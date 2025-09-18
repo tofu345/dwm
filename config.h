@@ -12,7 +12,7 @@ static const unsigned int gappov    = 2;       /* vert outer gap between windows
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int horizpadbar        = 5;        /* horizontal padding for statusbar */
+static const int horizpadbar        = 0;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 5;        /* vertical padding for statusbar */
 
 static const char dmenufont[]       = "CaskaydiaMono Nerd Font:size=9";
@@ -105,9 +105,6 @@ static const char *slock[]    = { "slock", NULL };
 static const char *zen[]      = { "flatpak", "run", "app.zen_browser.zen", NULL };
 
 /* https://gist.github.com/palopezv/efd34059af6126ad970940bcc6a90f2e */
-static const char *upvol[]      = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
-static const char *downvol[]    = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
-static const char *mutevol[]    = { "pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
 static const char *light_up[]   = { "light", "-A", "5", NULL };
 static const char *light_down[] = { "light", "-U", "5", NULL };
 
@@ -151,9 +148,9 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_q,                       killclient,     {0} },
     { MODKEY|ShiftMask,             XK_x,                       quit,           {0} },
 
-    { 0,                            XF86XK_AudioLowerVolume,    spawn,          {.v = downvol } },
-    { 0,                            XF86XK_AudioMute,           spawn,          {.v = mutevol } },
-    { 0,                            XF86XK_AudioRaiseVolume,    spawn,          {.v = upvol   } },
+    { 0,                            XF86XK_AudioLowerVolume,    spawn,          SHCMD("~/.dotfiles/bin/dwmb_change_volume.sh down") },
+    { 0,                            XF86XK_AudioMute,           spawn,          SHCMD("~/.dotfiles/bin/dwmb_change_volume.sh mute") },
+    { 0,                            XF86XK_AudioRaiseVolume,    spawn,          SHCMD("~/.dotfiles/bin/dwmb_change_volume.sh up") },
     { 0,			    XF86XK_MonBrightnessUp,	spawn,	        {.v = light_up} },
     { 0,		    	    XF86XK_MonBrightnessDown,	spawn,	        {.v = light_down} },
 
