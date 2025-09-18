@@ -12,12 +12,14 @@ static const unsigned int gappov    = 2;       /* vert outer gap between windows
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+static const int horizpadbar        = 5;        /* horizontal padding for statusbar */
+static const int vertpadbar         = 5;        /* vertical padding for statusbar */
 
-static const char dmenufont[]       = "CaskaydiaMono Nerd Font:size=9.9";
+static const char dmenufont[]       = "CaskaydiaMono Nerd Font:size=9";
 static const char *fonts[]          = { dmenufont };
 
 /* https://github.com/tonybanters/dwm/blob/master/config.h */
-static const char col_bg[]     = "#000000";  // background
+static const char col_bg[]     = "#101010";  // background
 static const char col_fg[]     = "#a9b1d6";  // foreground
 static const char col_wht[]    = "#ffffff";  // foreground
 static const char col_blk[]    = "#000000";  // black (normal)
