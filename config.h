@@ -82,11 +82,12 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", "-theme", "~/.dotfiles/rofi-theme.rasi", NULL };
 static const char *slock[]    = { "slock", NULL };
+static const char *zen[]      = { "flatpak", "run", "app.zen_browser.zen", NULL };
 
 /* https://gist.github.com/palopezv/efd34059af6126ad970940bcc6a90f2e */
-static const char *upvol[]   = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
-static const char *downvol[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
-static const char *mutevol[] = { "pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
+static const char *upvol[]      = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
+static const char *downvol[]    = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
+static const char *mutevol[]    = { "pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
 static const char *light_up[]   = { "light", "-A", "5", NULL };
 static const char *light_down[] = { "light", "-U", "5", NULL };
 
@@ -97,6 +98,7 @@ static const Key keys[] = {
     { MODKEY,                       XK_d,                       spawn,          {.v = rofi } },
     { MODKEY,                       XK_Return,                  spawn,          {.v = termcmd } },
     { MODKEY|ShiftMask,             XK_l,                       spawn,          {.v = slock } },
+    { MODKEY,                       XK_z,                       spawn,          {.v = zen } },
 
     { MODKEY,                       XK_b,                       togglebar,      {0} },
     { MODKEY,                       XK_j,                       focusstack,     {.i = +1 } },
@@ -106,7 +108,7 @@ static const Key keys[] = {
     { MODKEY,                       XK_h,                       setmfact,       {.f = -0.05 } },
     { MODKEY,                       XK_l,                       setmfact,       {.f = +0.05 } },
 
-    { MODKEY,                       XK_z,                       zoom,           {0} },
+    // { MODKEY,                       XK_z,                       zoom,           {0} },
     { MODKEY,                       XK_Tab,                     view,           {0} },
     { MODKEY|ShiftMask,             XK_q,                       killclient,     {0} },
     { MODKEY|ShiftMask,             XK_x,                       quit,           {0} },
