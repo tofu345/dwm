@@ -25,9 +25,14 @@ static const char col_cyn[]    = "#0db9d7";  // cyan (highlight)
 static const char col_brblk[]  = "#444b6a";  // bright black
 
 static const char *colors[][3] = {
-    /*               fg        bg       border */
-    [SchemeNorm] = { col_fg,   col_bg,  col_blk },
-    [SchemeSel]  = { col_wht,  col_bg,  col_mag },
+    /*                      fg          bg          border */
+    [SchemeNorm]        = { col_fg,     col_bg,     col_blk },
+    [SchemeSel]         = { col_wht,    col_bg,     col_mag },
+    [SchemeStatus]      = { col_wht,    col_bg,     "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
+    [SchemeTagsSel]     = { col_wht,    col_bg,     "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
+    [SchemeTagsNorm]    = { col_fg,     col_bg,     "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
+    [SchemeInfoSel]     = { col_fg,     col_bg,     "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
+    [SchemeInfoNorm]    = { col_fg,     col_bg,     "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
 };
 
 /* tagging */
