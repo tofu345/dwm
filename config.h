@@ -5,10 +5,10 @@
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const unsigned int gappih    = 2;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 2;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 2;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 2;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappih    = 0;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 0;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 0;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 0;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -34,7 +34,7 @@ static const char col_brblk[]  = "#444b6a";  // bright black
 static const char *colors[][3] = {
     /*                      fg          bg          border */
     [SchemeNorm]        = { col_fg,     col_bg,     col_blk },
-    [SchemeSel]         = { col_wht,    col_bg,     col_brblk },
+    [SchemeSel]         = { col_wht,    col_bg,     col_fg  },
     [SchemeStatus]      = { col_wht,    col_bg,     "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
     [SchemeTagsSel]     = { col_wht,    col_bg,     "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
     [SchemeTagsNorm]    = { col_fg,     col_bg,     "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
@@ -147,7 +147,7 @@ static const Key keys[] = {
     // { MODKEY,                       XK_z,                       zoom,           {0} },
     { MODKEY,                       XK_Tab,                     view,           {0} },
     { MODKEY|ShiftMask,             XK_q,                       killclient,     {0} },
-    { MODKEY|ShiftMask,             XK_x,                       quit,           {0} },
+    // { MODKEY|ShiftMask,             XK_x,                       quit,           {0} },
 
     { 0,                            XF86XK_AudioLowerVolume,    spawn,          SHCMD("~/.dotfiles/bin/dwmb_change_volume.sh down") },
     { 0,                            XF86XK_AudioMute,           spawn,          SHCMD("~/.dotfiles/bin/dwmb_change_volume.sh mute") },
