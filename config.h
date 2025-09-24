@@ -7,6 +7,7 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int gappih    = 0;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 0;       /* vert inner gap between windows */
+static const int focusonwheel       = 0;
 static const unsigned int gappoh    = 0;       /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov    = 0;       /* vert outer gap between windows and screen edge */
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
@@ -39,7 +40,7 @@ static const char col_brblk[]  = "#444b6a";  // bright black
 static const char *colors[][3] = {
     /*                      fg          bg          border */
     [SchemeNorm]        = { col_fg,     col_bg,     col_blk },
-    [SchemeSel]         = { col_wht,    col_bg,     col_fg  },
+    [SchemeSel]         = { col_wht,    col_bg,     "#333742"  },
     [SchemeStatus]      = { col_wht,    col_bg,     "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
     [SchemeTagsSel]     = { col_wht,    col_bg,     "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
     [SchemeTagsNorm]    = { col_fg,     col_bg,     "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
@@ -113,6 +114,10 @@ static const char *zen[]      = { "flatpak", "run", "app.zen_browser.zen", NULL 
 static const char *light_up[]   = { "light", "-A", "5", NULL };
 static const char *light_down[] = { "light", "-U", "5", NULL };
 
+static const char *volume_up[] = { "dwmb_change_volume.sh", "up", NULL };
+static const char *volume_down[] = { "dwmb_change_volume.sh", "down", NULL };
+static const char *volume_mute[] = { "dwmb_change_volume.sh", "mute", NULL };
+
 static const Key keys[] = {
     /* modifier                     key                         function        argument */
 
@@ -154,9 +159,9 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_q,                       killclient,     {0} },
     // { MODKEY|ShiftMask,             XK_x,                       quit,           {0} },
 
-    { 0,                            XF86XK_AudioLowerVolume,    spawn,          SHCMD("~/.dotfiles/bin/dwmb_change_volume.sh down") },
-    { 0,                            XF86XK_AudioMute,           spawn,          SHCMD("~/.dotfiles/bin/dwmb_change_volume.sh mute") },
-    { 0,                            XF86XK_AudioRaiseVolume,    spawn,          SHCMD("~/.dotfiles/bin/dwmb_change_volume.sh up") },
+    { 0,                            XF86XK_AudioLowerVolume,    spawn,          {.v = volume_down} },
+    { 0,                            XF86XK_AudioMute,           spawn,          {.v = volume_mute} },
+    { 0,                            XF86XK_AudioRaiseVolume,    spawn,          {.v = volume_up} },
     { 0,			    XF86XK_MonBrightnessUp,	spawn,	        {.v = light_up} },
     { 0,		    	    XF86XK_MonBrightnessDown,	spawn,	        {.v = light_down} },
 
