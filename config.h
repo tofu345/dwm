@@ -13,7 +13,7 @@ static const unsigned int gappov    = 0;       /* vert outer gap between windows
 static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayspacing = 2;   /* systray spacing */
+static const unsigned int systrayspacing = 0;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
@@ -21,7 +21,7 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 0;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 7;        /* vertical padding for statusbar */
 
-static const char dmenufont[]       = "CaskaydiaMono Nerd Font:size=9.8";
+static const char dmenufont[]       = "CaskaydiaMono Nerd Font:size=10";
 static const char *fonts[]          = { dmenufont };
 
 /* https://github.com/tonybanters/dwm/blob/master/config.h */
@@ -40,7 +40,7 @@ static const char col_brblk[]  = "#444b6a";  // bright black
 static const char *colors[][3] = {
     /*                      fg          bg          border */
     [SchemeNorm]        = { col_fg,     col_bg,     col_blk },
-    [SchemeSel]         = { col_wht,    col_bg,     "#333742"  },
+    [SchemeSel]         = { col_wht,    col_bg,     "#7f85a1"  },
     [SchemeStatus]      = { col_wht,    col_bg,     "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
     [SchemeTagsSel]     = { col_wht,    col_bg,     "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
     [SchemeTagsNorm]    = { col_fg,     col_bg,     "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
@@ -57,8 +57,8 @@ static const Rule rules[] = {
      *	WM_NAME(STRING) = title
      */
     /* class        instance    title       tags mask     isfloating   monitor */
-    { "zen",        NULL,       NULL,       1 << 1,       0,           -1 },
-    // TODO: zen browser
+    { "Gimp",       NULL,       NULL,       0,            1,           -1 },
+    // { "zen",        NULL,       NULL,       1 << 1,       0,           -1 },
 };
 
 /* layout(s) */
@@ -117,6 +117,8 @@ static const char *light_down[] = { "light", "-U", "5", NULL };
 static const char *volume_up[] = { "dwmb_change_volume.sh", "up", NULL };
 static const char *volume_down[] = { "dwmb_change_volume.sh", "down", NULL };
 static const char *volume_mute[] = { "dwmb_change_volume.sh", "mute", NULL };
+
+static const char *layoutmenu_cmd = "~/.dotfiles/bin/layoutmenu.sh";
 
 static const Key keys[] = {
     /* modifier                     key                         function        argument */
@@ -195,6 +197,7 @@ static const Button buttons[] = {
     /* click                event mask      button          function        argument */
     { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
     { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+    { ClkLtSymbol,          0,              Button3,        layoutmenu,     {0} },
     { ClkWinTitle,          0,              Button2,        zoom,           {0} },
     { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
     { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
