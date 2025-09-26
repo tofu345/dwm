@@ -5,23 +5,18 @@
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const unsigned int gappih    = 0;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 0;       /* vert inner gap between windows */
 static const int focusonwheel       = 0;
-static const unsigned int gappoh    = 0;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 0;       /* vert outer gap between windows and screen edge */
-static       int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
-static const unsigned int systrayspacing = 0;   /* systray spacing */
+static const unsigned int systrayspacing = 3;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int horizpadbar        = 0;        /* horizontal padding for statusbar */
+static const int horizpadbar        = 1;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 7;        /* vertical padding for statusbar */
 
-static const char dmenufont[]       = "CaskaydiaMono Nerd Font:size=10";
+static const char dmenufont[]       = "CaskaydiaMono Nerd Font:style=Bold:size=10";
 static const char *fonts[]          = { dmenufont };
 
 /* https://github.com/tonybanters/dwm/blob/master/config.h */
@@ -40,7 +35,7 @@ static const char col_brblk[]  = "#444b6a";  // bright black
 static const char *colors[][3] = {
     /*                      fg          bg          border */
     [SchemeNorm]        = { col_fg,     col_bg,     col_blk },
-    [SchemeSel]         = { col_wht,    col_bg,     "#7f85a1"  },
+    [SchemeSel]         = { col_wht,    col_bg,     "#484b5b"  },
     [SchemeStatus]      = { col_wht,    col_bg,     "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
     [SchemeTagsSel]     = { col_wht,    col_bg,     "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
     [SchemeTagsNorm]    = { col_fg,     col_bg,     "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
@@ -68,25 +63,11 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
 static const int refreshrate = 120;  /* refresh rate (per second) for client move/resize */
 
-#define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
-#include "vanitygaps.c"
-
 // 
 static const Layout layouts[] = {
     /* symbol     arrange function */
     { "[]=",      tile },    /* first entry is default */
     { "[M]",      monocle },
-    { "|M|",      centeredmaster },
-    { "TTT",      bstack },
-    { "HHH",      grid },
-    { "[@]",      spiral },
-    { "[\\]",     dwindle },
-    { "H[]",      deck },
-    { "===",      bstackhoriz },
-    { "###",      nrowgrid },
-    { "---",      horizgrid },
-    { ":::",      gaplessgrid },
-    { ">M>",      centeredfloatingmaster },
     { "><>",      NULL },    /* no layout function means floating behavior */
     { NULL,       NULL },
 };
@@ -137,24 +118,6 @@ static const Key keys[] = {
     { MODKEY,                       XK_x,                       transfer,       {0} },
     { MODKEY,                       XK_h,                       setmfact,       {.f = -0.05 } },
     { MODKEY,                       XK_l,                       setmfact,       {.f = +0.05 } },
-
-    // vanitygaps
-    { MODKEY|Mod1Mask,              XK_u,                       incrgaps,       {.i = +1 } },
-    { MODKEY|Mod1Mask|ShiftMask,    XK_u,                       incrgaps,       {.i = -1 } },
-    { MODKEY|Mod1Mask,              XK_i,                       incrigaps,      {.i = +1 } },
-    { MODKEY|Mod1Mask|ShiftMask,    XK_i,                       incrigaps,      {.i = -1 } },
-    { MODKEY|Mod1Mask,              XK_o,                       incrogaps,      {.i = +1 } },
-    { MODKEY|Mod1Mask|ShiftMask,    XK_o,                       incrogaps,      {.i = -1 } },
-    { MODKEY|Mod1Mask,              XK_asterisk,                togglegaps,     {0} },
-    { MODKEY|Mod1Mask|ShiftMask,    XK_asterisk,                defaultgaps,    {0} },
-    { MODKEY|Mod1Mask,              XK_6,                       incrihgaps,     {.i = +1 } },
-    { MODKEY|Mod1Mask|ShiftMask,    XK_6,                       incrihgaps,     {.i = -1 } },
-    { MODKEY|Mod1Mask,              XK_7,                       incrivgaps,     {.i = +1 } },
-    { MODKEY|Mod1Mask|ShiftMask,    XK_7,                       incrivgaps,     {.i = -1 } },
-    { MODKEY|Mod1Mask,              XK_8,                       incrohgaps,     {.i = +1 } },
-    { MODKEY|Mod1Mask|ShiftMask,    XK_8,                       incrohgaps,     {.i = -1 } },
-    { MODKEY|Mod1Mask,              XK_9,                       incrovgaps,     {.i = +1 } },
-    { MODKEY|Mod1Mask|ShiftMask,    XK_9,                       incrovgaps,     {.i = -1 } },
 
     // { MODKEY,                       XK_z,                       zoom,           {0} },
     { MODKEY,                       XK_Tab,                     view,           {0} },
