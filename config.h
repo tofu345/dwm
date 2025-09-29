@@ -35,7 +35,7 @@ static const char col_brblk[]  = "#444b6a";  // bright black
 static const char *colors[][3] = {
     /*                      fg          bg          border */
     [SchemeNorm]        = { col_fg,     col_bg,     col_blk },
-    [SchemeSel]         = { col_wht,    col_bg,     "#484b5b"  },
+    [SchemeSel]         = { col_wht,    col_bg,     "#5b5e73"  },
     [SchemeStatus]      = { col_wht,    col_bg,     "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
     [SchemeTagsSel]     = { col_wht,    col_bg,     "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
     [SchemeTagsNorm]    = { col_fg,     col_bg,     "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
@@ -75,9 +75,9 @@ static const Layout layouts[] = {
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
-    { MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+    { MODKEY,                       KEY,      comboview,           {.ui = 1 << TAG} }, \
     { MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-    { MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+    { MODKEY|ShiftMask,             KEY,      combotag,            {.ui = 1 << TAG} }, \
     { MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
