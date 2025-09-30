@@ -35,7 +35,7 @@ static const char col_brblk[]  = "#444b6a";  // bright black
 static const char *colors[][3] = {
     /*                      fg          bg          border */
     [SchemeNorm]        = { col_fg,     col_bg,     col_blk },
-    [SchemeSel]         = { col_wht,    col_bg,     "#5b5e73"  },
+    [SchemeSel]         = { col_wht,    col_bg,     "#585c6f"  },
     [SchemeStatus]      = { col_wht,    col_bg,     "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
     [SchemeTagsSel]     = { col_wht,    col_bg,     "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
     [SchemeTagsNorm]    = { col_fg,     col_bg,     "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
@@ -75,10 +75,10 @@ static const Layout layouts[] = {
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
-    { MODKEY,                       KEY,      comboview,           {.ui = 1 << TAG} }, \
-    { MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-    { MODKEY|ShiftMask,             KEY,      combotag,            {.ui = 1 << TAG} }, \
-    { MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }
+    { MODKEY,                       KEY,      comboview,        {.ui = 1 << TAG} }, \
+    { MODKEY|ControlMask,           KEY,      toggleview,       {.ui = 1 << TAG} }, \
+    { MODKEY|ShiftMask,             KEY,      combotag,         {.ui = 1 << TAG} }, \
+    { MODKEY|ControlMask|ShiftMask, KEY,      toggletag,        {.ui = 1 << TAG} }
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -94,7 +94,6 @@ static const char *zen[]      = { "flatpak", "run", "app.zen_browser.zen", NULL 
 /* https://gist.github.com/palopezv/efd34059af6126ad970940bcc6a90f2e */
 static const char *light_up[]   = { "light", "-A", "5", NULL };
 static const char *light_down[] = { "light", "-U", "5", NULL };
-
 static const char *volume_up[] = { "dwmb_change_volume.sh", "up", NULL };
 static const char *volume_down[] = { "dwmb_change_volume.sh", "down", NULL };
 static const char *volume_mute[] = { "dwmb_change_volume.sh", "mute", NULL };
@@ -119,9 +118,11 @@ static const Key keys[] = {
     { MODKEY,                       XK_h,                       setmfact,       {.f = -0.05 } },
     { MODKEY,                       XK_l,                       setmfact,       {.f = +0.05 } },
 
-    // { MODKEY,                       XK_z,                       zoom,           {0} },
-    { MODKEY,                       XK_Tab,                     view,           {0} },
     { MODKEY|ShiftMask,             XK_q,                       killclient,     {0} },
+    { 0,                            XK_Print,                   spawn,          SHCMD("~/.config/i3/scregcp.sh -s ~/Pictures/Screenshots/") },
+
+    // { MODKEY,                       XK_z,                       zoom,           {0} },
+    // { MODKEY,                       XK_Tab,                     view,           {0} },
     // { MODKEY|ShiftMask,             XK_x,                       quit,           {0} },
 
     { 0,                            XF86XK_AudioLowerVolume,    spawn,          {.v = volume_down} },
