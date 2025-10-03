@@ -5,7 +5,6 @@
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const int focusonwheel       = 0;
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 3;   /* systray spacing */
@@ -120,6 +119,7 @@ static const Key keys[] = {
 
     { MODKEY|ShiftMask,             XK_q,                       killclient,     {0} },
     { 0,                            XK_Print,                   spawn,          SHCMD("~/.config/i3/scregcp.sh -s ~/Pictures/Screenshots/") },
+    { MODKEY|ShiftMask,             XK_v,                       spawn,          SHCMD("xsel -bc") },
 
     // { MODKEY,                       XK_z,                       zoom,           {0} },
     // { MODKEY,                       XK_Tab,                     view,           {0} },
