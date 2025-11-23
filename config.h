@@ -34,7 +34,7 @@ static const char col_brblk[]  = "#444b6a";  // bright black
 static const char *colors[][3] = {
     /*                      fg          bg          border */
     [SchemeNorm]        = { col_fg,     col_bg,     col_blk },
-    [SchemeSel]         = { col_wht,    col_bg,     "#585c6f"  },
+    [SchemeSel]         = { col_wht,    col_bg,     "#444755"  },
     [SchemeStatus]      = { col_wht,    col_bg,     "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
     [SchemeTagsSel]     = { col_wht,    col_bg,     "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
     [SchemeTagsNorm]    = { col_fg,     col_bg,     "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
