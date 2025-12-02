@@ -93,9 +93,6 @@ static const char *zen[]      = { "flatpak", "run", "app.zen_browser.zen", NULL 
 /* https://gist.github.com/palopezv/efd34059af6126ad970940bcc6a90f2e */
 static const char *light_up[]   = { "light", "-A", "5", NULL };
 static const char *light_down[] = { "light", "-U", "5", NULL };
-static const char *volume_up[] = { "dwmb_change_volume.sh", "up", NULL };
-static const char *volume_down[] = { "dwmb_change_volume.sh", "down", NULL };
-static const char *volume_mute[] = { "dwmb_change_volume.sh", "mute", NULL };
 
 static const char *layoutmenu_cmd = "~/.dotfiles/bin/layoutmenu.sh";
 
@@ -125,9 +122,9 @@ static const Key keys[] = {
     // { MODKEY,                       XK_Tab,                     view,           {0} },
     // { MODKEY|ShiftMask,             XK_x,                       quit,           {0} },
 
-    { 0,                            XF86XK_AudioLowerVolume,    spawn,          {.v = volume_down} },
-    { 0,                            XF86XK_AudioMute,           spawn,          {.v = volume_mute} },
-    { 0,                            XF86XK_AudioRaiseVolume,    spawn,          {.v = volume_up} },
+    { 0,                            XF86XK_AudioLowerVolume,    spawn,          SHCMD("~/.dotfiles/bin/dwmb_volume_down.sh") },
+    { 0,                            XF86XK_AudioMute,           spawn,          SHCMD("~/.dotfiles/bin/dwmb_volume_mute.sh") },
+    { 0,                            XF86XK_AudioRaiseVolume,    spawn,          SHCMD("~/.dotfiles/bin/dwmb_volume_up.sh") },
     { 0,			    XF86XK_MonBrightnessUp,	spawn,	        {.v = light_up} },
     { 0,		    	    XF86XK_MonBrightnessDown,	spawn,	        {.v = light_down} },
 
