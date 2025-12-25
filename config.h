@@ -3,17 +3,17 @@
 #include <X11/XF86keysym.h>
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 3;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
-static const int showsystray        = 1;     /* 0 means no systray */
+static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 1;        /* horizontal padding for statusbar */
-static const int vertpadbar         = 7;        /* vertical padding for statusbar */
+static const int vertpadbar         = 10;       /* vertical padding for statusbar */
 
 static const char dmenufont[]       = "CaskaydiaMono Nerd Font:style=Bold:size=10";
 static const char *fonts[]          = { dmenufont };
@@ -87,12 +87,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", col_fg, "-sb", col_bg, "-sf", col_wht, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", "-theme", "~/.dotfiles/rofi-theme.rasi", NULL };
-static const char *slock[]    = { "slock", NULL };
 static const char *zen[]      = { "flatpak", "run", "app.zen_browser.zen", NULL };
-
-/* https://gist.github.com/palopezv/efd34059af6126ad970940bcc6a90f2e */
-static const char *light_up[]   = { "light", "-A", "5", NULL };
-static const char *light_down[] = { "light", "-U", "5", NULL };
 
 static const char *layoutmenu_cmd = "~/.dotfiles/bin/layoutmenu.sh";
 
@@ -102,7 +97,6 @@ static const Key keys[] = {
     { MODKEY,                       XK_r,                       spawn,          {.v = dmenucmd } },
     { MODKEY,                       XK_d,                       spawn,          {.v = rofi } },
     { MODKEY,                       XK_Return,                  spawn,          {.v = termcmd } },
-    { MODKEY|ShiftMask,             XK_l,                       spawn,          {.v = slock } },
     { MODKEY,                       XK_z,                       spawn,          {.v = zen } },
 
     { MODKEY,                       XK_b,                       togglebar,      {0} },
@@ -117,16 +111,20 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_q,                       killclient,     {0} },
     { 0,                            XK_Print,                   spawn,          SHCMD("~/.config/i3/scregcp.sh -s ~/Pictures/Screenshots/") },
     { MODKEY|ShiftMask,             XK_v,                       spawn,          SHCMD("xsel -bc") },
+    { MODKEY|ShiftMask,             XK_l,                       spawn,          SHCMD("xsecurelock") },
 
     // { MODKEY,                       XK_z,                       zoom,           {0} },
     // { MODKEY,                       XK_Tab,                     view,           {0} },
     // { MODKEY|ShiftMask,             XK_x,                       quit,           {0} },
 
-    { 0,                            XF86XK_AudioLowerVolume,    spawn,          SHCMD("~/.dotfiles/bin/dwmb_volume_down.sh") },
-    { 0,                            XF86XK_AudioMute,           spawn,          SHCMD("~/.dotfiles/bin/dwmb_volume_mute.sh") },
-    { 0,                            XF86XK_AudioRaiseVolume,    spawn,          SHCMD("~/.dotfiles/bin/dwmb_volume_up.sh") },
-    { 0,			    XF86XK_MonBrightnessUp,	spawn,	        {.v = light_up} },
-    { 0,		    	    XF86XK_MonBrightnessDown,	spawn,	        {.v = light_down} },
+    // adjust volume and update dwmblock
+    { 0,                            XF86XK_AudioMute,           spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks") },
+    { 0,                            XF86XK_AudioLowerVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 dwmblocks") },
+    { 0,                            XF86XK_AudioRaiseVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 && pkill -RTMIN+1 dwmblocks") },
+
+    // adjust brightness and update dwmblock
+    { 0,			    XF86XK_MonBrightnessUp,	spawn,	        SHCMD("brightnessctl set +10% && pkill -RTMIN+2 dwmblocks") },
+    { 0,		    	    XF86XK_MonBrightnessDown,	spawn,	        SHCMD("brightnessctl --min-value=100 set 10-% && pkill -RTMIN+2 dwmblocks") },
 
     { MODKEY,                       XK_t,                       setlayout,      {.v = &layouts[0]} }, // tiled
     { MODKEY,                       XK_f,                       setlayout,      {.v = &layouts[1]} }, // monocle
