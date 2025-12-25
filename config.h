@@ -92,51 +92,51 @@ static const char *zen[]      = { "flatpak", "run", "app.zen_browser.zen", NULL 
 static const char *layoutmenu_cmd = "~/.dotfiles/bin/layoutmenu.sh";
 
 static const Key keys[] = {
-    /* modifier                     key                         function        argument */
+    /* modifier             key                         function        argument */
 
-    { MODKEY,                       XK_r,                       spawn,          {.v = dmenucmd } },
-    { MODKEY,                       XK_d,                       spawn,          {.v = rofi } },
-    { MODKEY,                       XK_Return,                  spawn,          {.v = termcmd } },
-    { MODKEY,                       XK_z,                       spawn,          {.v = zen } },
+    { MODKEY,               XK_r,                       spawn,          {.v = dmenucmd } },
+    { MODKEY,               XK_d,                       spawn,          {.v = rofi } },
+    { MODKEY,               XK_Return,                  spawn,          {.v = termcmd } },
+    { MODKEY,               XK_z,                       spawn,          {.v = zen } },
 
-    { MODKEY,                       XK_b,                       togglebar,      {0} },
-    { MODKEY,                       XK_j,                       focusstack,     {.i = +1 } },
-    { MODKEY,                       XK_k,                       focusstack,     {.i = -1 } },
-    { MODKEY,                       XK_p,                       incnmaster,     {.i = +1 } },
-    { MODKEY|ShiftMask,             XK_p,                       incnmaster,     {.i = -1 } },
-    { MODKEY,                       XK_x,                       transfer,       {0} },
-    { MODKEY,                       XK_h,                       setmfact,       {.f = -0.05 } },
-    { MODKEY,                       XK_l,                       setmfact,       {.f = +0.05 } },
+    { MODKEY,               XK_b,                       togglebar,      {0} },
+    { MODKEY,               XK_j,                       focusstack,     {.i = +1 } },
+    { MODKEY,               XK_k,                       focusstack,     {.i = -1 } },
+    { MODKEY,               XK_p,                       incnmaster,     {.i = +1 } },
+    { MODKEY|ShiftMask,     XK_p,                       incnmaster,     {.i = -1 } },
+    { MODKEY,               XK_x,                       transfer,       {0} },
+    { MODKEY,               XK_h,                       setmfact,       {.f = -0.05 } },
+    { MODKEY,               XK_l,                       setmfact,       {.f = +0.05 } },
 
-    { MODKEY|ShiftMask,             XK_q,                       killclient,     {0} },
-    { 0,                            XK_Print,                   spawn,          SHCMD("~/.config/i3/scregcp.sh -s ~/Pictures/Screenshots/") },
-    { MODKEY|ShiftMask,             XK_v,                       spawn,          SHCMD("xsel -bc") },
-    { MODKEY|ShiftMask,             XK_l,                       spawn,          SHCMD("xsecurelock") },
+    { MODKEY|ShiftMask,     XK_q,                       killclient,     {0} },
+    { 0,                    XK_Print,                   spawn,          SHCMD("~/.config/i3/scregcp.sh -s ~/Pictures/Screenshots/") },
+    { MODKEY|ShiftMask,     XK_v,                       spawn,          SHCMD("xsel -bc") },
+    { MODKEY|ShiftMask,     XK_l,                       spawn,          SHCMD("xsecurelock") },
 
     // { MODKEY,                       XK_z,                       zoom,           {0} },
     // { MODKEY,                       XK_Tab,                     view,           {0} },
     // { MODKEY|ShiftMask,             XK_x,                       quit,           {0} },
 
     // adjust volume and update dwmblock
-    { 0,                            XF86XK_AudioMute,           spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks") },
-    { 0,                            XF86XK_AudioLowerVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 dwmblocks") },
-    { 0,                            XF86XK_AudioRaiseVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 && pkill -RTMIN+1 dwmblocks") },
+    { 0,                    XF86XK_AudioMute,           spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks") },
+    { 0,                    XF86XK_AudioLowerVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 dwmblocks") },
+    { 0,                    XF86XK_AudioRaiseVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 && pkill -RTMIN+1 dwmblocks") },
 
     // adjust brightness and update dwmblock
-    { 0,			    XF86XK_MonBrightnessUp,	spawn,	        SHCMD("brightnessctl set +10% && pkill -RTMIN+2 dwmblocks") },
-    { 0,		    	    XF86XK_MonBrightnessDown,	spawn,	        SHCMD("brightnessctl --min-value=100 set 10-% && pkill -RTMIN+2 dwmblocks") },
+    { 0,		    XF86XK_MonBrightnessUp,	spawn,	        SHCMD("brightnessctl set +10% && pkill -RTMIN+2 dwmblocks") },
+    { 0,	     	    XF86XK_MonBrightnessDown,	spawn,	        SHCMD("brightnessctl --min-value=100 set 10-% && pkill -RTMIN+2 dwmblocks") },
 
-    { MODKEY,                       XK_t,                       setlayout,      {.v = &layouts[0]} }, // tiled
-    { MODKEY,                       XK_f,                       setlayout,      {.v = &layouts[1]} }, // monocle
-    { MODKEY,                       XK_space,                   setlayout,      {0} },
-    { MODKEY|ShiftMask,             XK_space,                   togglefloating, {0} },
+    { MODKEY,               XK_t,                       setlayout,      {.v = &layouts[0]} }, // tiled
+    { MODKEY,               XK_f,                       setlayout,      {.v = &layouts[1]} }, // monocle
+    { MODKEY,               XK_space,                   setlayout,      {0} },
+    { MODKEY|ShiftMask,     XK_space,                   togglefloating, {0} },
 
-    { MODKEY,                       XK_0,                       view,           {.ui = ~0 } },
-    { MODKEY|ShiftMask,             XK_0,                       tag,            {.ui = ~0 } },
-    { MODKEY,                       XK_comma,                   focusmon,       {.i = -1 } },
-    { MODKEY,                       XK_period,                  focusmon,       {.i = +1 } },
-    { MODKEY|ShiftMask,             XK_comma,                   tagmon,         {.i = -1 } },
-    { MODKEY|ShiftMask,             XK_period,                  tagmon,         {.i = +1 } },
+    { MODKEY,               XK_0,                       view,           {.ui = ~0 } },
+    { MODKEY|ShiftMask,     XK_0,                       tag,            {.ui = ~0 } },
+    { MODKEY,               XK_comma,                   focusmon,       {.i = -1 } },
+    { MODKEY,               XK_period,                  focusmon,       {.i = +1 } },
+    { MODKEY|ShiftMask,     XK_comma,                   tagmon,         {.i = -1 } },
+    { MODKEY|ShiftMask,     XK_period,                  tagmon,         {.i = +1 } },
 
     // real prog dvorak L https://github.com/ThePrimeagen/keyboards
     TAGKEYS(XK_plus,         0),
