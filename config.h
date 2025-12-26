@@ -109,7 +109,7 @@ static const Key keys[] = {
     { MODKEY,               XK_l,                       setmfact,       {.f = +0.05 } },
 
     { MODKEY|ShiftMask,     XK_q,                       killclient,     {0} },
-    { 0,                    XK_Print,                   spawn,          SHCMD("~/.config/i3/scregcp.sh -s ~/Pictures/Screenshots/") },
+    { 0,                    XK_Print,                   spawn,          SHCMD("maim -s | tee ~/Pictures/Screenshots/$(date '+%Y-%m-%d_%H-%M-%S')_screenshot.png | xclip -selection clipboard -t image/png") },
     { MODKEY|ShiftMask,     XK_v,                       spawn,          SHCMD("xsel -bc") },
     { MODKEY|ShiftMask,     XK_l,                       spawn,          SHCMD("xsecurelock") },
 
