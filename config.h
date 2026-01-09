@@ -56,7 +56,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
@@ -86,8 +86,8 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", col_fg, "-sb", col_bg, "-sf", col_wht, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
-static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", "-theme", "~/.dotfiles/rofi-theme.rasi", NULL };
-static const char *zen[]      = { "flatpak", "run", "app.zen_browser.zen", NULL };
+static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", "-theme", "~/dotfiles/rofi-theme.rasi", NULL };
+static const char *browser[]      = { "helium-browser", NULL };
 
 static const char *layoutmenu_cmd = "~/.dotfiles/bin/layoutmenu.sh";
 
@@ -97,9 +97,9 @@ static const Key keys[] = {
     { MODKEY,               XK_r,                       spawn,          {.v = dmenucmd } },
     { MODKEY,               XK_d,                       spawn,          {.v = rofi } },
     { MODKEY,               XK_Return,                  spawn,          {.v = termcmd } },
-    { MODKEY,               XK_z,                       spawn,          {.v = zen } },
+    { MODKEY,               XK_b,                       spawn,          {.v = browser } },
 
-    { MODKEY,               XK_b,                       togglebar,      {0} },
+    // { MODKEY,               XK_b,                       togglebar,      {0} },
     { MODKEY,               XK_j,                       focusstack,     {.i = +1 } },
     { MODKEY,               XK_k,                       focusstack,     {.i = -1 } },
     { MODKEY,               XK_p,                       incnmaster,     {.i = +1 } },
@@ -111,10 +111,10 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,     XK_q,                       killclient,     {0} },
     { 0,                    XK_Print,                   spawn,          SHCMD("maim -s | tee ~/Pictures/Screenshots/$(date '+%Y-%m-%d_%H-%M-%S')_screenshot.png | xclip -selection clipboard -t image/png") },
     { MODKEY|ShiftMask,     XK_v,                       spawn,          SHCMD("xsel -bc") },
-    { MODKEY|ShiftMask,     XK_l,                       spawn,          SHCMD("xsecurelock") },
+    { MODKEY|ShiftMask,     XK_l,                       spawn,          SHCMD("xset s activate") },
 
-    // { MODKEY,                       XK_z,                       zoom,           {0} },
-    // { MODKEY,                       XK_Tab,                     view,           {0} },
+    { MODKEY,               XK_z,                       zoom,           {0} },
+    { MODKEY,               XK_Tab,                     view,           {0} },
     // { MODKEY|ShiftMask,             XK_x,                       quit,           {0} },
 
     // adjust volume and update dwmblock
@@ -153,18 +153,18 @@ static const Key keys[] = {
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static const Button buttons[] = {
-    /* click                event mask      button          function        argument */
-    { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-    { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-    { ClkLtSymbol,          0,              Button3,        layoutmenu,     {0} },
-    { ClkWinTitle,          0,              Button2,        zoom,           {0} },
-    { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
-    { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-    { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-    { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
-    { ClkTagBar,            0,              Button1,        view,           {0} },
-    { ClkTagBar,            0,              Button3,        toggleview,     {0} },
-    { ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
-    { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+    /* click                event mask          button          function        argument */
+    { ClkTagBar,            MODKEY,             Button1,        tag,            {0} },
+    { ClkTagBar,            MODKEY,             Button3,        toggletag,      {0} },
+    { ClkLtSymbol,          0,                  Button3,        layoutmenu,     {0} },
+    { ClkWinTitle,          0,                  Button2,        zoom,           {0} },
+    { ClkStatusText,        0,                  Button2,        spawn,          {.v = termcmd } },
+    { ClkClientWin,         MODKEY,             Button1,        movemouse,      {0} },
+    { ClkClientWin,         MODKEY,             Button2,        togglefloating, {0} },
+    { ClkClientWin,         MODKEY|ShiftMask,   Button1,        resizemouse,    {0} },
+    { ClkTagBar,            0,                  Button1,        view,           {0} },
+    { ClkTagBar,            0,                  Button3,        toggleview,     {0} },
+    { ClkTagBar,            MODKEY,             Button1,        tag,            {0} },
+    { ClkTagBar,            MODKEY,             Button3,        toggletag,      {0} },
 };
 
