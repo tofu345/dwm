@@ -61,7 +61,6 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
 static const int refreshrate = 120;  /* refresh rate (per second) for client move/resize */
 
-// 
 static const Layout layouts[] = {
     /* symbol     arrange function */
     { "[]=",      tile },    /* first entry is default */
@@ -88,36 +87,33 @@ static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", "-theme", "~/dotfiles/rofi-theme.rasi", NULL };
 static const char *helium[]   = { "helium-browser", NULL };
 
-static const char *layoutmenu_cmd = "~/.dotfiles/bin/layoutmenu.sh";
+static const char *layoutmenu_cmd = "~/dotfiles/bin/layoutmenu.sh";
 
 static const Key keys[] = {
     /* modifier             key                         function        argument */
+    { MODKEY,               XK_Return,                  spawn,          {.v = termcmd } },
     { MODKEY,               XK_r,                       spawn,          {.v = dmenucmd } },
     { MODKEY,               XK_d,                       spawn,          {.v = rofi } },
-    { MODKEY,               XK_Return,                  spawn,          {.v = termcmd } },
     { MODKEY|ShiftMask,     XK_h,                       spawn,          {.v = helium } },
-
-    { MODKEY|ShiftMask,     XK_q,                       killclient,     {0} },
     { 0,                    XK_Print,                   spawn,          SHCMD("maim -s | tee ~/Pictures/Screenshots/$(date '+%Y-%m-%d_%H-%M-%S')_screenshot.png | xclip -selection clipboard -t image/png") },
     { MODKEY|ShiftMask,     XK_v,                       spawn,          SHCMD("xsel -bc") },
     { MODKEY|ShiftMask,     XK_l,                       spawn,          SHCMD("xset s activate") },
-
-    { MODKEY,               XK_z,                       zoom,           {0} },
-    { MODKEY,               XK_Tab,                     view,           {0} },
-    // { MODKEY|ShiftMask,             XK_x,                       quit,           {0} },
-
     { 0,                    XF86XK_AudioMute,           spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioLowerVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioRaiseVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 && pkill -RTMIN+1 dwmblocks") },
     { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("brightnessctl set +10%") },
     { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("brightnessctl --min-value=100 set 10-%") },
 
+    { MODKEY,               XK_Tab,                     view,           {0} },
+    { MODKEY,               XK_z,                       zoom,           {0} },
+    { MODKEY|ShiftMask,     XK_q,                       killclient,     {0} },
+    // { MODKEY|ShiftMask,     XK_x,                       quit,           {0} },
     { MODKEY,               XK_t,                       setlayout,      {.v = &layouts[0]} }, // tiled
-    { MODKEY,               XK_f,                       setlayout,      {.v = &layouts[1]} }, // monocle
-    { MODKEY,               XK_space,                   setlayout,      {0} },
+    { MODKEY,               XK_m,                       setlayout,      {.v = &layouts[1]} }, // monocle
+    // { MODKEY,               XK_space,                   setlayout,      {0} }, // next layout
+	{ MODKEY,               XK_f,						togglefullscr,  {0} },
     { MODKEY|ShiftMask,     XK_space,                   togglefloating, {0} },
     { MODKEY,               XK_s,                       togglesticky,   {0} },
-
     { MODKEY,               XK_b,                       togglebar,      {0} },
     { MODKEY,               XK_j,                       focusstack,     {.i = +1 } },
     { MODKEY,               XK_k,                       focusstack,     {.i = -1 } },
@@ -126,10 +122,10 @@ static const Key keys[] = {
     { MODKEY,               XK_x,                       transfer,       {0} },
     { MODKEY,               XK_h,                       setmfact,       {.f = -0.05 } },
     { MODKEY,               XK_l,                       setmfact,       {.f = +0.05 } },
-    { MODKEY,               XK_comma,                   focusmon,       {.i = -1 } },
-    { MODKEY,               XK_period,                  focusmon,       {.i = +1 } },
-    { MODKEY|ShiftMask,     XK_comma,                   tagmon,         {.i = -1 } },
-    { MODKEY|ShiftMask,     XK_period,                  tagmon,         {.i = +1 } },
+    // { MODKEY,               XK_comma,					focusmon,       {.i = -1 } },
+    // { MODKEY,               XK_period,					focusmon,       {.i = +1 } },
+    // { MODKEY|ShiftMask,     XK_comma,					tagmon,         {.i = -1 } },
+    // { MODKEY|ShiftMask,     XK_period,					tagmon,         {.i = +1 } },
     // { MODKEY,               XK_0,						view,           {.ui = ~0 } },
     // { MODKEY|ShiftMask,     XK_0,						tag,            {.ui = ~0 } },
 
