@@ -84,7 +84,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", col_fg, "-sb", col_bg, "-sf", col_wht, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
-static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", "-theme", "~/dotfiles/rofi-theme.rasi", NULL };
+static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
 static const char *helium[]   = { "helium-browser", NULL };
 
 static const char *layoutmenu_cmd = "~/dotfiles/bin/layoutmenu.sh";
@@ -158,4 +158,3 @@ static const Button buttons[] = {
     { ClkTagBar,            MODKEY,             Button1,        tag,            {0} },
     { ClkTagBar,            MODKEY,             Button3,        toggletag,      {0} },
 };
-
