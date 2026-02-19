@@ -85,7 +85,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", col_fg, "-sb", col_bg, "-sf", col_wht, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
-static const char *helium[]   = { "helium-browser", NULL };
+static const char *helium[]   = { "helium", NULL };
 
 static const char *layoutmenu_cmd = "~/dotfiles/bin/layoutmenu.sh";
 
