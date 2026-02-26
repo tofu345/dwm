@@ -50,8 +50,10 @@ static const Rule rules[] = {
      *	WM_CLASS(STRING) = instance, class
      *	WM_NAME(STRING) = title
      */
-    /* class        instance    title       tags mask     isfloating   monitor */
-    { "Gimp",       NULL,       NULL,       0,            1,           -1 },
+    /* class					instance    title       tags mask     iscentered	isfloating   monitor */
+	// { "Gimp",					NULL,       NULL,       0,            0,           1,           -1 },
+	// { "Firefox",				NULL,       NULL,       1 << 8,       0,           0,           -1 },
+    { "org.gnome.Nautilus",     NULL,       NULL,       0,            1,			1,           -1 },
 };
 
 /* layout(s) */
@@ -85,7 +87,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", col_fg, "-sb", col_bg, "-sf", col_wht, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
-static const char *helium[]   = { "helium", NULL };
+static const char *helium[]   = { "helium-browser", NULL };
 
 static const char *layoutmenu_cmd = "~/dotfiles/bin/layoutmenu.sh";
 
@@ -101,8 +103,8 @@ static const Key keys[] = {
     { 0,                    XF86XK_AudioMute,           spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioLowerVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioRaiseVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 && pkill -RTMIN+1 dwmblocks") },
-    { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("brightnessctl set +10%") },
-    { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("brightnessctl --min-value=100 set 10-%") },
+    { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("xbacklight -steps 25 +10") },
+    { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("[ `xbacklight -get` -gt 10 ] && xbacklight -steps 25 -10") },
 
     { MODKEY,               XK_Tab,                     view,           {0} },
     { MODKEY,               XK_z,                       zoom,           {0} },
