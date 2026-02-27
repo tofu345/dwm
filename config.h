@@ -12,8 +12,8 @@ static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display 
 static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int horizpadbar        = 1;        /* horizontal padding for statusbar */
-static const int vertpadbar         = 10;       /* vertical padding for statusbar */
+static const int horizpadbar        = 0;        /* horizontal padding for statusbar */
+static const int vertpadbar         = 5;		/* vertical padding for statusbar */
 
 static const char dmenufont[]       = "CaskaydiaMono Nerd Font:style=Bold:size=10";
 static const char *fonts[]          = { dmenufont };
@@ -34,7 +34,7 @@ static const char col_brblk[]  = "#444b6a";  // bright black
 static const char *colors[][3] = {
     /*                      fg          bg          border */
     [SchemeNorm]        = { col_fg,     col_bg,     col_blk },
-    [SchemeSel]         = { col_wht,    col_bg,     "#404040"  },
+    [SchemeSel]         = { col_wht,    col_bg,     "#3b3b3b"  },
     [SchemeStatus]      = { col_wht,    col_bg,     "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
     [SchemeTagsSel]     = { col_wht,    col_bg,     "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
     [SchemeTagsNorm]    = { col_fg,     col_bg,     "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
@@ -51,9 +51,10 @@ static const Rule rules[] = {
      *	WM_NAME(STRING) = title
      */
     /* class					instance    title       tags mask     iscentered	isfloating   monitor */
-	// { "Gimp",					NULL,       NULL,       0,            0,           1,           -1 },
+	// { "Gimp",				NULL,       NULL,       0,            0,           1,           -1 },
 	// { "Firefox",				NULL,       NULL,       1 << 8,       0,           0,           -1 },
     { "org.gnome.Nautilus",     NULL,       NULL,       0,            1,			1,           -1 },
+    { "Gcr-prompter",			NULL,       NULL,       0,            1,			1,           -1 },
 };
 
 /* layout(s) */
@@ -88,8 +89,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
 static const char *helium[]   = { "helium-browser", NULL };
-
-static const char *layoutmenu_cmd = "~/dotfiles/bin/layoutmenu.sh";
+static const char *filebrowser[] = { "nautilus", NULL };
 
 static const Key keys[] = {
     /* modifier             key                         function        argument */
@@ -97,6 +97,7 @@ static const Key keys[] = {
     { MODKEY,               XK_r,                       spawn,          {.v = dmenucmd } },
     { MODKEY,               XK_d,                       spawn,          {.v = rofi } },
     { MODKEY|ShiftMask,     XK_h,                       spawn,          {.v = helium } },
+    { MODKEY,               XK_e,                       spawn,          {.v = filebrowser } },
     { 0,                    XK_Print,                   spawn,          SHCMD("maim -s | tee ~/Pictures/Screenshots/$(date '+%Y-%m-%d_%H-%M-%S')_screenshot.png | xclip -selection clipboard -t image/png") },
     { MODKEY|ShiftMask,     XK_v,                       spawn,          SHCMD("xsel -bc") },
     { MODKEY|ShiftMask,     XK_l,                       spawn,          SHCMD("xset s activate") },
@@ -106,13 +107,12 @@ static const Key keys[] = {
     { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("xbacklight -steps 25 +10") },
     { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("[ `xbacklight -get` -gt 10 ] && xbacklight -steps 25 -10") },
 
-    { MODKEY,               XK_Tab,                     view,           {0} },
+    { MODKEY,               XK_Tab,                     view,           {0} }, // previous tag
     { MODKEY,               XK_z,                       zoom,           {0} },
     { MODKEY|ShiftMask,     XK_q,                       killclient,     {0} },
-    // { MODKEY|ShiftMask,     XK_x,                       quit,           {0} },
     { MODKEY,               XK_t,                       setlayout,      {.v = &layouts[0]} }, // tiled
     { MODKEY,               XK_m,                       setlayout,      {.v = &layouts[1]} }, // monocle
-    // { MODKEY,               XK_space,                   setlayout,      {0} }, // next layout
+    { MODKEY,               XK_space,                   setlayout,      {.v = &layouts[2]} }, // floating
 	{ MODKEY,               XK_f,						togglefullscr,  {0} },
     { MODKEY|ShiftMask,     XK_space,                   togglefloating, {0} },
     { MODKEY,               XK_s,                       togglesticky,   {0} },
@@ -130,6 +130,8 @@ static const Key keys[] = {
     // { MODKEY|ShiftMask,     XK_period,					tagmon,         {.i = +1 } },
     // { MODKEY,               XK_0,						view,           {.ui = ~0 } },
     // { MODKEY|ShiftMask,     XK_0,						tag,            {.ui = ~0 } },
+
+    { Mod1Mask|ControlMask, XK_Delete,                  quit,           {0} }, // Control-Alt-Delete
 
     // real prog dvorak L https://github.com/ThePrimeagen/keyboards
     TAGKEYS(XK_plus,         0),
@@ -149,7 +151,7 @@ static const Button buttons[] = {
     /* click                event mask          button          function        argument */
     { ClkTagBar,            MODKEY,             Button1,        tag,            {0} },
     { ClkTagBar,            MODKEY,             Button3,        toggletag,      {0} },
-    { ClkLtSymbol,          0,                  Button3,        layoutmenu,     {0} },
+	{ ClkLtSymbol,          0,					Button3,        setlayout,      {.v = &layouts[2]} },
     { ClkWinTitle,          0,                  Button2,        zoom,           {0} },
     { ClkStatusText,        0,                  Button2,        spawn,          {.v = termcmd } },
     { ClkClientWin,         MODKEY,             Button1,        movemouse,      {0} },
