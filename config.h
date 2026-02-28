@@ -13,10 +13,10 @@ static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 0;        /* horizontal padding for statusbar */
-static const int vertpadbar         = 5;		/* vertical padding for statusbar */
+static const int vertpadbar         = 6;		/* vertical padding for statusbar */
 
-static const char dmenufont[]       = "CaskaydiaMono Nerd Font:style=Bold:size=10";
-static const char *fonts[]          = { dmenufont };
+static const char font[]			= "CaskaydiaMono Nerd Font:style=Bold:size=10";
+static const char *fonts[]          = { font };
 
 /* https://github.com/tonybanters/dwm/blob/master/config.h */
 static const char col_bg[]     = "#101010";  // background
@@ -85,7 +85,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_bg, "-nf", col_fg, "-sb", col_bg, "-sf", col_wht, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", font, "-nb", col_bg, "-nf", col_fg, "-sb", col_bg, "-sf", col_wht, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
 static const char *helium[]   = { "helium-browser", NULL };
@@ -152,7 +152,6 @@ static const Button buttons[] = {
     { ClkTagBar,            MODKEY,             Button1,        tag,            {0} },
     { ClkTagBar,            MODKEY,             Button3,        toggletag,      {0} },
 	{ ClkLtSymbol,          0,					Button3,        setlayout,      {.v = &layouts[2]} },
-    { ClkWinTitle,          0,                  Button2,        zoom,           {0} },
     { ClkStatusText,        0,                  Button2,        spawn,          {.v = termcmd } },
     { ClkClientWin,         MODKEY,             Button1,        movemouse,      {0} },
     { ClkClientWin,         MODKEY,             Button2,        togglefloating, {0} },
