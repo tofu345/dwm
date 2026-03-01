@@ -104,8 +104,8 @@ static const Key keys[] = {
     { 0,                    XF86XK_AudioMute,           spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioLowerVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioRaiseVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 && pkill -RTMIN+1 dwmblocks") },
-    { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("xbacklight -steps 25 +10") },
-    { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("[ `xbacklight -get` -gt 10 ] && xbacklight -steps 25 -10") },
+    { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("xbacklight -steps 15 +10") },
+    { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("[ `xbacklight -get` -gt 10 ] && xbacklight -steps 15 -10") },
 
     { MODKEY,               XK_Tab,                     view,           {0} }, // previous tag
     { MODKEY,               XK_z,                       zoom,           {0} },
@@ -152,6 +152,7 @@ static const Button buttons[] = {
     { ClkTagBar,            MODKEY,             Button1,        tag,            {0} },
     { ClkTagBar,            MODKEY,             Button3,        toggletag,      {0} },
 	{ ClkLtSymbol,          0,					Button3,        setlayout,      {.v = &layouts[2]} },
+	{ ClkWinTitle,          0,					Button2,        zoom,           {0} },
     { ClkStatusText,        0,                  Button2,        spawn,          {.v = termcmd } },
     { ClkClientWin,         MODKEY,             Button1,        movemouse,      {0} },
     { ClkClientWin,         MODKEY,             Button2,        togglefloating, {0} },
