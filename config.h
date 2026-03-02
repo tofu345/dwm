@@ -99,16 +99,16 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", font, "-nb", col_bg, "-nf", col_fg, "-sb", col_bg, "-sf", col_wht, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
-static const char *helium[]   = { "helium-browser", NULL };
-static const char *filebrowser[] = { "nautilus", NULL };
+static const char *browser[]  = { "helium-browser", NULL };
+static const char *files[]	  = { "nautilus", NULL };
 
 static const Key keys[] = {
     /* modifier             key                         function        argument */
     { MODKEY,               XK_Return,                  spawn,          {.v = termcmd } },
     { MODKEY,               XK_r,                       spawn,          {.v = dmenucmd } },
     { MODKEY,               XK_d,                       spawn,          {.v = rofi } },
-    { MODKEY|ShiftMask,     XK_h,                       spawn,          {.v = helium } },
-    { MODKEY,               XK_e,                       spawn,          {.v = filebrowser } },
+    { MODKEY|ShiftMask,     XK_b,                       spawn,          {.v = browser } },
+    { MODKEY,               XK_e,                       spawn,          {.v = files } },
     { 0,                    XK_Print,                   spawn,          SHCMD("maim -s | tee ~/Pictures/Screenshots/$(date '+%Y-%m-%d_%H-%M-%S')_screenshot.png | xclip -selection clipboard -t image/png") },
     { MODKEY|ShiftMask,     XK_v,                       spawn,          SHCMD("xsel -bc") },
     { MODKEY|ShiftMask,     XK_l,                       spawn,          SHCMD("xset s activate") },
@@ -128,6 +128,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,     XK_space,                   togglefloating, {0} },
     { MODKEY,               XK_s,                       togglesticky,   {0} },
     { MODKEY,               XK_b,                       togglebar,      {0} },
+
     { MODKEY,               XK_j,                       focusstack,     {.i = +1 } },
     { MODKEY,               XK_k,                       focusstack,     {.i = -1 } },
     { MODKEY,               XK_p,                       incnmaster,     {.i = +1 } },
@@ -135,14 +136,18 @@ static const Key keys[] = {
     { MODKEY,               XK_x,                       transfer,       {0} },
     { MODKEY,               XK_h,                       setmfact,       {.f = -0.05 } },
     { MODKEY,               XK_l,                       setmfact,       {.f = +0.05 } },
+	{ MODKEY|ShiftMask,     XK_j,						setcfact,       {.f = +0.25} },
+	{ MODKEY|ShiftMask,     XK_k,      					setcfact,       {.f = -0.25} },
+	{ MODKEY|ShiftMask,     XK_o,      					setcfact,       {.f =  0.00} },
+
+    { Mod1Mask|ControlMask, XK_Delete,                  quit,           {0} }, // Control-Alt-Delete
+
     // { MODKEY,               XK_comma,					focusmon,       {.i = -1 } },
     // { MODKEY,               XK_period,					focusmon,       {.i = +1 } },
     // { MODKEY|ShiftMask,     XK_comma,					tagmon,         {.i = -1 } },
     // { MODKEY|ShiftMask,     XK_period,					tagmon,         {.i = +1 } },
     // { MODKEY,               XK_0,						view,           {.ui = ~0 } },
     // { MODKEY|ShiftMask,     XK_0,						tag,            {.ui = ~0 } },
-
-    { Mod1Mask|ControlMask, XK_Delete,                  quit,           {0} }, // Control-Alt-Delete
 
     // real prog dvorak L https://github.com/ThePrimeagen/keyboards
     TAGKEYS(XK_plus,         0),
