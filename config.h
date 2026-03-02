@@ -79,6 +79,7 @@ static const Layout layouts[] = {
     /* symbol     arrange function */
     { "[]=",      tile },    /* first entry is default */
     { "[M]",      monocle },
+	{ "[D]",      deck },
     { "><>",      NULL },    /* no layout function means floating behavior */
     { NULL,       NULL },
 };
@@ -123,7 +124,8 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,     XK_q,                       killclient,     {0} },
     { MODKEY,               XK_t,                       setlayout,      {.v = &layouts[0]} }, // tiled
     { MODKEY,               XK_m,                       setlayout,      {.v = &layouts[1]} }, // monocle
-    { MODKEY,               XK_space,                   setlayout,      {.v = &layouts[2]} }, // floating
+    { MODKEY|ShiftMask,     XK_d,						setlayout,      {.v = &layouts[2]} }, // deck
+    { MODKEY,               XK_space,                   setlayout,      {.v = &layouts[3]} }, // floating
 	{ MODKEY,               XK_f,						togglefullscr,  {0} },
     { MODKEY|ShiftMask,     XK_space,                   togglefloating, {0} },
     { MODKEY,               XK_s,                       togglesticky,   {0} },
@@ -167,7 +169,7 @@ static const Button buttons[] = {
     /* click                event mask          button          function        argument */
     { ClkTagBar,            MODKEY,             Button1,        tag,            {0} },
     { ClkTagBar,            MODKEY,             Button3,        toggletag,      {0} },
-	{ ClkLtSymbol,          0,					Button3,        setlayout,      {.v = &layouts[2]} },
+	{ ClkLtSymbol,          0,					Button3,        setlayout,      {.v = &layouts[3]} },
 	{ ClkWinTitle,          0,					Button2,        zoom,           {0} },
     { ClkStatusText,        0,                  Button2,        spawn,          {.v = termcmd } },
     { ClkClientWin,         MODKEY,             Button1,        movemouse,      {0} },
