@@ -64,7 +64,7 @@ static const float mfact     = 0.5;  /* factor of master area size [0.05..0.95] 
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
-static const int refreshrate = 60;  /* refresh rate (per second) for client move/resize */
+static const int refreshrate = 120;  /* refresh rate (per second) for client move/resize */
 
 /* Bartabgroups properties */
 #define BARTAB_BORDERS 0       // 0 = off, 1 = on
@@ -102,6 +102,7 @@ static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
 static const char *browser[]  = { "helium-browser", NULL };
 static const char *files[]	  = { "nautilus", NULL };
+static const char *layoutmenu_cmd = "dwm_layoutmenu.sh";
 
 static const Key keys[] = {
     /* modifier             key                         function        argument */
@@ -169,7 +170,7 @@ static const Button buttons[] = {
     /* click                event mask          button          function        argument */
     { ClkTagBar,            MODKEY,             Button1,        tag,            {0} },
     { ClkTagBar,            MODKEY,             Button3,        toggletag,      {0} },
-	{ ClkLtSymbol,          0,					Button3,        setlayout,      {.v = &layouts[3]} },
+	{ ClkLtSymbol,          0,					Button1,        layoutmenu,     {0} },
 	{ ClkWinTitle,          0,					Button2,        zoom,           {0} },
     { ClkStatusText,        0,                  Button2,        spawn,          {.v = termcmd } },
     { ClkClientWin,         MODKEY,             Button1,        movemouse,      {0} },
