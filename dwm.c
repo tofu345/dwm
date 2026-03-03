@@ -519,7 +519,7 @@ bartabdraw(Monitor *m, Client *c, int unused, int x, int w, int groupactive) {
 }
 
 void
-battabclick(Monitor *m, Client *c, int passx, int x, int w, int unused) {
+bartabclick(Monitor *m, Client *c, int passx, int x, int w, int unused) {
 	if (passx >= x && passx <= x + w) {
 		focus(c);
 		restack(selmon);
@@ -651,8 +651,12 @@ buttonpress(XEvent *e)
 			click = ClkLtSymbol;
 		else if (ev->x > selmon->ww - (int)TEXTW(stext))
 			click = ClkStatusText;
-		else // Focus clicked tab bar item
-			bartabcalculate(selmon, x, TEXTW(stext) - lrpad + 2, ev->x, battabclick);
+
+		// FIXME: disabled because it does not work properly, tab bar group clicks have a weird offset...
+		// It does not occur without dwmblocks, so that is likely the problem.
+
+		// else // Focus clicked tab bar item
+		// 	bartabcalculate(selmon, x, TEXTW(stext) - lrpad + 2, ev->x, bartabclick);
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
 		restack(selmon);
@@ -1722,7 +1726,7 @@ propertynotify(XEvent *e)
 		resizebarwin(selmon);
 		updatesystray();
 	}
-	
+
 	if ((ev->window == root) && (ev->atom == XA_WM_NAME))
 		updatestatus();
 	else if (ev->state == PropertyDelete)
