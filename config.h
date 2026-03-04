@@ -53,8 +53,6 @@ static const Rule rules[] = {
      *	WM_NAME(STRING) = title
      */
     /* class					instance    title       tags mask     iscentered	isfloating   monitor */
-	// { "Gimp",				NULL,       NULL,       0,            0,           1,           -1 },
-	// { "Firefox",				NULL,       NULL,       1 << 8,       0,           0,           -1 },
     { "org.gnome.Nautilus",     NULL,       NULL,       0,            1,			1,           -1 },
     { "Gcr-prompter",			NULL,       NULL,       0,            1,			1,           -1 },
 };
@@ -102,7 +100,7 @@ static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
 static const char *browser[]  = { "helium-browser", NULL };
 static const char *files[]	  = { "nautilus", NULL };
-static const char *layoutmenu_cmd = "dwm_layoutmenu.sh";
+static const char *screenshot[] = { "dwm_screenshot.sh", NULL };
 
 static const Key keys[] = {
     /* modifier             key                         function        argument */
@@ -111,7 +109,7 @@ static const Key keys[] = {
     { MODKEY,               XK_d,                       spawn,          {.v = rofi } },
     { MODKEY|ShiftMask,     XK_b,                       spawn,          {.v = browser } },
     { MODKEY,               XK_e,                       spawn,          {.v = files } },
-    { 0,                    XK_Print,                   spawn,          SHCMD("maim -s | tee ~/Pictures/Screenshots/$(date '+%Y-%m-%d_%H-%M-%S')_screenshot.png | xclip -selection clipboard -t image/png") },
+    { 0,                    XK_Print,                   spawn,          {.v = screenshot } },
     { MODKEY|ShiftMask,     XK_v,                       spawn,          SHCMD("xsel -bc") },
     { MODKEY|ShiftMask,     XK_l,                       spawn,          SHCMD("xset s activate") },
     { 0,                    XF86XK_AudioMute,           spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks") },
@@ -171,8 +169,8 @@ static const Button buttons[] = {
     { ClkTagBar,            MODKEY,             Button1,        tag,            {0} },
     { ClkTagBar,            MODKEY,             Button3,        toggletag,      {0} },
 	{ ClkLtSymbol,          0,					Button1,        layoutmenu,     {0} },
-	{ ClkWinTitle,          0,					Button2,        zoom,           {0} },
-    { ClkStatusText,        0,                  Button2,        spawn,          {.v = termcmd } },
+	// { ClkWinTitle,          0,					Button2,        zoom,           {0} },
+	// { ClkStatusText,        0,					Button2,        spawn,          {.v = termcmd } },
     { ClkClientWin,         MODKEY,             Button1,        movemouse,      {0} },
     { ClkClientWin,         MODKEY,             Button2,        togglefloating, {0} },
     { ClkClientWin,         MODKEY|ShiftMask,   Button1,        resizemouse,    {0} },
@@ -181,3 +179,5 @@ static const Button buttons[] = {
     { ClkTagBar,            MODKEY,             Button1,        tag,            {0} },
     { ClkTagBar,            MODKEY,             Button3,        toggletag,      {0} },
 };
+
+static const char layoutmenu_cmd[] = "dwm_layoutmenu.sh";

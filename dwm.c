@@ -638,12 +638,14 @@ buttonpress(XEvent *e)
 		unsigned int occ = 0;
 		for(c = m->clients; c; c=c->next)
 			occ |= c->tags == TAGMASK ? 0 : c->tags;
+
 		do {
 			/* Do not reserve space for vacant tags */
 			if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
 				continue;
 			x += TEXTW(tags[i]);
 		} while (ev->x >= x && ++i < LENGTH(tags));
+
 		if (i < LENGTH(tags)) {
 			click = ClkTagBar;
 			arg.ui = 1 << i;
@@ -653,7 +655,7 @@ buttonpress(XEvent *e)
 			click = ClkStatusText;
 
 		// FIXME: disabled because it does not work properly, tab bar group clicks have a weird offset...
-		// It does not occur without dwmblocks, so that is likely the problem.
+		// NOTE: It does not occur without dwmblocks running, so that is likely the problem.
 
 		// else // Focus clicked tab bar item
 		// 	bartabcalculate(selmon, x, TEXTW(stext) - lrpad + 2, ev->x, bartabclick);
@@ -1166,9 +1168,10 @@ drawbar(Monitor *m)
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
 	// Draw bartabgroups
+	// NOTE: updated to include systray width (stw) and extra padding with the status text.
 	drw_rect(drw, x, 0, m->ww - tw - stw - x, bh, 1, 1);
 	if ((w = m->ww - tw - stw - x) > bh) {
-		bartabcalculate(m, x, tw, -1, bartabdraw);
+		bartabcalculate(m, x, tw + stw + 2, -1, bartabdraw);
 		if (BARTAB_BOTTOMBORDER) {
 			drw_setscheme(drw, scheme[SchemeTabActive]);
 			drw_rect(drw, 0, bh - 1, m->ww, 1, 1, 0);
