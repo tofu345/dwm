@@ -141,7 +141,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,     XK_k,      					setcfact,       {.f = -0.25} },
 	{ MODKEY|ShiftMask,     XK_o,      					setcfact,       {.f =  0.00} },
 
-    { Mod1Mask|ControlMask, XK_Delete,                  quit,           {0} }, // Control-Alt-Delete
+	{ MODKEY|ControlMask|ShiftMask,
+							XK_q,						quit,           {1} }, // restart
 
     // { MODKEY,               XK_comma,					focusmon,       {.i = -1 } },
     // { MODKEY,               XK_period,					focusmon,       {.i = +1 } },
