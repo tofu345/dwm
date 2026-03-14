@@ -570,8 +570,8 @@ bartabcalculate(
 		} else continue;
 
 		// avoid drawing over status bar
-		if (w >= m->mw - sw - offx)
-			w -= w - sw;
+		if (offx + w >= m->mw - sw)
+			w = m->ww - offx - sw;
 		if (w > 0)
 			tabfn(m, c, passx, x, w, tgactive);
 		i++;
