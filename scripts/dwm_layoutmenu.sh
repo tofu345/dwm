@@ -6,3 +6,15 @@ cat <<EOF | xmenu
 [D] Deck	2
 ><> Floating Layout	3
 EOF
+
+# |M|  Centeredmaster	2
+# TTT  Bstack	3
+# HHH  Grid	4
+# [@]  Spiral	5
+# [\\] Dwindle	6
+# H[]  Deck	7
+# ===  Bstackhoriz	8
+# ###  Nrowgrid	9
+# ---  Horizgrid	10
+# :::  Gaplessgrid	11
+# >M>  Centeredfloatingmaster	12

@@ -487,7 +487,7 @@ bartabdraw(Monitor *m, Client *c, int unused, int x, int w, int groupactive) {
 	int i, nclienttags = 0, nviewtags = 0;
 
 	drw_setscheme(drw, scheme[
-		m->sel == c ? SchemeSel : (groupactive ? SchemeTabActive: SchemeTabInactive)
+		m->sel == c ? SchemeSel : (groupactive ? SchemeTabActive : SchemeTabInactive)
 	]);
 	drw_text(drw, x, 0, w, bh, lrpad / 2, c->name, 0);
 
@@ -568,7 +568,12 @@ bartabcalculate(
 			 w = ((m->mw * (1 - m->mfact)) - sw) / clientsnstack;
 			 tgactive = !masteractive;
 		} else continue;
-		tabfn(m, c, passx, x, w, tgactive);
+
+		// avoid drawing over status bar
+		if (w >= m->mw - sw - offx)
+			w -= w - sw;
+		if (w > 0)
+			tabfn(m, c, passx, x, w, tgactive);
 		i++;
 	}
 }

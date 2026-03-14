@@ -13,7 +13,7 @@ static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 0;        /* horizontal padding for statusbar */
-static const int vertpadbar         = 6;		/* vertical padding for statusbar */
+static const int vertpadbar         = 7;		/* vertical padding for statusbar */
 
 static const char font[]			= "CaskaydiaMono Nerd Font:style=Bold:size=10";
 static const char *fonts[]          = { font };
@@ -67,11 +67,11 @@ static const int refreshrate = 120;  /* refresh rate (per second) for client mov
 /* Bartabgroups properties */
 #define BARTAB_BORDERS 0       // 0 = off, 1 = on
 #define BARTAB_BOTTOMBORDER 0  // 0 = off, 1 = on
-#define BARTAB_TAGSINDICATOR 1 // 0 = off, 1 = on if >1 client/view tag, 2 = always on
-#define BARTAB_TAGSPX 1        // # pixels for tag grid boxes
-#define BARTAB_TAGSROWS 1      // # rows in tag grid (9 tags, e.g. 3x3)
-static void (*bartabmonfns[])(Monitor *) = { monocle /* , customlayoutfn */ };
-static void (*bartabfloatfns[])(Monitor *) = { NULL /* , customlayoutfn */ };
+#define BARTAB_TAGSINDICATOR 0 // 0 = off, 1 = on if >1 client/view tag, 2 = always on
+#define BARTAB_TAGSPX 0        // # pixels for tag grid boxes
+#define BARTAB_TAGSROWS 0      // # rows in tag grid (9 tags, e.g. 3x3)
+static void (*bartabmonfns[])(Monitor *) = { monocle /* customlayoutfn */ };
+static void (*bartabfloatfns[])(Monitor *) = { NULL /* customlayoutfn */ };
 
 static const Layout layouts[] = {
     /* symbol     arrange function */
@@ -115,8 +115,8 @@ static const Key keys[] = {
     { 0,                    XF86XK_AudioMute,           spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioLowerVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioRaiseVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 && pkill -RTMIN+1 dwmblocks") },
-    { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("xbacklight -steps 15 +10") },
-    { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("[ `xbacklight -get` -gt 10 ] && xbacklight -steps 15 -10") },
+    { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("xbacklight -time 50 -steps 10 +5") },
+    { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("[ `xbacklight -get` -gt 5 ] && xbacklight -time 50 -steps 10 -5") },
 
     { MODKEY,               XK_Tab,                     view,           {0} }, // previous tag
     { MODKEY,               XK_z,                       zoom,           {0} },
