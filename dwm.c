@@ -311,7 +311,7 @@ static void (*handler[LASTEvent]) (XEvent *) = {
 	[MapRequest] = maprequest,
 	[MotionNotify] = motionnotify,
 	[PropertyNotify] = propertynotify,
-        [ResizeRequest] = resizerequest,
+    [ResizeRequest] = resizerequest,
 	[UnmapNotify] = unmapnotify
 };
 static Atom wmatom[WMLast], netatom[NetLast], xatom[XLast];
@@ -483,7 +483,7 @@ applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact)
 
 void
 bartabdraw(Monitor *m, Client *c, int unused, int x, int w, int groupactive) {
-	if (!c) return;
+	if (!c || w <= 0) return;
 	int i, nclienttags = 0, nviewtags = 0;
 
 	drw_setscheme(drw, scheme[
@@ -506,7 +506,9 @@ bartabdraw(Monitor *m, Client *c, int unused, int x, int w, int groupactive) {
 		if ((m->tagset[m->seltags] >> i) & 1) { nviewtags++; }
 		if ((c->tags >> i) & 1) { nclienttags++; }
 	}
-	if (BARTAB_TAGSINDICATOR == 2 || nclienttags > 1 || nviewtags > 1) {
+
+#if BARTAB_TAGSINDICATOR == 2
+	if (nclienttags > 1 || nviewtags > 1) {
 		for (i = 0; i < LENGTH(tags); i++) {
 			drw_rect(drw,
 				( x + w - 2 - ((LENGTH(tags) / BARTAB_TAGSROWS) * BARTAB_TAGSPX)
@@ -519,6 +521,7 @@ bartabdraw(Monitor *m, Client *c, int unused, int x, int w, int groupactive) {
 			);
 		}
 	}
+#endif
 }
 
 void
@@ -560,20 +563,21 @@ bartabcalculate(
 			 w = (m->mw - offx - sw) / (clientsnmaster + clientsnstack);
 			 tgactive = 1;
 		} else if (i < m->nmaster && !c->isfloating) {
-			 x = offx + ((((m->mw * m->mfact) - offx) /clientsnmaster) * i);
+			 x = offx + ((((m->mw * m->mfact) - offx) / clientsnmaster) * i);
 			 w = ((m->mw * m->mfact) - offx) / clientsnmaster;
+
+             // avoid drawing over status bar
+             if (x + w >= m->mw - sw)
+                 w = m->mw - sw - x;
+
 			 tgactive = masteractive;
 		} else if (!c->isfloating) {
-			 x = (m->mw * m->mfact) + ((((m->mw * (1 - m->mfact)) - sw) / clientsnstack) * (i - m->nmaster));
 			 w = ((m->mw * (1 - m->mfact)) - sw) / clientsnstack;
+			 x = (m->mw * m->mfact) + (w * (i - m->nmaster));
 			 tgactive = !masteractive;
 		} else continue;
 
-		// avoid drawing over status bar
-		if (offx + w >= m->mw - sw)
-			w = m->ww - offx - sw;
-		if (w > 0)
-			tabfn(m, c, passx, x, w, tgactive);
+        tabfn(m, c, passx, x, w, tgactive);
 		i++;
 	}
 }
@@ -662,11 +666,14 @@ buttonpress(XEvent *e)
 		else if (ev->x > selmon->ww - (int)TEXTW(stext))
 			click = ClkStatusText;
 
-		// FIXME: disabled because it does not work properly, tab bar group clicks have a weird offset...
-		// NOTE: It does not occur without dwmblocks running, so that is likely the problem.
+        // Does not work properly, clicks on stack clients tab titles have an
+        // offset.  Likely because of patch:status2d, since the length of the
+        // data in [stext] is different from what is rendered.  Not present
+        // when dwmblocks is not started.
 
 		// else // Focus clicked tab bar item
 		// 	bartabcalculate(selmon, x, TEXTW(stext) - lrpad + 2, ev->x, bartabclick);
+
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
 		restack(selmon);
@@ -2169,12 +2176,12 @@ setup(void)
 	netatom[NetActiveWindow] = XInternAtom(dpy, "_NET_ACTIVE_WINDOW", False);
 	netatom[NetSupported] = XInternAtom(dpy, "_NET_SUPPORTED", False);
 	netatom[NetWMName] = XInternAtom(dpy, "_NET_WM_NAME", False);
-        netatom[NetSupported] = XInternAtom(dpy, "_NET_SUPPORTED", False);
-        netatom[NetSystemTray] = XInternAtom(dpy, "_NET_SYSTEM_TRAY_S0", False);
-        netatom[NetSystemTrayOP] = XInternAtom(dpy, "_NET_SYSTEM_TRAY_OPCODE", False);
-        netatom[NetSystemTrayOrientation] = XInternAtom(dpy, "_NET_SYSTEM_TRAY_ORIENTATION", False);
-        netatom[NetSystemTrayOrientationHorz] = XInternAtom(dpy, "_NET_SYSTEM_TRAY_ORIENTATION_HORZ", False);
-        netatom[NetWMName] = XInternAtom(dpy, "_NET_WM_NAME", False);
+    netatom[NetSupported] = XInternAtom(dpy, "_NET_SUPPORTED", False);
+    netatom[NetSystemTray] = XInternAtom(dpy, "_NET_SYSTEM_TRAY_S0", False);
+    netatom[NetSystemTrayOP] = XInternAtom(dpy, "_NET_SYSTEM_TRAY_OPCODE", False);
+    netatom[NetSystemTrayOrientation] = XInternAtom(dpy, "_NET_SYSTEM_TRAY_ORIENTATION", False);
+    netatom[NetSystemTrayOrientationHorz] = XInternAtom(dpy, "_NET_SYSTEM_TRAY_ORIENTATION_HORZ", False);
+    netatom[NetWMName] = XInternAtom(dpy, "_NET_WM_NAME", False);
 	netatom[NetWMState] = XInternAtom(dpy, "_NET_WM_STATE", False);
 	netatom[NetWMCheck] = XInternAtom(dpy, "_NET_SUPPORTING_WM_CHECK", False);
 	netatom[NetWMFullscreen] = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN", False);
