@@ -85,9 +85,9 @@ static const Layout layouts[] = {
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
-    { MODKEY,                       KEY,      comboview,        {.ui = 1 << TAG} }, \
+    { MODKEY,                       KEY,      view,             {.ui = 1 << TAG} }, \
     { MODKEY|ControlMask,           KEY,      toggleview,       {.ui = 1 << TAG} }, \
-    { MODKEY|ShiftMask,             KEY,      combotag,         {.ui = 1 << TAG} }, \
+    { MODKEY|ShiftMask,             KEY,      tag,              {.ui = 1 << TAG} }, \
     { MODKEY|ControlMask|ShiftMask, KEY,      toggletag,        {.ui = 1 << TAG} }
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
@@ -115,8 +115,8 @@ static const Key keys[] = {
     { 0,                    XF86XK_AudioMute,           spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioLowerVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioRaiseVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 && pkill -RTMIN+1 dwmblocks") },
-    { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("xbacklight -time 50 -steps 10 +5") },
-    { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("[ `xbacklight -get` -gt 5 ] && xbacklight -time 50 -steps 10 -5") },
+    { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("xbacklight -time 75 -steps 10 +5") },
+    { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("[ `xbacklight -get` -gt 5 ] && xbacklight -time 75 -steps 10 -5") },
 
     { MODKEY,               XK_Tab,                     view,           {0} }, // previous tag
     { MODKEY,               XK_z,                       zoom,           {0} },
