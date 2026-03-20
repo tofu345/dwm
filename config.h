@@ -3,7 +3,7 @@
 #include <X11/XF86keysym.h>
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
@@ -23,25 +23,25 @@ static const char col_bg[]     = "#101010";  // background
 static const char col_fg[]     = "#a9b1d6";  // foreground
 static const char col_wht[]    = "#ffffff";  // foreground
 static const char col_blk[]    = "#000000";  // black (normal)
+static const char col_brblk[]  = "#444b6a";  // bright black
 static const char col_red[]    = "#f7768e";  // red
 static const char col_grn[]    = "#9ece6a";  // green
 static const char col_ylw[]    = "#e0af68";  // yellow
 static const char col_blu[]    = "#7aa2f7";  // blue
 static const char col_mag[]    = "#ad8ee6";  // magenta
 static const char col_cyn[]    = "#0db9d7";  // cyan (highlight)
-static const char col_brblk[]  = "#444b6a";  // bright black
 
 static const char *colors[][3] = {
     /*                      fg          bg          border */
-    [SchemeNorm]        = { col_fg,     col_bg,     col_blk },
-    [SchemeSel]         = { col_wht,    col_bg,     "#3b3b3b"  },
-    [SchemeStatus]      = { col_wht,    col_bg,     "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
-    [SchemeTagsSel]     = { col_wht,    col_bg,     "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
-    [SchemeTagsNorm]    = { col_fg,     col_bg,     "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-    [SchemeInfoSel]     = { col_fg,     col_bg,     "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-    [SchemeInfoNorm]    = { col_fg,     col_bg,     "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
-	[SchemeTabActive]   = { col_fg, 	col_bg,		col_blk	   }, // active tab group
-	[SchemeTabInactive] = { col_fg,		col_bg,		col_blk    }  // inactive tab group
+    [SchemeNorm]        = { col_fg,     col_blk,    col_blk },
+    [SchemeSel]         = { col_wht,    col_blk,    col_blk },
+    [SchemeStatus]      = { col_wht,    col_blk,    "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
+    [SchemeTagsSel]     = { col_wht,    col_blk,    "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
+    [SchemeTagsNorm]    = { col_fg,     col_blk,    "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
+    [SchemeInfoSel]     = { col_fg,     col_blk,    "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
+    [SchemeInfoNorm]    = { col_fg,     col_blk,    "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
+	[SchemeTabActive]   = { col_fg, 	col_blk,	col_blk	   }, // active tab group
+	[SchemeTabInactive] = { col_fg,		col_blk,	col_blk    }  // inactive tab group
 };
 
 /* tagging */
@@ -115,8 +115,8 @@ static const Key keys[] = {
     { 0,                    XF86XK_AudioMute,           spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioLowerVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioRaiseVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 && pkill -RTMIN+1 dwmblocks") },
-    { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("xbacklight -time 75 -steps 10 +5") },
-    { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("[ `xbacklight -get` -gt 5 ] && xbacklight -time 75 -steps 10 -5") },
+    { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("xbacklight -steps 5 +5") },
+    { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("[ `xbacklight -get` -gt 5 ] && xbacklight -steps 5 -5") },
 
     { MODKEY,               XK_Tab,                     view,           {0} }, // previous tag
     { MODKEY,               XK_z,                       zoom,           {0} },
