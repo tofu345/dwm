@@ -37,10 +37,17 @@ install: all
 	mkdir -p ${DESTDIR}${MANPREFIX}/man1
 	sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
 	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
+	for script in $(wildcard scripts/*); do \
+		cp -f $$script $(DESTDIR)$(PREFIX)/bin; \
+		chmod 755 $(DESTDIR)$(PREFIX)/bin/$$(basename $$script); \
+	done
 
 uninstall:
 	rm -f \
 		${DESTDIR}${PREFIX}/bin/dwm \
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
+	for script in $(wildcard scripts/*); do \
+		rm -f $(DESTDIR)$(PREFIX)/bin/$$(basename $$script); \
+	done
 
 .PHONY: all clean dist install uninstall
