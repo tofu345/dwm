@@ -115,8 +115,8 @@ static const Key keys[] = {
     { 0,                    XF86XK_AudioMute,           spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioLowerVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioRaiseVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 && pkill -RTMIN+1 dwmblocks") },
-    { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("xbacklight -steps 5 +5") },
-    { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("[ `xbacklight -get` -gt 5 ] && xbacklight -steps 5 -5") },
+    { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("brightnessctl set +3%") },
+    { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("brightnessctl --min-value=100 set 3-%") },
 
     { MODKEY,               XK_Tab,                     view,           {0} }, // previous tag
     { MODKEY,               XK_z,                       zoom,           {0} },
