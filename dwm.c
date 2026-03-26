@@ -294,6 +294,7 @@ static void comboview(const Arg *arg);
 static Systray *systray = NULL;
 static const char broken[] = "broken";
 static char stext[1024];
+int actual_sw = 0; // status width after patch:status2d (drawstatusbar)
 static int screen;
 static int sw, sh;           /* X display screen geometry width, height */
 static int bh;               /* bar height */
@@ -639,16 +640,11 @@ buttonpress(XEvent *e)
 			arg.ui = 1 << i;
 		} else if (ev->x < x + TEXTW(selmon->ltsymbol))
 			click = ClkLtSymbol;
-		else if (ev->x > selmon->ww - (int)TEXTW(stext))
+		else if (ev->x > selmon->ww - actual_sw)
 			click = ClkStatusText;
-
-        // Does not work properly, clicks on stack clients tab titles have an
-        // offset.  Likely because of patch:status2d, since the length of the
-        // data in [stext] is different from what is rendered.  Not present
-        // when dwmblocks is not started.
-
-		// else // Focus clicked tab bar item
-		// 	bartabcalculate(selmon, x, TEXTW(stext) - lrpad + 2, ev->x, bartabclick);
+		else
+            // Focus clicked tab bar item
+			bartabcalculate(selmon, x, actual_sw, ev->x, bartabclick);
 
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
@@ -1137,6 +1133,7 @@ drawbar(Monitor *m)
 	if (m == selmon) { /* status is only drawn on selected monitor */
 		tw = m->ww - drawstatusbar(m, bh, stext);
 	}
+    actual_sw = tw + stw + 2;
 
 	resizebarwin(m);
 	for (c = m->clients; c; c = c->next) {
@@ -1162,7 +1159,7 @@ drawbar(Monitor *m)
 	// NOTE: updated to include systray width (stw) and extra padding with the status text.
 	drw_rect(drw, x, 0, m->ww - tw - stw - x, bh, 1, 1);
 	if ((w = m->ww - tw - stw - x) > bh) {
-		bartabcalculate(m, x, tw + stw + 2, -1, bartabdraw);
+		bartabcalculate(m, x, actual_sw, -1, bartabdraw);
 		if (BARTAB_BOTTOMBORDER) {
 			drw_setscheme(drw, scheme[SchemeTabActive]);
 			drw_rect(drw, 0, bh - 1, m->ww, 1, 1, 0);
