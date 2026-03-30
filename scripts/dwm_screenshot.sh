@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -e
+set -eo pipefail
 
 maim -s \
 	| tee ~/Pictures/Screenshots/$(date '+%Y-%m-%d_%H-%M-%S')_screenshot.png \

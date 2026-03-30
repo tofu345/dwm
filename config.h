@@ -3,7 +3,7 @@
 #include <X11/XF86keysym.h>
 
 /* appearance */
-static const unsigned int borderpx  = 3;        /* border pixel of windows */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
@@ -21,8 +21,8 @@ static const char *fonts[]          = { font };
 /* https://github.com/tonybanters/dwm/blob/master/config.h */
 static const char col_bg[]     = "#101010";  // background
 static const char col_fg[]     = "#a9b1d6";  // foreground
-static const char col_wht[]    = "#ffffff";  // foreground
-static const char col_blk[]    = "#000000";  // black (normal)
+static const char col_wht[]    = "#d6d6d6";  // foreground selected
+static const char col_blk[]    = "#000000";  // black
 static const char col_brblk[]  = "#444b6a";  // bright black
 static const char col_red[]    = "#f7768e";  // red
 static const char col_grn[]    = "#9ece6a";  // green
@@ -53,7 +53,7 @@ static const Rule rules[] = {
      *	WM_NAME(STRING) = title
      */
     /* class					instance    title       tags mask     iscentered	isfloating   monitor */
-    { "org.gnome.Nautilus",     NULL,       NULL,       0,            1,			1,           -1 },
+    { "Nemo",                   NULL,       NULL,       0,            1,			1,           -1 },
     { "Gcr-prompter",			NULL,       NULL,       0,            1,			1,           -1 },
 };
 
@@ -95,11 +95,11 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", font, "-nb", col_bg, "-nf", col_fg, "-sb", col_bg, "-sf", col_wht, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", font, "-nb", col_blk, "-nf", col_fg, "-sb", col_blk, "-sf", col_wht, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
 static const char *browser[]  = { "helium-browser", NULL };
-static const char *files[]	  = { "nautilus", NULL };
+static const char *files[]	  = { "nemo", NULL };
 static const char *screenshot[] = { "dwm_screenshot.sh", NULL };
 
 static const Key keys[] = {
@@ -115,8 +115,8 @@ static const Key keys[] = {
     { 0,                    XF86XK_AudioMute,           spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioLowerVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioRaiseVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 && pkill -RTMIN+1 dwmblocks") },
-    { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("brightnessctl set +3%") },
-    { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("brightnessctl --min-value=100 set 3-%") },
+    { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("brightnessctl set +3% &>/dev/null") },
+    { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("brightnessctl --min-value=100 set 3-% &>/dev/null") },
 
     { MODKEY,               XK_Tab,                     view,           {0} }, // previous tag
     { MODKEY,               XK_z,                       zoom,           {0} },
@@ -143,6 +143,9 @@ static const Key keys[] = {
 
 	{ MODKEY|ControlMask|ShiftMask,
 							XK_q,						quit,           {1} }, // restart
+
+	// { MODKEY|ControlMask|Mod1Mask,
+	// 						XK_Delete,					quit,           {0} },
 
     // { MODKEY,               XK_comma,					focusmon,       {.i = -1 } },
     // { MODKEY,               XK_period,					focusmon,       {.i = +1 } },
