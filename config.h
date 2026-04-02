@@ -4,8 +4,6 @@
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const int startwithgaps	    = 1;	    /* 1 means gaps are used by default */
-static const unsigned int gappx     = 3;       /* default gap between windows in pixels */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayonleft = 0;   	/* 0: systray in the right corner, >0: systray on left of status text */
@@ -143,11 +141,6 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,     XK_j,						setcfact,       {.f = +0.25} },
 	{ MODKEY|ShiftMask,     XK_k,      					setcfact,       {.f = -0.25} },
 	{ MODKEY|ShiftMask,     XK_o,      					setcfact,       {.f =  0.00} },
-
-	{ MODKEY,               XK_minus,                   setgaps,        {.i = -1 } },
-	{ MODKEY|ShiftMask,     XK_minus,                   setgaps,        {.i = +1 } },
-	{ MODKEY,               XK_g,                       setgaps,        {.i = GAP_RESET } },
-	{ MODKEY|ShiftMask,     XK_g,                       setgaps,        {.i = GAP_TOGGLE} },
 
 	{ MODKEY|ControlMask|ShiftMask,
 							XK_q,						quit,           {1} }, // restart
