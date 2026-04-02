@@ -57,6 +57,7 @@ static const Rule rules[] = {
     /* class					instance    title       tags mask     iscentered	isfloating   monitor */
     { "Nemo",                   NULL,       NULL,       0,            1,			1,           -1 },
     { "Gcr-prompter",			NULL,       NULL,       0,            1,			1,           -1 },
+    { "soteria",			    NULL,       NULL,       0,            1,			1,           -1 },
 };
 
 /* layout(s) */
@@ -117,8 +118,8 @@ static const Key keys[] = {
     { 0,                    XF86XK_AudioMute,           spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioLowerVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioRaiseVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 && pkill -RTMIN+1 dwmblocks") },
-    { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("brightnessctl set +3% &>/dev/null") },
-    { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("brightnessctl --min-value=100 set 3-% &>/dev/null") },
+    { 0,					XF86XK_MonBrightnessUp,		spawn,	        SHCMD("brightnessctl -q set +3%") },
+    { 0,					XF86XK_MonBrightnessDown,	spawn,	        SHCMD("brightnessctl -q --min-value=100 set 3-%") },
 
     { MODKEY,               XK_Tab,                     view,           {0} }, // previous tag
     { MODKEY,               XK_z,                       zoom,           {0} },
