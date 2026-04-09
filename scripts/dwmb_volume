@@ -10,5 +10,5 @@
 #     icon="󰕿"
 # fi
 
-[[ $(pamixer --get-mute) == true ]] && echo -n "^c#f7768e^"
+[[ $(pamixer --get-mute) = true ]] && echo -n "^c#f7768e^"
 echo "󰓃 $(pamixer --get-volume)^d^"
