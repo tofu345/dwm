@@ -21,7 +21,7 @@ static const char *fonts[]          = { font };
 /* https://github.com/tonybanters/dwm/blob/master/config.h */
 static const char col_bg[]     = "#101010";  // background
 static const char col_fg[]     = "#a9b1d6";  // foreground
-static const char col_wht[]    = "#d6d6d6";  // foreground selected
+static const char col_sel[]    = "#dbdeed";  // foreground selected
 static const char col_blk[]    = "#000000";  // black
 static const char col_brblk[]  = "#444b6a";  // bright black
 static const char col_red[]    = "#f7768e";  // red
@@ -34,9 +34,9 @@ static const char col_cyn[]    = "#0db9d7";  // cyan (highlight)
 static const char *colors[][3] = {
     /*                      fg          bg          border */
     [SchemeNorm]        = { col_fg,     col_blk,    col_blk },
-    [SchemeSel]         = { col_wht,    col_blk,    col_blk },
-    [SchemeStatus]      = { col_wht,    col_blk,    "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
-    [SchemeTagsSel]     = { col_wht,    col_blk,    "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
+    [SchemeSel]         = { col_sel,    col_blk,    col_blk },
+    [SchemeStatus]      = { col_sel,    col_blk,    "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
+    [SchemeTagsSel]     = { col_sel,    col_blk,    "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
     [SchemeTagsNorm]    = { col_fg,     col_blk,    "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
     [SchemeInfoSel]     = { col_fg,     col_blk,    "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
     [SchemeInfoNorm]    = { col_fg,     col_blk,    "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
@@ -96,12 +96,12 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", font, "-nb", col_blk, "-nf", col_fg, "-sb", col_blk, "-sf", col_wht, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", font, "-nb", col_blk, "-nf", col_fg, "-sb", col_blk, "-sf", col_sel, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
 static const char *browser[]  = { "helium-browser", NULL };
 static const char *files[]	  = { "nemo", NULL };
-static const char *screenshot[] = { "dwm_screenshot.sh", NULL };
+static const char *screenshot[] = { "dwm_screenshot", NULL };
 
 static const Key keys[] = {
     /* modifier             key                         function        argument */
@@ -185,4 +185,4 @@ static const Button buttons[] = {
     { ClkTagBar,            MODKEY,             Button3,        toggletag,      {0} },
 };
 
-static const char layoutmenu_cmd[] = "dwm_layoutmenu.sh";
+static const char layoutmenu_cmd[] = "dwm_layoutmenu";

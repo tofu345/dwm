@@ -280,16 +280,6 @@ static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
 
-static void keyrelease(XEvent *e);
-static void combotag(const Arg *arg);
-static void comboview(const Arg *arg);
-
-
-static void keyrelease(XEvent *e);
-static void combotag(const Arg *arg);
-static void comboview(const Arg *arg);
-
-
 /* variables */
 static Systray *systray = NULL;
 static const char broken[] = "broken";

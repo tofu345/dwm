@@ -1,8 +1,8 @@
 #!/bin/sh
 
-set -eo pipefail
+set -e pipefail
 
-maim -s \
+maim -q -s \
 	| tee ~/Pictures/Screenshots/$(date '+%Y-%m-%d_%H-%M-%S')_screenshot.png \
 	| xclip -selection clipboard -t image/png
 
