@@ -21,12 +21,12 @@ void exitdwm ()
 # error (conflicting macro names)
 # endif
 
-# define S_LOCK "Lock"
-# define S_RESTART_DWM "restart Dwm"
-# define S_OFFSCREEN "Off-screen"
-# define S_EXIT "Exit"
-# define S_REBOOT "Reboot"
-# define S_SHUTDOWN "Shutdown"
+# define S_LOCK "Lock "
+# define S_RESTART_DWM "Restart Dwm "
+# define S_OFFSCREEN "Off-screen "
+# define S_EXIT "Exit "
+# define S_REBOOT "Reboot "
+# define S_SHUTDOWN "Shutdown "
 # define S_LOCK_ICON "\uf023"			// <= FontAwesome icons
 # define S_RESTART_DWM_ICON "\uf01e"
 # define S_OFFSCREEN_ICON "\uf108"
@@ -45,7 +45,7 @@ void exitdwm ()
 			S_FORMAT (EXIT) "\n"
 			S_FORMAT (REBOOT) "\n"
 			S_FORMAT (SHUTDOWN)
-			"\" | dmenu -p exit: | " S_FORMAT_CLEAR
+			"\" | rofi -dmenu -p 'exit:' | " S_FORMAT_CLEAR
 		,
 		"r"
 	);
@@ -64,8 +64,8 @@ void exitdwm ()
 	else if (strcmp (exit_action, S_RESTART_DWM) == 0) quit (& (const Arg) {1});
 	else if (strcmp (exit_action, S_OFFSCREEN) == 0) system ("sleep .5; xset dpms force off");
 	else if (strcmp (exit_action, S_EXIT) == 0) quit (& (const Arg) {0});
-	else if (strcmp (exit_action, S_REBOOT) == 0) system ("systemctl reboot");
-	else if (strcmp (exit_action, S_SHUTDOWN) == 0) system ("systemctl poweroff -i");
+	else if (strcmp (exit_action, S_REBOOT) == 0) system ("loginctl reboot");
+	else if (strcmp (exit_action, S_SHUTDOWN) == 0) system ("loginctl poweroff");
 
 close_streams:
 	pclose (exit_menu);
