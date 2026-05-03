@@ -1,6 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 #include <X11/XF86keysym.h>
+#include "exitdwm.c"
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -63,7 +64,7 @@ static const float mfact     = 0.5;  /* factor of master area size [0.05..0.95] 
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
-static const int refreshrate = 120;  /* refresh rate (per second) for client move/resize */
+static const int refreshrate = 60;   /* refresh rate (per second) for client move/resize */
 
 /* Bartabgroups properties */
 #define BARTAB_BORDERS 0       // 0 = off, 1 = on
@@ -142,8 +143,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,     XK_k,      					setcfact,       {.f = +0.25} },
 	{ MODKEY|ShiftMask,     XK_o,      					setcfact,       {.f =  0.00} },
 
-	{ MODKEY|ControlMask|ShiftMask,
-							XK_q,						quit,           {1} }, // restart
+	{ MODKEY|ControlMask|ShiftMask, 
+                            XK_q,                       exitdwm,       {0} },
 
 	// { MODKEY|ControlMask|Mod1Mask,
 	// 						XK_Delete,					quit,           {0} },
