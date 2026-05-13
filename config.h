@@ -14,7 +14,7 @@ static const int showsystray        = 1;        /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 0;        /* horizontal padding for statusbar */
-static const int vertpadbar         = 7;		/* vertical padding for statusbar */
+static const int vertpadbar         = 10;		/* vertical padding for statusbar */
 
 static const char font[]			= "CaskaydiaMono Nerd Font:style=Bold:size=10";
 static const char *fonts[]          = { font };
@@ -34,8 +34,8 @@ static const char col_cyn[]    = "#0db9d7";  // cyan (highlight)
 
 static const char *colors[][3] = {
     /*                      fg          bg          border */
-    [SchemeNorm]        = { col_fg,     col_blk,    col_blk },
-    [SchemeSel]         = { col_sel,    col_blk,    col_blk },
+    [SchemeNorm]        = { col_fg,     col_blk,    col_blk    },
+    [SchemeSel]         = { col_sel,    col_blk,    "#1c1d23"  },
     [SchemeStatus]      = { col_sel,    col_blk,    "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
     [SchemeTagsSel]     = { col_sel,    col_blk,    "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
     [SchemeTagsNorm]    = { col_fg,     col_blk,    "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
@@ -113,7 +113,7 @@ static const Key keys[] = {
     { MODKEY,               XK_e,                       spawn,          {.v = files } },
     { 0,                    XK_Print,                   spawn,          {.v = screenshot } },
     { MODKEY|ShiftMask,     XK_v,                       spawn,          SHCMD("xsel -bc") },
-    { MODKEY|ShiftMask,     XK_l,                       spawn,          SHCMD("xset s activate") },
+    { MODKEY|ShiftMask,     XK_l,                       spawn,          SHCMD("xset s activate & sleep .5; xset dpms force off") },
     { 0,                    XF86XK_AudioMute,           spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioLowerVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 dwmblocks") },
     { 0,                    XF86XK_AudioRaiseVolume,    spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 && pkill -RTMIN+1 dwmblocks") },
@@ -143,11 +143,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,     XK_k,      					setcfact,       {.f = +0.25} },
 	{ MODKEY|ShiftMask,     XK_o,      					setcfact,       {.f =  0.00} },
 
-	{ MODKEY|ControlMask|ShiftMask, 
+	{ MODKEY|ControlMask|ShiftMask,
                             XK_q,                       exitdwm,       {0} },
-
-	// { MODKEY|ControlMask|Mod1Mask,
-	// 						XK_Delete,					quit,           {0} },
 
     // { MODKEY,               XK_comma,					focusmon,       {.i = -1 } },
     // { MODKEY,               XK_period,					focusmon,       {.i = +1 } },
