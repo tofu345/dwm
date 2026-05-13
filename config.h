@@ -2,6 +2,7 @@
 
 #include <X11/XF86keysym.h>
 #include "exitdwm.c"
+#include "movestack.c"
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
@@ -142,6 +143,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,     XK_j,						setcfact,       {.f = -0.25} },
 	{ MODKEY|ShiftMask,     XK_k,      					setcfact,       {.f = +0.25} },
 	{ MODKEY|ShiftMask,     XK_o,      					setcfact,       {.f =  0.00} },
+	{ MODKEY|ControlMask,   XK_j,                       movestack,      {.i = +1 } },
+	{ MODKEY|ControlMask,   XK_k,                       movestack,      {.i = -1 } },
 
 	{ MODKEY|ControlMask|ShiftMask,
                             XK_q,                       exitdwm,       {0} },
