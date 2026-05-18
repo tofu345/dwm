@@ -18,7 +18,7 @@ void exitdwm ()
 # endif
 
 # define S_RESTART_DWM "Restart Dwm "
-# define S_EXIT "Exit "
+# define S_EXIT "Exit Dwm "
 # define S_REBOOT "Reboot "
 # define S_SHUTDOWN "Shutdown "
 # define S_HIBERNATE "Hibernate "
