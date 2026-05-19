@@ -4,6 +4,8 @@
 #include "exitdwm.c"
 #include "movestack.c"
 
+#define STATUSBAR "dwmb"
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -115,9 +117,9 @@ static const Key keys[] = {
     { 0,                /* Print */ 107,            spawn,          {.v = screenshot } },
     { MODKEY|ShiftMask,     /* v */ 60,             spawn,          SHCMD("xsel -bc") },
     { MODKEY|ShiftMask,     /* l */ 33,             spawn,          SHCMD("xset s activate & sleep .5; xset dpms force off") },
-    { 0,            /* AudioMute */ 121,            spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && pkill -RTMIN+1 dwmblocks") },
-    { 0,     /* AudioLowerVolume */ 122,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && pkill -RTMIN+1 dwmblocks") },
-    { 0,     /* AudioRaiseVolume */ 123,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 && pkill -RTMIN+1 dwmblocks") },
+    { 0,            /* AudioMute */ 121,            spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle >&/dev/null" ) },
+    { 0,     /* AudioLowerVolume */ 122,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- >&/dev/null" ) },
+    { 0,     /* AudioRaiseVolume */ 123,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 >&/dev/null") },
     { 0,      /* MonBrightnessUp */ 233,            spawn,          SHCMD("brightnessctl -q set +3%") },
     { 0,    /* MonBrightnessDown */ 232,            spawn,          SHCMD("brightnessctl -q --min-value=100 set 3-%") },
 
@@ -145,7 +147,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,     /* o */ 39,             setcfact,       {.f =  0.00} },
     { MODKEY|ControlMask,   /* j */ 54,             movestack,      {.i = +1 } },
     { MODKEY|ControlMask,   /* k */ 55,             movestack,      {.i = -1 } },
-    
+
     { MODKEY|ControlMask|ShiftMask,
                             /* q */ 53,             exitdwm,       {0} },
 
@@ -176,7 +178,15 @@ static const Button buttons[] = {
     { ClkTagBar,            MODKEY,             Button3,        toggletag,      {0} },
     { ClkLtSymbol,          0,                  Button1,        layoutmenu,     {0} },
     // { ClkWinTitle,          0,                    Button2,        zoom,           {0} },
-    // { ClkStatusText,        0,                    Button2,        spawn,          {.v = termcmd } },
+	{ ClkStatusText,        0,                  Button1,        sigstatusbar,   {.i = 1} },
+	{ ClkStatusText,        0,                  Button2,        sigstatusbar,   {.i = 2} },
+	{ ClkStatusText,        0,                  Button3,        sigstatusbar,   {.i = 3} },
+	{ ClkStatusText,        0,                  Button4,        sigstatusbar,   {.i = 4} },
+	{ ClkStatusText,        0,                  Button5,        sigstatusbar,   {.i = 5} },
+	{ ClkStatusText,        0,                  6,              sigstatusbar,   {.i = 6} },
+	{ ClkStatusText,        0,                  7,              sigstatusbar,   {.i = 7} },
+	{ ClkStatusText,        0,                  8,              sigstatusbar,   {.i = 8} },
+	{ ClkStatusText,        0,                  9,              sigstatusbar,   {.i = 9} },
     { ClkClientWin,         MODKEY,             Button1,        movemouse,      {0} },
     { ClkClientWin,         MODKEY,             Button2,        togglefloating, {0} },
     { ClkClientWin,         MODKEY|ShiftMask,   Button1,        resizemouse,    {0} },

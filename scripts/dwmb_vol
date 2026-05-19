@@ -1,0 +1,12 @@
+#!/bin/sh
+
+case $BUTTON in
+    1) wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle & ;;
+esac
+
+# Inspired By: Jake@Linux https://gitlab.com/jped/scripts/-/blob/main/volume?ref_type=heads
+
+mute=""
+[[ $(pamixer --get-mute) = true ]] && mute="^c#595d70^"
+
+SIGNAL=1 dwmb_print "${mute}󰓃 $(pamixer --get-volume)^d^"

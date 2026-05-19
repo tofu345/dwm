@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Helper script for defining clickable regions with [dwmb](https://git.sr.ht/~jstnas/dwmb)
+#
+# using the [statuscmd](https://dwm.suckless.org/patches/statuscmd/) patch, dwm
+# will send $SIGNAL to `STATUSBAR` (in config.h) if any text inbetween the raw
+# bytes is clicked.
+#
+# example output:
+#   [\001] [..text..] [\001] [\n]
+#    ^^^^              ^^^^
+#      |                 |
+#      raw byte of $SIGNAL
+#
+# usage:
+#   SIGNAL=1 dwmb_print "text"
+
+[[ -z $SIGNAL ]] && echo "$@" && exit
+
+BYTES=$(printf '%x' $SIGNAL) # convert to hex
+echo -ne "\x${BYTES}${@}\x${BYTES}\n"

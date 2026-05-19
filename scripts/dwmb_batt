@@ -32,4 +32,4 @@ if [[ -n $color ]]; then
     fg_color="^c$color^"
 fi
 
-echo "$fg_color${icons[$icon]} $level%^d^"
+SIGNAL=3 dwmb_print "$fg_color${icons[$icon]} $level%^d^"

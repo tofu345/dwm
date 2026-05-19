@@ -1,6 +1,0 @@
-#!/bin/sh
-
-# Originally By: Jake@Linux https://gitlab.com/jped/scripts/-/blob/main/volume?ref_type=heads
-
-[[ $(pamixer --get-mute) = true ]] && echo -n "^c#595d70^"
-echo "󰓃 $(pamixer --get-volume)^d^"
