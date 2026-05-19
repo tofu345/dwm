@@ -188,7 +188,7 @@ static void detach(Client *c);
 static void detachstack(Client *c);
 static Monitor *dirtomon(int dir);
 static void drawbar(Monitor *m);
-static int drawstatusbar(Monitor *m, int bh, char* text);
+static int drawstatusbar(Monitor *m, int bh, char* rawtext);
 static void drawbars(void);
 static void enternotify(XEvent *e);
 static void expose(XEvent *e);
@@ -282,8 +282,8 @@ static void zoom(const Arg *arg);
 /* variables */
 static Systray *systray = NULL;
 static const char broken[] = "broken";
-static char stext[1024];
-int actual_sw = 0; // status width after patch:status2d (drawstatusbar)
+static char rawstext[1024]; // stores status text with patch:status2d tags: ^r,c,b,f...^
+static char stext[1024];    // stores statis text without status2d tags
 static int screen;
 static int sw, sh;           /* X display screen geometry width, height */
 static int bh;               /* bar height */
@@ -629,11 +629,10 @@ buttonpress(XEvent *e)
 			arg.ui = 1 << i;
 		} else if (ev->x < x + TEXTW(selmon->ltsymbol))
 			click = ClkLtSymbol;
-		else if (ev->x > selmon->ww - actual_sw)
+		else if (ev->x > selmon->ww - (int)TEXTW(stext))
 			click = ClkStatusText;
-		else
-            // Focus clicked tab bar item
-			bartabcalculate(selmon, x, actual_sw, ev->x, bartabclick);
+		else // Focus clicked tab bar item
+			bartabcalculate(selmon, x, TEXTW(stext) - lrpad + 2, ev->x, bartabclick);
 
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
@@ -995,17 +994,10 @@ dirtomon(int dir)
 }
 
 int
-drawstatusbar(Monitor *m, int bh, char* stext) {
-	int ret, i, w, x, len;
+drawstatusbar(Monitor *m, int bh, char *rawtext) {
+	int ret, i, w, x, len = strlen(rawtext) + 1;
 	short isCode = 0;
-	char *text;
-	char *p;
-
-	len = strlen(stext) + 1 ;
-	if (!(text = (char*) malloc(sizeof(char)*len)))
-		die("malloc");
-	p = text;
-	memcpy(text, stext, len);
+	char *text = rawtext;
 
 	/* compute width of the status text */
 	w = 0;
@@ -1030,7 +1022,7 @@ drawstatusbar(Monitor *m, int bh, char* stext) {
 		w += TEXTW(text) - lrpad;
 	else
 		isCode = 0;
-	text = p;
+	text = rawtext;
 
 	w += 2; /* 1px padding on both sides */
 	ret = m->ww - w;
@@ -1042,8 +1034,9 @@ drawstatusbar(Monitor *m, int bh, char* stext) {
 	drw_rect(drw, x, 0, w, bh, 1, 1);
 	x++;
 
-	/* process status text */
+	/* process status text and copy processed text into `stext` */
 	i = -1;
+    stext[0] = '\0';
 	while (text[++i]) {
 		if (text[i] == '^' && !isCode) {
 			isCode = 1;
@@ -1051,6 +1044,8 @@ drawstatusbar(Monitor *m, int bh, char* stext) {
 			text[i] = '\0';
 			w = TEXTW(text) - lrpad;
 			drw_text(drw, x, 0, w, bh, 0, text, 0);
+            strcat(stext, text); // could be more efficient but eh.
+            text[i] = '^';
 
 			x += w;
 
@@ -1095,10 +1090,10 @@ drawstatusbar(Monitor *m, int bh, char* stext) {
 	if (!isCode) {
 		w = TEXTW(text) - lrpad;
 		drw_text(drw, x, 0, w, bh, 0, text, 0);
+        strcat(stext, text);
 	}
 
 	drw_setscheme(drw, scheme[SchemeNorm]);
-	free(p);
 
 	return ret;
 }
@@ -1120,9 +1115,8 @@ drawbar(Monitor *m)
 
 	/* draw status first so it can be overdrawn by tags later */
 	if (m == selmon) { /* status is only drawn on selected monitor */
-		tw = m->ww - drawstatusbar(m, bh, stext);
+		tw = m->ww - drawstatusbar(m, bh, rawstext);
 	}
-    actual_sw = tw + stw + 2;
 
 	resizebarwin(m);
 	for (c = m->clients; c; c = c->next) {
@@ -1148,7 +1142,7 @@ drawbar(Monitor *m)
 	// NOTE: updated to include systray width (stw) and extra padding with the status text.
 	drw_rect(drw, x, 0, m->ww - tw - stw - x, bh, 1, 1);
 	if ((w = m->ww - tw - stw - x) > bh) {
-		bartabcalculate(m, x, actual_sw, -1, bartabdraw);
+		bartabcalculate(m, x, tw + stw + 2, -1, bartabdraw);
 		if (BARTAB_BOTTOMBORDER) {
 			drw_setscheme(drw, scheme[SchemeTabActive]);
 			drw_rect(drw, 0, bh - 1, m->ww, 1, 1, 0);
@@ -2653,12 +2647,11 @@ updatesizehints(Client *c)
 void
 updatestatus(void)
 {
-	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext)))
-		strcpy(stext, "dwm-"VERSION);
+	if (!gettextprop(root, XA_WM_NAME, rawstext, sizeof(rawstext)))
+		strcpy(rawstext, "dwm-"VERSION);
 	drawbar(selmon);
 	updatesystray();
 }
-
 
 void
 updatesystrayicongeom(Client *i, int w, int h)
