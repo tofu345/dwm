@@ -1,4 +1,19 @@
 my dwm build
 ============
 
-
+Dependencies:
+- alacritty
+- brightnessctl
+- btop
+- dmenu
+- libnotify
+- maim
+- nemo
+- pamixer
+- rofi
+- ttf-cascadia-mono-nerd
+- wiremix
+- wireplumber
+- xmenu
+- xorg-xset
+- xsel

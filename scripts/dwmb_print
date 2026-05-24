@@ -17,5 +17,5 @@
 
 [[ -z $SIGNAL ]] && echo "$@" && exit
 
-BYTES=$(printf '%x' $SIGNAL) # convert to hex
-echo -ne "\x${BYTES}${@}\x${BYTES}\n"
+HEX=$(printf '%x' $SIGNAL)
+echo -ne "\x${HEX}${@}\x${HEX}\n"

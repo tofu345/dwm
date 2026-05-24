@@ -39,8 +39,8 @@ install: all
 	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
 	for script in $(wildcard scripts/*); do \
 		if [ -f "$$script" ]; then \
-			cp -f "$$script" $(DESTDIR)$(PREFIX)/bin; \
-			chmod 755 $(DESTDIR)$(PREFIX)/bin/$$(basename "$$script"); \
+			cp -f "$$script" ${DESTDIR}${PREFIX}/bin; \
+			chmod 755 ${DESTDIR}${PREFIX}/bin/$$(basename "$$script"); \
 		fi \
 	done
 
@@ -50,7 +50,7 @@ uninstall:
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
 	for script in $(wildcard scripts/*); do \
 		if [ -f "$$script" ]; then \
-			rm -f $(DESTDIR)$(PREFIX)/bin/$$(basename "$$script"); \
+			rm -f ${DESTDIR}${PREFIX}/bin/$$(basename "$$script"); \
 		fi \
 	done
 

@@ -1,16 +1,16 @@
 #!/bin/sh
 
-free -h --si | awk '/^Mem/{
+free | awk '/^Mem/{
+    used = int($3)
+    avail = int($2)
+    usage = int((used/avail)*100)
+
     # check only if in Gb
 	if (index($3, "G") != 0) {
-        # conv to int
-		used = $3+0
-		avail = $2+0
-		if (used > (0.75 * avail)) {
+		if (usage > 75)
 			printf "^c#e0af68^"
-		} else if (used > (0.85 * avail)) {
+		else if (usage > 85)
 			printf "^c#f7768e^"
-		}
 	}
-	print " " $3 "/" $2 "^d^"
+	print " " usage "%"
 }'
