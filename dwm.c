@@ -656,7 +656,7 @@ buttonpress(XEvent *e)
 				}
 			}
 		} else
-			bartabcalculate(selmon, x, TEXTW(stext) - lrpad + 2, ev->x, bartabclick);
+			bartabcalculate(selmon, x, statusw - lrpad + 2, ev->x, bartabclick);
 
 	} else if ((c = wintoclient(ev->window))) {
 		focus(c);
@@ -1056,7 +1056,7 @@ drawstatusbar(Monitor *m, int bh, char *rawtext) {
 	text = rawtext;
 
 	w += 2; /* 1px padding on both sides */
-	ret = m->ww - w;
+	ret = w;
 	x = m->ww - w - getsystraywidth();
 
 	drw_setscheme(drw, scheme[LENGTH(colors)]);
@@ -1159,7 +1159,7 @@ drawbar(Monitor *m)
 
 	/* draw status first so it can be overdrawn by tags later */
 	if (m == selmon) { /* status is only drawn on selected monitor */
-		statusw = tw = m->ww - drawstatusbar(m, bh, rawstext);
+		statusw = tw = drawstatusbar(m, bh, rawstext);
 	}
 
 	resizebarwin(m);
@@ -2794,7 +2794,7 @@ updatesystray(void)
 	Client *i;
 	Monitor *m = systraytomon(NULL);
 	unsigned int x = m->mx + m->mw;
-	unsigned int sw = TEXTW(stext) - lrpad + systrayspacing;
+	unsigned int sw = statusw - lrpad + systrayspacing;
 	unsigned int w = 1;
 
 	if (!showsystray)
