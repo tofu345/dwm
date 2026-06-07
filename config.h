@@ -25,7 +25,7 @@ static const char *fonts[]          = { font };
 /* https://github.com/tonybanters/dwm/blob/master/config.h */
 static const char col_bg[]     = "#101010";  // background
 static const char col_fg[]     = "#a9b1d6";  // foreground
-static const char col_sel[]    = "#dbdeed";  // foreground selected
+static const char col_sel[]    = "#ffffff";  // foreground selected
 static const char col_blk[]    = "#000000";  // black
 static const char col_brblk[]  = "#444b6a";  // bright black
 static const char col_red[]    = "#f7768e";  // red
@@ -38,8 +38,8 @@ static const char col_cyn[]    = "#0db9d7";  // cyan (highlight)
 static const char *colors[][3] = {
     /*                      fg          bg          border */
     [SchemeNorm]        = { col_fg,     col_blk,    col_blk    },
-    [SchemeSel]         = { col_sel,    col_blk,    "#1c1d23"  },
-    [SchemeStatus]      = { col_sel,    col_blk,    "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
+    [SchemeSel]         = { col_sel,    col_blk,    /* darker shade of col_fg */ "#353743" },
+    [SchemeStatus]      = { col_fg,     col_blk,    "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
     [SchemeTagsSel]     = { col_sel,    col_blk,    "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
     [SchemeTagsNorm]    = { col_fg,     col_blk,    "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
     [SchemeInfoSel]     = { col_fg,     col_blk,    "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
@@ -118,8 +118,8 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,     /* v */ 60,             spawn,          SHCMD("xsel -bc") },
     { MODKEY|ShiftMask,     /* l */ 33,             spawn,          SHCMD("xset s activate & sleep .5; xset dpms force off") },
     { 0,            /* AudioMute */ 121,            spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle >&/dev/null" ) },
-    { 0,     /* AudioLowerVolume */ 122,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- >&/dev/null" ) },
-    { 0,     /* AudioRaiseVolume */ 123,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.0 >&/dev/null") },
+    { 0,     /* AudioLowerVolume */ 122,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- >&/dev/null" ) },
+    { 0,     /* AudioRaiseVolume */ 123,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+ --limit 1.0 >&/dev/null") },
     { 0,      /* MonBrightnessUp */ 233,            spawn,          SHCMD("brightnessctl -q set +3%") },
     { 0,    /* MonBrightnessDown */ 232,            spawn,          SHCMD("brightnessctl -q --min-value=100 set 3-%") },
 
