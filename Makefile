@@ -37,21 +37,16 @@ install: all
 	mkdir -p ${DESTDIR}${MANPREFIX}/man1
 	sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
 	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
-	for script in $(wildcard scripts/*); do \
-		if [ -f "$$script" ]; then \
-			cp -f "$$script" ${DESTDIR}${PREFIX}/bin; \
-			chmod 755 ${DESTDIR}${PREFIX}/bin/$$(basename "$$script"); \
-		fi \
-	done
+	find ./scripts \
+		-maxdepth 1 \( -type f -or -type l \) \
+	 	-exec sh -c 'install -m755 "$$1" ${DESTDIR}${PREFIX}/bin' sh {} \;
 
 uninstall:
 	rm -f \
 		${DESTDIR}${PREFIX}/bin/dwm \
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
-	for script in $(wildcard scripts/*); do \
-		if [ -f "$$script" ]; then \
-			rm -f ${DESTDIR}${PREFIX}/bin/$$(basename "$$script"); \
-		fi \
-	done
+	find ./scripts \
+		-maxdepth 1 \( -type f -or -type l \) \
+	 	-exec sh -c 'rm -f ${DESTDIR}${PREFIX}/bin/$$(basename "$$1")' sh {} \;
 
 .PHONY: all clean dist install uninstall
