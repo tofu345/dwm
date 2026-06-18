@@ -11,6 +11,7 @@ Dependencies:
 - nemo
 - pamixer
 - rofi
+- slock
 - ttf-cascadia-mono-nerd
 - wiremix
 - wireplumber

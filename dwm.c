@@ -286,7 +286,7 @@ static Systray *systray = NULL;
 static const char broken[] = "broken";
 static char rawstext[1024]; // stores status text with patch:status2d tags: ^r,c,b,f...^
 static char stext[1024];    // stores statis text without status2d tags
-static int statusw;
+static int statusw = 0;
 static int statussig;
 static pid_t statuspid = -1;
 static int screen;
@@ -1159,7 +1159,8 @@ drawbar(Monitor *m)
 
 	/* draw status first so it can be overdrawn by tags later */
 	if (m == selmon) { /* status is only drawn on selected monitor */
-		statusw = tw = drawstatusbar(m, bh, rawstext);
+		tw = drawstatusbar(m, bh, rawstext);
+        statusw = tw + stw;
 	}
 
 	resizebarwin(m);

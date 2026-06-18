@@ -13,7 +13,7 @@
 #      raw byte of $SIGNAL
 #
 # usage:
-#   SIGNAL=1 dwmb_print "text"
+#   SIGNAL=1 dwmb_print "..text.."
 
 [[ -z $SIGNAL ]] && echo "$@" && exit
 

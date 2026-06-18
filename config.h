@@ -116,7 +116,7 @@ static const Key keys[] = {
     { MODKEY,               /* e */ 40,             spawn,          {.v = files } },
     { 0,                /* Print */ 107,            spawn,          {.v = screenshot } },
     { MODKEY|ShiftMask,     /* v */ 60,             spawn,          SHCMD("xsel -bc") },
-    { MODKEY|ShiftMask,     /* l */ 33,             spawn,          SHCMD("xset s activate & sleep .5; xset dpms force off") },
+    { MODKEY|ShiftMask,     /* l */ 33,             spawn,          SHCMD("slock & sleep .5; xset dpms force off") },
     { 0,            /* AudioMute */ 121,            spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle >&/dev/null" ) },
     { 0,     /* AudioLowerVolume */ 122,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- >&/dev/null" ) },
     { 0,     /* AudioRaiseVolume */ 123,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+ --limit 1.0 >&/dev/null") },
