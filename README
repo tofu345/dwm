@@ -15,6 +15,7 @@ Dependencies:
 - ttf-cascadia-mono-nerd
 - wiremix
 - wireplumber
+- xclip
 - xmenu
 - xorg-xset
 - xsel

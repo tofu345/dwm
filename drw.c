@@ -261,7 +261,7 @@ drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned int lp
 
 	usedfont = drw->fonts;
 	if (!ellipsis_width && render)
-		ellipsis_width = drw_fontset_getwidth(drw, "…");
+		ellipsis_width = drw_fontset_getwidth(drw, "… ");
 	if (!invalid_width && render)
 		invalid_width = drw_fontset_getwidth(drw, invalid);
 	while (1) {

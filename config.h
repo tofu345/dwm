@@ -27,25 +27,18 @@ static const char col_bg[]     = "#101010";  // background
 static const char col_fg[]     = "#a9b1d6";  // foreground
 static const char col_sel[]    = "#ffffff";  // foreground selected
 static const char col_blk[]    = "#000000";  // black
-static const char col_brblk[]  = "#444b6a";  // bright black
-static const char col_red[]    = "#f7768e";  // red
-static const char col_grn[]    = "#9ece6a";  // green
-static const char col_ylw[]    = "#e0af68";  // yellow
-static const char col_blu[]    = "#7aa2f7";  // blue
-static const char col_mag[]    = "#ad8ee6";  // magenta
-static const char col_cyn[]    = "#0db9d7";  // cyan (highlight)
 
 static const char *colors[][3] = {
-    /*                      fg          bg          border */
-    [SchemeNorm]        = { col_fg,     col_blk,    col_blk    },
-    [SchemeSel]         = { col_sel,    col_blk,    /* darker shade of col_fg */ "#353743" },
-    [SchemeStatus]      = { col_fg,     col_blk,    "#000000"  }, // Statusbar right {text,background,not used but cannot be empty}
-    [SchemeTagsSel]     = { col_sel,    col_blk,    "#000000"  }, // Tagbar left selected {text,background,not used but cannot be empty}
-    [SchemeTagsNorm]    = { col_fg,     col_blk,    "#000000"  }, // Tagbar left unselected {text,background,not used but cannot be empty}
-    [SchemeInfoSel]     = { col_fg,     col_blk,    "#000000"  }, // infobar middle  selected {text,background,not used but cannot be empty}
-    [SchemeInfoNorm]    = { col_fg,     col_blk,    "#000000"  }, // infobar middle  unselected {text,background,not used but cannot be empty}
-    [SchemeTabActive]   = { col_fg,     col_blk,    col_blk    }, // active tab group
-    [SchemeTabInactive] = { col_fg,     col_blk,    col_blk    }  // inactive tab group
+    /*                        fg          bg          border (cannot be empty) */
+    [SchemeNorm]        = {   col_fg,     col_blk,    "#101014"  }, // Unselected windows
+    [SchemeSel]         = {   col_sel,    "#101014",  "#353743"  }, // Selected window
+    [SchemeStatus]      = {   col_fg,     col_blk,    col_blk    }, // Statusbar right
+    [SchemeTagsSel]     = {   col_sel,    col_blk,    col_blk    }, // Tagbar left selected
+    [SchemeTagsNorm]    = {   col_fg,     col_blk,    col_blk    }, // Tagbar left unselected
+    [SchemeInfoSel]     = {   col_fg,     col_blk,    col_blk    }, // infobar middle selected
+    [SchemeInfoNorm]    = {   col_fg,     col_blk,    col_blk    }, // infobar middle unselected
+    [SchemeTabActive]   = {   col_fg,     col_blk,    col_blk    }, // active tab group
+    [SchemeTabInactive] = {   col_fg,     col_blk,    col_blk    }  // inactive tab group
 };
 
 /* tagging */
@@ -117,9 +110,9 @@ static const Key keys[] = {
     { 0,                /* Print */ 107,            spawn,          {.v = screenshot } },
     { MODKEY|ShiftMask,     /* v */ 60,             spawn,          SHCMD("xsel -bc") },
     { MODKEY|ShiftMask,     /* l */ 33,             spawn,          SHCMD("slock & sleep .5; xset dpms force off") },
-    { 0,            /* AudioMute */ 121,            spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle >&/dev/null" ) },
-    { 0,     /* AudioLowerVolume */ 122,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- >&/dev/null" ) },
-    { 0,     /* AudioRaiseVolume */ 123,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+ --limit 1.0 >&/dev/null") },
+    { 0,            /* AudioMute */ 121,            spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle &" ) },
+    { 0,     /* AudioLowerVolume */ 122,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- &" ) },
+    { 0,     /* AudioRaiseVolume */ 123,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+ --limit 1.0 &") },
     { 0,      /* MonBrightnessUp */ 233,            spawn,          SHCMD("brightnessctl -q set +3%") },
     { 0,    /* MonBrightnessDown */ 232,            spawn,          SHCMD("brightnessctl -q --min-value=100 set 3-%") },
 

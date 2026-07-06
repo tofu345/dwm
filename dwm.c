@@ -1019,7 +1019,7 @@ dirtomon(int dir)
 
 int
 drawstatusbar(Monitor *m, int bh, char *rawtext) {
-	int ret, i, w, x, len = strlen(rawtext) + 1;
+	int ret, i, w, x;
 	short isCode = 0;
 	char ch, *text = rawtext;
 
@@ -1146,8 +1146,8 @@ void
 drawbar(Monitor *m)
 {
 	int x, w, tw = 0, stw = 0;
-	int boxs = drw->fonts->h / 9;
-	int boxw = drw->fonts->h / 6 + 2;
+	// int boxs = drw->fonts->h / 9;
+	// int boxw = drw->fonts->h / 6 + 2;
 	unsigned int i, occ = 0, urg = 0;
 	Client *c;
 
@@ -3097,4 +3097,3 @@ transfer(const Arg *arg) {
 	}
 	arrange(selmon);
 }
-

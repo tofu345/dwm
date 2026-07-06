@@ -4,9 +4,9 @@ case $BUTTON in
     1) alacritty -e btop & ;;
 esac
 
-# https://askubuntu.com/a/297978
-output=$(vmstat 1 2 | tail -1 | awk '{
-    usage = 100 - $15
+# https://stackoverflow.com/a/70760502
+output=$(printf "%b" "import psutil\nprint('{}'.format(psutil.cpu_percent(interval=1)))" | python3 | awk '{
+    usage = int($0)
 
     if (usage > 90)
         printf "^c#f7768e^"
