@@ -188,7 +188,7 @@ static void detach(Client *c);
 static void detachstack(Client *c);
 static Monitor *dirtomon(int dir);
 static void drawbar(Monitor *m);
-static int drawstatusbar(Monitor *m, int bh, char* rawtext);
+static int drawstatusbar(Monitor *m, int bh);
 static void drawbars(void);
 static void enternotify(XEvent *e);
 static void expose(XEvent *e);
@@ -199,7 +199,6 @@ static void focusstack(const Arg *arg);
 static Atom getatomprop(Client *c, Atom prop);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
-static pid_t getstatusbarpid(void);
 static unsigned int getsystraywidth();
 static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
 static void grabbuttons(Client *c, int focused);
@@ -241,7 +240,6 @@ static void setmfact(const Arg *arg);
 static void setup(void);
 static void seturgent(Client *c, int urg);
 static void showhide(Client *c);
-static void sigstatusbar(const Arg *arg);
 static void sighup(int unused);
 static void sigterm(int unused);
 static void spawn(const Arg *arg);
@@ -284,11 +282,8 @@ static void zoom(const Arg *arg);
 /* variables */
 static Systray *systray = NULL;
 static const char broken[] = "broken";
-static char rawstext[1024]; // stores status text with patch:status2d tags: ^r,c,b,f...^
 static char stext[1024];    // stores statis text without status2d tags
 static int statusw = 0;
-static int statussig;
-static pid_t statuspid = -1;
 static int screen;
 static int sw, sh;           /* X display screen geometry width, height */
 static int bh;               /* bar height */
@@ -608,7 +603,6 @@ buttonpress(XEvent *e)
 	Client *c;
 	Monitor *m;
 	XButtonPressedEvent *ev = &e->xbutton;
-	char *text, *s, ch;
 
 	click = ClkRootWin;
 	/* focus monitor if necessary */
@@ -638,23 +632,6 @@ buttonpress(XEvent *e)
 		else if (ev->x > selmon->ww - statusw) {
 			x = selmon->ww - statusw;
 			click = ClkStatusText;
-			statussig = 0;
-			for (text = s = stext; *s && x <= ev->x; s++) {
-				if ((unsigned char)(*s) < ' ') {
-					ch = *s;
-					*s = '\0';
-					x += TEXTW(text) - lrpad;
-					*s = ch;
-					text = s + 1;
-					if (x >= ev->x)
-						break;
-					/* End clickable section on a matching signal raw byte */
-					if (statussig == ch)
-						statussig = 0;
-					else
-						statussig = ch;
-				}
-			}
 		} else
 			bartabcalculate(selmon, x, statusw - lrpad + 2, ev->x, bartabclick);
 
@@ -1018,10 +995,14 @@ dirtomon(int dir)
 }
 
 int
-drawstatusbar(Monitor *m, int bh, char *rawtext) {
-	int ret, i, w, x;
+drawstatusbar(Monitor *m, int bh) {
+	int ret, i, w, x, len;
 	short isCode = 0;
-	char ch, *text = rawtext;
+    static char p[1024];
+	char *text = p;
+
+	len = strlen(stext) + 1;
+	memcpy(text, stext, len);
 
 	/* compute width of the status text */
 	w = 0;
@@ -1040,20 +1021,13 @@ drawstatusbar(Monitor *m, int bh, char *rawtext) {
 				text = text + i + 1;
 				i = -1;
 			}
-		} else if ((unsigned char)(text[i]) < ' ') {
-            ch = text[i];
-            text[i] = '\0';
-            w += TEXTW(text) - lrpad;
-            text[i] = ch;
-            text = text + i + 1;
-            i = -1;
-        }
+		}
 	}
 	if (!isCode)
 		w += TEXTW(text) - lrpad;
 	else
 		isCode = 0;
-	text = rawtext;
+	text = p;
 
 	w += 2; /* 1px padding on both sides */
 	ret = w;
@@ -1065,9 +1039,8 @@ drawstatusbar(Monitor *m, int bh, char *rawtext) {
 	drw_rect(drw, x, 0, w, bh, 1, 1);
 	x++;
 
-	/* process status text and copy processed text into `stext` */
+	/* process status text */
 	i = -1;
-    stext[0] = '\0';
 	while (text[++i]) {
 		if (text[i] == '^' && !isCode) {
 			isCode = 1;
@@ -1075,8 +1048,6 @@ drawstatusbar(Monitor *m, int bh, char *rawtext) {
 			text[i] = '\0';
 			w = TEXTW(text) - lrpad;
 			drw_text(drw, x, 0, w, bh, 0, text, 0);
-            strcat(stext, text); // could be more efficient but eh.
-            text[i] = '^';
 
 			x += w;
 
@@ -1115,26 +1086,12 @@ drawstatusbar(Monitor *m, int bh, char *rawtext) {
 			text = text + i + 1;
 			i=-1;
 			isCode = 0;
-		} else if ((unsigned char)(text[i]) < ' ') {
-            // don't display statuscmd signal tags, but still copy into `stext`
-            ch = text[i];
-            text[i] = '\0';
-            w = TEXTW(text) - lrpad;
-			drw_text(drw, x, 0, w, bh, 0, text, 0);
-            strcat(stext, text);
-			x += w;
-            text[i] = ch;
-
-            strcat(stext, (char[2]){ ch, '\0' });
-            text = text + i + 1;
-            i = -1;
-        }
+		}
 	}
 
 	if (!isCode) {
 		w = TEXTW(text) - lrpad;
 		drw_text(drw, x, 0, w, bh, 0, text, 0);
-        strcat(stext, text);
 	}
 
 	drw_setscheme(drw, scheme[SchemeNorm]);
@@ -1159,7 +1116,7 @@ drawbar(Monitor *m)
 
 	/* draw status first so it can be overdrawn by tags later */
 	if (m == selmon) { /* status is only drawn on selected monitor */
-		tw = drawstatusbar(m, bh, rawstext);
+		tw = drawstatusbar(m, bh);
         statusw = tw + stw;
 	}
 
@@ -1334,30 +1291,6 @@ getatomprop(Client *c, Atom prop)
 		XFree(p);
 	}
 	return atom;
-}
-
-pid_t
-getstatusbarpid(void)
-{
-	char buf[32], *str = buf, *c;
-	FILE *fp;
-
-	if (statuspid > 0) {
-		snprintf(buf, sizeof(buf), "/proc/%u/cmdline", statuspid);
-		if ((fp = fopen(buf, "r"))) {
-			fgets(buf, sizeof(buf), fp);
-			while ((c = strchr(str, '/')))
-				str = c + 1;
-			fclose(fp);
-			if (!strcmp(str, STATUSBAR))
-				return statuspid;
-		}
-	}
-	if (!(fp = popen("pidof -s "STATUSBAR, "r")))
-		return -1;
-	fgets(buf, sizeof(buf), fp);
-	pclose(fp);
-	return strtol(buf, NULL, 10);
 }
 
 int
@@ -2285,20 +2218,6 @@ sigterm(int unused)
 }
 
 void
-sigstatusbar(const Arg *arg)
-{
-	union sigval sv;
-
-	if (!statussig)
-		return;
-	sv.sival_int = arg->i;
-	if ((statuspid = getstatusbarpid()) <= 0)
-		return;
-
-	sigqueue(statuspid, SIGRTMIN+statussig, sv);
-}
-
-void
 spawn(const Arg *arg)
 {
 	struct sigaction sa;
@@ -2730,8 +2649,8 @@ updatesizehints(Client *c)
 void
 updatestatus(void)
 {
-	if (!gettextprop(root, XA_WM_NAME, rawstext, sizeof(rawstext)))
-		strcpy(rawstext, "dwm-"VERSION);
+	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext)))
+		strcpy(stext, "dwm-"VERSION);
 	drawbar(selmon);
 	updatesystray();
 }

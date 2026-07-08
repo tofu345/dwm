@@ -4,8 +4,6 @@
 #include "exitdwm.c"
 #include "movestack.c"
 
-#define STATUSBAR "dwmb"
-
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
@@ -98,7 +96,7 @@ static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
 static const char *browser[]  = { "helium-browser", NULL };
 static const char *files[]    = { "nemo", NULL };
-static const char *screenshot[] = { "dwm_screenshot", NULL };
+static const char *screenshot[] = { "dwm-screenshot", NULL };
 
 static const Key keys[] = {
     /* modifier            keycodes (in dvorak :p)  function        argument */
@@ -170,16 +168,8 @@ static const Button buttons[] = {
     { ClkTagBar,            MODKEY,             Button1,        tag,            {0} },
     { ClkTagBar,            MODKEY,             Button3,        toggletag,      {0} },
     { ClkLtSymbol,          0,                  Button1,        layoutmenu,     {0} },
-    // { ClkWinTitle,          0,                    Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,                  Button1,        sigstatusbar,   {.i = 1} },
-	{ ClkStatusText,        0,                  Button2,        sigstatusbar,   {.i = 2} },
-	{ ClkStatusText,        0,                  Button3,        sigstatusbar,   {.i = 3} },
-	{ ClkStatusText,        0,                  Button4,        sigstatusbar,   {.i = 4} },
-	{ ClkStatusText,        0,                  Button5,        sigstatusbar,   {.i = 5} },
-	{ ClkStatusText,        0,                  6,              sigstatusbar,   {.i = 6} },
-	{ ClkStatusText,        0,                  7,              sigstatusbar,   {.i = 7} },
-	{ ClkStatusText,        0,                  8,              sigstatusbar,   {.i = 8} },
-	{ ClkStatusText,        0,                  9,              sigstatusbar,   {.i = 9} },
+    // { ClkWinTitle,          0,                  Button2,        zoom,           {0} },
+	{ ClkStatusText,        0,                  Button2,        spawn,          {.v = termcmd } },
     { ClkClientWin,         MODKEY,             Button1,        movemouse,      {0} },
     { ClkClientWin,         MODKEY,             Button2,        togglefloating, {0} },
     { ClkClientWin,         MODKEY|ShiftMask,   Button1,        resizemouse,    {0} },
@@ -189,6 +179,6 @@ static const Button buttons[] = {
     { ClkTagBar,            MODKEY,             Button3,        toggletag,      {0} },
 };
 
-static const char layoutmenu_cmd[] = "dwm_layoutmenu";
+static const char layoutmenu_cmd[] = "dwm-layoutmenu";
 
 // vim:expandtab
