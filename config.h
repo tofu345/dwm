@@ -96,6 +96,7 @@ static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
 static const char *browser[]  = { "helium-browser", NULL };
 static const char *files[]    = { "nemo", NULL };
+static const char *tlp[]      = { "dwm-tlp", NULL };
 static const char *screenshot[] = { "dwm-screenshot", NULL };
 
 static const Key keys[] = {
@@ -106,6 +107,8 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,     /* b */ 57,             spawn,          {.v = browser } },
     { MODKEY,               /* e */ 40,             spawn,          {.v = files } },
     { 0,                /* Print */ 107,            spawn,          {.v = screenshot } },
+    { MODKEY|ControlMask,   /* p */ 27,             spawn,          {.v = tlp} },
+    { MODKEY|ShiftMask,     /* w */ 59,             spawn,          SHCMD("alacritty -T 'wiremix' -e wiremix") },
     { MODKEY|ShiftMask,     /* v */ 60,             spawn,          SHCMD("xsel -bc") },
     { MODKEY|ShiftMask,     /* l */ 33,             spawn,          SHCMD("slock & sleep .5; xset dpms force off") },
     { 0,            /* AudioMute */ 121,            spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle &" ) },
@@ -142,10 +145,11 @@ static const Key keys[] = {
     { MODKEY|ControlMask|ShiftMask,
                             /* q */ 53,             exitdwm,       {0} },
 
-    // { MODKEY,            /* comma */ ,            focusmon,       {.i = -1 } },
-    // { MODKEY,           /* period */ ,            focusmon,       {.i = +1 } },
-    // { MODKEY|ShiftMask,  /* comma */ ,            tagmon,         {.i = -1 } },
-    // { MODKEY|ShiftMask, /* period */ ,            tagmon,         {.i = +1 } },
+    { MODKEY,           /* comma */ 25,             focusmon,       {.i = -1 } },
+    { MODKEY,          /* period */ 26,             focusmon,       {.i = +1 } },
+    { MODKEY|ShiftMask, /* comma */ 25,             tagmon,         {.i = -1 } },
+    { MODKEY|ShiftMask,/* period */ 26,             tagmon,         {.i = +1 } },
+
     // { MODKEY,                /* 0 */ ,            view,           {.ui = ~0 } },
     // { MODKEY|ShiftMask,      /* 0 */ ,            tag,            {.ui = ~0 } },
 

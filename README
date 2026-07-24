@@ -12,6 +12,7 @@ Dependencies:
 - pamixer
 - rofi
 - slock
+- tlp
 - ttf-cascadia-mono-nerd
 - wiremix
 - wireplumber
