@@ -17,7 +17,7 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 0;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 10;       /* vertical padding for statusbar */
 
-static const char font[]            = "CaskaydiaMono Nerd Font:style=Bold:size=9";
+static const char font[]            = "Cascadia Code:style=Bold:size=9";
 static const char *fonts[]          = { font };
 
 /* https://github.com/tonybanters/dwm/blob/master/config.h */

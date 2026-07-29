@@ -29,8 +29,9 @@ void exitdwm ()
 # define S_SHUTDOWN_ICON "\uf011"
 # define S_HIBERNATE_ICON "\ue7fc"
 
-# define S_FORMAT(ACTION) S_##ACTION##_ICON " " S_##ACTION
-# define S_FORMAT_CLEAR "sed 's/^..//'"
+# define S_FORMAT(ACTION) S_##ACTION
+// # define S_FORMAT(ACTION) S_##ACTION##_ICON " " S_##ACTION
+// # define S_FORMAT_CLEAR "sed 's/^..//'"
 
 	FILE * exit_menu = popen (
 		"echo \""
@@ -39,7 +40,8 @@ void exitdwm ()
 			S_FORMAT (REBOOT) "\n"
 			S_FORMAT (SHUTDOWN) "\n"
 			S_FORMAT (HIBERNATE)
-			"\" | rofi -dmenu -i -p '' | " S_FORMAT_CLEAR
+			"\" | rofi -dmenu -i -p '' "
+			// "\" | rofi -dmenu -i -p '' | " S_FORMAT_CLEAR
 		,
 		"r"
 	);
@@ -56,9 +58,9 @@ void exitdwm ()
 
     if (strcmp (exit_action, S_RESTART_DWM) == 0) quit (& (const Arg) {1});
 	else if (strcmp (exit_action, S_EXIT) == 0) quit (& (const Arg) {0});
-	else if (strcmp (exit_action, S_REBOOT) == 0) system ("loginctl reboot");
-	else if (strcmp (exit_action, S_SHUTDOWN) == 0) system ("loginctl poweroff");
-	else if (strcmp (exit_action, S_HIBERNATE) == 0) system ("loginctl hibernate");
+	else if (strcmp (exit_action, S_REBOOT) == 0) system ("doas loginctl reboot");
+	else if (strcmp (exit_action, S_SHUTDOWN) == 0) system ("doas loginctl poweroff");
+	else if (strcmp (exit_action, S_HIBERNATE) == 0) system ("doas loginctl hibernate");
 
 close_streams:
 	pclose (exit_menu);
