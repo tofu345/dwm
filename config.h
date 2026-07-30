@@ -95,7 +95,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", font, "-nb", col_blk, "-nf", col_fg, "-sb", col_blk, "-sf", col_sel, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
-static const char *browser[]  = { "helium-browser", NULL };
+static const char *browser[]  = { "chromium-bin", NULL };
 static const char *files[]    = { "nemo", NULL };
 static const char *tlp[]      = { "dwm-tlp", NULL };
 static const char *screenshot[] = { "dwm-screenshot", NULL };
@@ -112,9 +112,9 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,     /* w */ 59,             spawn,          SHCMD("alacritty -T 'wiremix' -e wiremix") },
     { MODKEY|ShiftMask,     /* v */ 60,             spawn,          SHCMD("xsel -bc") },
     { MODKEY|ShiftMask,     /* l */ 33,             spawn,          SHCMD("slock & sleep .5; xset dpms force off") },
-    { 0,            /* AudioMute */ 121,            spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle &" ) },
-    { 0,     /* AudioLowerVolume */ 122,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- &" ) },
-    { 0,     /* AudioRaiseVolume */ 123,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+ --limit 1.0 &") },
+    { 0,            /* AudioMute */ 121,            spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && dwmblocks-update vol" ) },
+    { 0,     /* AudioLowerVolume */ 122,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- && dwmblocks-update vol" ) },
+    { 0,     /* AudioRaiseVolume */ 123,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+ --limit 1.0 && dwmblocks-update vol") },
     { 0,      /* MonBrightnessUp */ 233,            spawn,          SHCMD("brightnessctl -q set +3%") },
     { 0,    /* MonBrightnessDown */ 232,            spawn,          SHCMD("brightnessctl -q --min-value=100 set 3-%") },
 
