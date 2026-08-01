@@ -2,6 +2,7 @@ my dwm build
 ============
 
 Dependencies:
+
 - alacritty
 - brightnessctl
 - btop
@@ -9,7 +10,6 @@ Dependencies:
 - libnotify
 - maim
 - nemo
-- pamixer
 - rofi
 - slock
 - tlp

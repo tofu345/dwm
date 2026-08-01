@@ -18,7 +18,7 @@ static const int topbar             = 1;        /* 0 means bottom bar */
 static const int horizpadbar        = 0;        /* horizontal padding for statusbar */
 static const int vertpadbar         = 10;       /* vertical padding for statusbar */
 
-static const char font[]            = "Cascadia Code:style=Bold:size=9";
+static const char font[]            = "CaskaydiaMono Nerd Font:style=Bold:size=9";
 static const char *fonts[]          = { font };
 
 /* https://github.com/tonybanters/dwm/blob/master/config.h */
@@ -51,6 +51,7 @@ static const Rule rules[] = {
     /* class            instance    title       tags mask     iscentered    isfloating  isterminal   noswallow  monitor */
     { "Nemo",           NULL,       NULL,       0,            1,            1,          0,           1,         -1 },
     { "Gcr-prompter",   NULL,       NULL,       0,            1,            1,          0,           1,         -1 },
+    // small caveat: the terminal window disappears when dwm is restarted
     { "Alacritty",      NULL,       NULL,       0,            0,            0,          1,           0,         -1 },
 };
 
