@@ -3,7 +3,7 @@
 # NOTE: sudo must not require a password for `tlp` and `tlp-stat`
 
 current_profile=$(doas tlp-stat -m)
-selected_profile=$(echo "Performance |Balanced |Power Saver" | rofi -sep '|' -dmenu -i -p "$current_profile")
+selected_profile=$(echo "Performance |Balanced |Power Saver" | rofi -sep '|' -dmenu -i -p "Current Profile: $current_profile")
 
 exec >&/dev/null
 case $selected_profile in

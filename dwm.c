@@ -1601,7 +1601,7 @@ manage(Window w, XWindowAttributes *wa)
 	if (c->isfloating)
 		XRaiseWindow(dpy, c->win);
 	if(!c->swallower) {
-		attach(c);
+		attachtop(c);
 		attachstack(c);
 	}
 	XChangeProperty(dpy, root, netatom[NetClientList], XA_WINDOW, 32, PropModeAppend,
