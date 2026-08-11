@@ -8,7 +8,7 @@
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
-static const unsigned int systrayonleft = 0;    /* 0: systray in the right corner, >0: systray on left of status text */
+static const unsigned int systrayonleft  = 0;   /* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 3;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, 0: display systray on the last monitor */
 static const int showsystray        = 1;        /* 0 means no systray */
@@ -21,22 +21,22 @@ static const char font[]            = "CaskaydiaMono Nerd Font:style=Bold:size=9
 static const char *fonts[]          = { font };
 
 /* https://github.com/tonybanters/dwm/blob/master/config.h */
-static const char col_bg[]     = "#101010";  // background
-static const char col_fg[]     = "#a9b1d6";  // foreground
-static const char col_sel[]    = "#ffffff";  // foreground selected
-static const char col_blk[]    = "#000000";  // black
+static const char col_bg[]          = "#101010";  // background
+static const char col_fg[]          = "#a9b1d6";  // foreground
+static const char col_sel[]         = "#ffffff";  // foreground selected
+static const char col_blk[]         = "#000000";  // black
 
 static const char *colors[][3] = {
-    /*                        fg          bg          border (cannot be empty) */
-    [SchemeNorm]        = {   col_fg,     col_blk,    "#101014"  }, // Unselected windows
-    [SchemeSel]         = {   col_sel,    "#101014",  "#353743"  }, // Selected window
-    [SchemeStatus]      = {   col_fg,     col_blk,    col_blk    }, // Statusbar right
-    [SchemeTagsSel]     = {   col_sel,    col_blk,    col_blk    }, // Tagbar left selected
-    [SchemeTagsNorm]    = {   col_fg,     col_blk,    col_blk    }, // Tagbar left unselected
-    [SchemeInfoSel]     = {   col_fg,     col_blk,    col_blk    }, // infobar middle selected
-    [SchemeInfoNorm]    = {   col_fg,     col_blk,    col_blk    }, // infobar middle unselected
-    [SchemeTabActive]   = {   col_fg,     col_blk,    col_blk    }, // active tab group
-    [SchemeTabInactive] = {   col_fg,     col_blk,    col_blk    }  // inactive tab group
+    /*                      fg         bg         border (cannot be empty) */
+    [SchemeNorm]        = { col_fg,    col_blk,   "#101014" }, // Unselected windows
+    [SchemeSel]         = { col_sel,   "#101014", "#353743" }, // Selected window
+    [SchemeStatus]      = { col_fg,    col_blk,   col_blk   }, // Statusbar right
+    [SchemeTagsSel]     = { col_sel,   col_blk,   col_blk   }, // Tagbar left selected
+    [SchemeTagsNorm]    = { col_fg,    col_blk,   col_blk   }, // Tagbar left unselected
+    [SchemeInfoSel]     = { col_fg,    col_blk,   col_blk   }, // infobar middle selected
+    [SchemeInfoNorm]    = { col_fg,    col_blk,   col_blk   }, // infobar middle unselected
+    [SchemeTabActive]   = { col_fg,    col_blk,   col_blk   }, // active tab group
+    [SchemeTabInactive] = { col_fg,    col_blk,   col_blk   }  // inactive tab group
 };
 
 /* tagging */

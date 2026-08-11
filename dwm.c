@@ -2572,8 +2572,13 @@ unmanage(Client *c, int destroyed)
 		XSetErrorHandler(xerror);
 		XUngrabServer(dpy);
 	} else deleteswallower(c);
-	if(c->swallower) focus(c->swallower);
-	else focus(NULL);
+
+	// if(c->swallower) focus(c->swallower);
+	// else focus(NULL);
+
+        // don't focus swallowed window if swallower exits
+	focus(NULL);
+
 	free(c);
 	updateclientlist();
 	arrange(m);
