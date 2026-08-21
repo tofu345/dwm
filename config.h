@@ -58,6 +58,7 @@ static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
 static const int refreshrate = 60;   /* refresh rate (per second) for client move/resize */
+static const int decorhints  = 1;    /* 1 means respect decoration hints */
 
 /* Bartabgroups properties */
 #define BARTAB_BORDERS 0       // 0 = off, 1 = on
