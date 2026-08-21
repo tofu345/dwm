@@ -1,78 +1,61 @@
-# include <stdio.h>
-# include <string.h>
+#include <stdio.h>
+#include <string.h>
 
 void exitdwm ()
 {
-# if							   \
-	defined S_RESTART_DWM		|| \
-	defined S_EXIT				|| \
-	defined S_REBOOT			|| \
-	defined S_SHUTDOWN			|| \
-	defined S_RESTART_DWM_ICON	|| \
-	defined S_EXIT_ICON			|| \
-	defined S_REBOOT_ICON		|| \
-	defined S_SHUTDOWN_ICON		|| \
-	defined S_FORMAT			|| \
-	defined S_FORMAT_CLEAR
-# error (conflicting macro names)
-# endif
+#if			    \
+   defined S_RESTART_DWM || \
+   defined S_EXIT_DWM	 || \
+   defined S_REBOOT	 || \
+   defined S_SHUTDOWN	 || \
+   defined S_HIBERNATE
+#error (conflicting macro names)
+#endif
 
-# define S_RESTART_DWM "Restart Dwm "
-# define S_EXIT "Exit Dwm "
-# define S_REBOOT "Reboot "
-# define S_SHUTDOWN "Shutdown "
-# define S_HIBERNATE "Hibernate "
-// FontAwesome icons
-# define S_RESTART_DWM_ICON "\uf01e"
-# define S_EXIT_ICON "\uf2f5"
-# define S_REBOOT_ICON "\uf021"
-# define S_SHUTDOWN_ICON "\uf011"
-# define S_HIBERNATE_ICON "\ue7fc"
+#define S_RESTART_DWM "Restart Dwm "
+#define S_EXIT_DWM "Exit Dwm "
+#define S_SHUTDOWN "Shutdown "
+#define S_REBOOT "Reboot "
+#define S_HIBERNATE "Hibernate "
 
-# define S_FORMAT(ACTION) S_##ACTION
-// # define S_FORMAT(ACTION) S_##ACTION##_ICON " " S_##ACTION
-// # define S_FORMAT_CLEAR "sed 's/^..//'"
+    FILE * exit_menu =
+        popen("echo \""
+              S_RESTART_DWM "\n"
+              S_EXIT_DWM "\n"
+              S_SHUTDOWN "\n"
+              S_REBOOT "\n"
+              S_HIBERNATE "\" | rofi -dmenu -i -p ''", "r");
 
-	FILE * exit_menu = popen (
-		"echo \""
-			S_FORMAT (RESTART_DWM) "\n"
-			S_FORMAT (EXIT) "\n"
-			S_FORMAT (REBOOT) "\n"
-			S_FORMAT (SHUTDOWN) "\n"
-			S_FORMAT (HIBERNATE)
-			"\" | rofi -dmenu -i -p '' "
-			// "\" | rofi -dmenu -i -p '' | " S_FORMAT_CLEAR
-		,
-		"r"
-	);
+    char exit_action[16];
+    if (exit_menu == NULL || fscanf(exit_menu, "%15[a-zA-Z -]", exit_action) == EOF)
+    {
+        fputs("Error. Failure in exit_dwm.", stderr);
+        goto close;
+    }
 
-	char exit_action [16];
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-result"
 
-	if (
-		exit_menu == NULL ||
-		fscanf (exit_menu, "%15[a-zA-Z -]", exit_action) == EOF
-	) {
-		fputs ("Error. Failure in exit_dwm.", stderr);
-		goto close_streams;
-	}
+    /* unused-result warning in here get ignored during compilation */
+    if (strcmp (exit_action, S_RESTART_DWM) == 0)
+        quit(&(const Arg){1});
+    else if (strcmp (exit_action, S_EXIT_DWM) == 0)
+        quit(&(const Arg){0});
+    else if (strcmp(exit_action, S_SHUTDOWN) == 0)
+        system("doas loginctl poweroff");
+    else if (strcmp(exit_action, S_REBOOT) == 0)
+        system("doas loginctl reboot");
+    else if (strcmp(exit_action, S_HIBERNATE) == 0)
+        system("doas loginctl hibernate");
 
-    if (strcmp (exit_action, S_RESTART_DWM) == 0) quit (& (const Arg) {1});
-	else if (strcmp (exit_action, S_EXIT) == 0) quit (& (const Arg) {0});
-	else if (strcmp (exit_action, S_REBOOT) == 0) system ("doas loginctl reboot");
-	else if (strcmp (exit_action, S_SHUTDOWN) == 0) system ("doas loginctl poweroff");
-	else if (strcmp (exit_action, S_HIBERNATE) == 0) system ("doas loginctl hibernate");
+#pragma GCC diagnostic pop
 
-close_streams:
-	pclose (exit_menu);
+close:
+    pclose(exit_menu);
 
-# undef S_RESTART_DWM
-# undef S_EXIT
-# undef S_REBOOT
-# undef S_SHUTDOWN
-# undef S_RESTART_DWM_ICON
-# undef S_EXIT_ICON
-# undef S_REBOOT_ICON
-# undef S_SHUTDOWN_ICON
-# undef S_FORMAT
-# undef S_FORMAT_CLEAR
+#undef S_RESTART_DWM
+#undef S_EXIT_DWM
+#undef S_SHUTDOWN
+#undef S_REBOOT
+#undef S_HIBERNATE
 }

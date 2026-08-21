@@ -150,8 +150,8 @@ static const Key keys[] = {
     { MODKEY|ShiftMask, /* comma */ 25,             tagmon,         {.i = -1 } },
     { MODKEY|ShiftMask,/* period */ 26,             tagmon,         {.i = +1 } },
 
-    // { MODKEY,                /* 0 */ ,            view,           {.ui = ~0 } },
-    // { MODKEY|ShiftMask,      /* 0 */ ,            tag,            {.ui = ~0 } },
+    { MODKEY,               /* 0 */ 19,             view,           {.ui = ~0 } },
+    { MODKEY|ShiftMask,     /* 0 */ 19,             tag,            {.ui = ~0 } },
 
     //       key  code  tag
     TAGKEYS(/* 1 */ 10, 0),
