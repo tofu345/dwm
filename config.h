@@ -125,7 +125,7 @@ static const Key keys[] = {
     { MODKEY,           /* space */ 65,             setlayout,      {.v = &layouts[3]} }, // floating
     { MODKEY,               /* f */ 29,             togglefullscr,  {0} },
     { MODKEY|ShiftMask, /* space */ 65,             togglefloating, {0} },
-    { MODKEY,               /* s */ 47,             togglesticky,   {0} },
+    { MODKEY|ShiftMask,     /* s */ 47,             togglesticky,   {0} },
     { MODKEY,               /* b */ 57,             togglebar,      {0} },
 
     { MODKEY,               /* j */ 54,             focusstack,     {.i = +1 } },
