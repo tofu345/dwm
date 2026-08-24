@@ -111,9 +111,9 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,     /* w */ 59,             spawn,          SHCMD("alacritty -T 'wiremix' -e wiremix") },
     { MODKEY|ShiftMask,     /* v */ 60,             spawn,          SHCMD("xsel -bc") },
     { MODKEY|ShiftMask,     /* l */ 33,             spawn,          SHCMD("slock & sleep .5; xset dpms force off") },
-    { 0,            /* AudioMute */ 121,            spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && dwmblocks-update vol" ) },
-    { 0,     /* AudioLowerVolume */ 122,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- && dwmblocks-update vol" ) },
-    { 0,     /* AudioRaiseVolume */ 123,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+ --limit 1.0 && dwmblocks-update vol") },
+    { 0,            /* AudioMute */ 121,            spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && dwmblocks-upd vol" ) },
+    { 0,     /* AudioLowerVolume */ 122,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- && dwmblocks-upd vol" ) },
+    { 0,     /* AudioRaiseVolume */ 123,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+ --limit 1.0 && dwmblocks-upd vol") },
     { 0,      /* MonBrightnessUp */ 233,            spawn,          SHCMD("brightnessctl -q set +3%") },
     { 0,    /* MonBrightnessDown */ 232,            spawn,          SHCMD("brightnessctl -q --min-value=100 set 3-%") },
 

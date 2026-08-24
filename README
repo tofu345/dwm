@@ -20,3 +20,6 @@ Dependencies:
 - xmenu
 - xorg-xset
 - xsel
+
+patch alternatives:
+- bartabgroups vs underlinetags with taglabels
