@@ -1949,7 +1949,12 @@ resizemouse(const Arg *arg)
 			{
 				if (!c->isfloating && selmon->lt[selmon->sellt]->arrange
 				&& (abs(nw - c->w) > snap || abs(nh - c->h) > snap))
+                                {
+                                        // overwrite saved floating position
+                                        c->sfx = c->x; c->sfy = c->y;
+                                        c->sfw = c->w; c->sfh = c->h;
 					togglefloating(NULL);
+                                }
 			}
 			if (!selmon->lt[selmon->sellt]->arrange || c->isfloating)
 				resize(c, c->x, c->y, nw, nh, 1);
