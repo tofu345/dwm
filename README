@@ -40,6 +40,7 @@ patches:
 - movestack-20211115-a786211
 - pertag
 - restartsig
+- savefloats-20181212-b69c870
 - status2d
 - status2d-systray
 - statuspadding
