@@ -42,6 +42,7 @@ patches:
 - restartsig
 - savefloats-20181212-b69c870
 - status2d
+- status2d-extrabar-6.2
 - status2d-systray
 - statuspadding
 - sticky-6.5
