@@ -1,18 +1,3 @@
 #!/bin/sh
 
-set -e pipefail
-
-[[ ! -e ~/Pictures/Screenshots ]] && mkdir ~/Pictures/Screenshots
-
-file=$(echo ~/Pictures/Screenshots/$(date '+%Y-%m-%d_%H-%M-%S')_screenshot.png)
-
-maim -q -s \
-	| tee "$file" \
-	| xclip -selection clipboard -t image/png
-
-# delete screenshot if it is empty (selection was aborted)
-if [[ ! -s $file ]]; then
-    rm "$file"
-else
-    notify-send 'Screenshot Saved' 'Image copied to the Clipboard'
-fi
+maim -q -s | xclip -selection clipboard -t image/png

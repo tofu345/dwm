@@ -114,8 +114,8 @@ static const Key keys[] = {
     { 0,            /* AudioMute */ 121,            spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && dwmblocks-upd vol" ) },
     { 0,     /* AudioLowerVolume */ 122,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- && dwmblocks-upd vol" ) },
     { 0,     /* AudioRaiseVolume */ 123,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+ --limit 1.0 && dwmblocks-upd vol") },
-    { 0,      /* MonBrightnessUp */ 233,            spawn,          SHCMD("brightnessctl -q set +3%") },
-    { 0,    /* MonBrightnessDown */ 232,            spawn,          SHCMD("brightnessctl -q --min-value=100 set 3-%") },
+    { 0,      /* MonBrightnessUp */ 233,            spawn,          SHCMD("brightnessctl -q set +2%") },
+    { 0,    /* MonBrightnessDown */ 232,            spawn,          SHCMD("brightnessctl -q --min-value=100 set 2-%") },
 
     { MODKEY,             /* Tab */ 23,             view,           {0} }, // previous tag
     { MODKEY,               /* z */ 61,             zoom,           {0} },

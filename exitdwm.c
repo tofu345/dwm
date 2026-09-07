@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 void exitdwm ()
@@ -20,11 +21,11 @@ void exitdwm ()
 
     FILE * exit_menu =
         popen("echo \""
-              S_RESTART_DWM "\n"
-              S_EXIT_DWM "\n"
-              S_SHUTDOWN "\n"
-              S_REBOOT "\n"
-              S_HIBERNATE "\" | rofi -dmenu -i -p ''", "r");
+              "\uf01e " S_RESTART_DWM "\n"
+              "\uf2f5 " S_EXIT_DWM "\n"
+              "\uf011 " S_SHUTDOWN "\n"
+              "\uf021 " S_REBOOT "\n"
+              "\ue7fc " S_HIBERNATE "\" | rofi -dmenu -i -p '' | sed 's/^..//'", "r");
 
     char exit_action[16];
     if (exit_menu == NULL || fscanf(exit_menu, "%15[a-zA-Z -]", exit_action) == EOF)
@@ -42,11 +43,11 @@ void exitdwm ()
     else if (strcmp (exit_action, S_EXIT_DWM) == 0)
         quit(&(const Arg){0});
     else if (strcmp(exit_action, S_SHUTDOWN) == 0)
-        system("doas loginctl poweroff");
+        system("loginctl poweroff");
     else if (strcmp(exit_action, S_REBOOT) == 0)
-        system("doas loginctl reboot");
+        system("loginctl reboot");
     else if (strcmp(exit_action, S_HIBERNATE) == 0)
-        system("doas loginctl hibernate");
+        system("loginctl hibernate");
 
 #pragma GCC diagnostic pop
 

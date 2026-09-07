@@ -2,11 +2,11 @@ my dwm build
 ============
 
 Dependencies:
-
 - alacritty
 - brightnessctl
 - btop
 - dmenu
+- doas
 - libnotify
 - maim
 - nemo
@@ -21,5 +21,31 @@ Dependencies:
 - xorg-xset
 - xsel
 
-patch alternatives:
-- bartabgroups vs underlinetags with taglabels
+patches:
+- Fix transparent borders https://github.com/szatanjl/dwm/commit/1529909466206016f2101457bbf37c67195714c8
+- actualfullscreen
+- attachtop-6.2
+- bartabgroups
+- betterswallow NOTE: requires https://github.com/afishhh/better-swallow it also breaks patch:attachtop
+- center
+- cfacts
+- cfacts_deck
+- colorbar
+- decorhints-6.2
+- exitmenu-6.3
+- hide_vacant_tags add:zen browser keybind remove:zoom
+- keycodes-20230319
+- layoutmenu
+- movestack-20211115-a786211
+- pertag
+- restartsig
+- status2d
+- status2d-systray
+- statuspadding
+- sticky-6.5
+- transfer
+- unicode_ellipsis-20222909-d3f93c7
+- zoomswap-6.2
+
+alternatives:
+- bartabgroups: underlinetags with taglabels
