@@ -33,6 +33,7 @@ patches:
 - colorbar
 - decorhints-6.2
 - exitmenu-6.3
+- focusonclick-20260516-44dbc68
 - hide_vacant_tags add:zen browser keybind remove:zoom
 - keycodes-20230319
 - layoutmenu
