@@ -1788,7 +1788,12 @@ movemouse(const Arg *arg)
 				ny = selmon->wy + selmon->wh - HEIGHT(c);
 			if (!c->isfloating && selmon->lt[selmon->sellt]->arrange
 			&& (abs(nx - c->x) > snap || abs(ny - c->y) > snap))
-				togglefloating(NULL);
+                        {
+                            // overwrite saved floating position
+                            c->sfx = c->x; c->sfy = c->y;
+                            c->sfw = c->w; c->sfh = c->h;
+                            togglefloating(NULL);
+                        }
 			if (!selmon->lt[selmon->sellt]->arrange || c->isfloating)
 				resize(c, nx, ny, c->w, c->h, 1);
 			break;
