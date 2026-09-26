@@ -79,7 +79,7 @@
 
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
-enum { SchemeNorm, SchemeSel, SchemeStatus, SchemeTagsSel, SchemeTagsNorm, SchemeInfoSel, SchemeInfoNorm, SchemeTabActive, SchemeTabInactive }; /* color schemes */
+enum { SchemeNorm, SchemeSel, SchemeStatus, SchemeTagsSel, SchemeTagsNorm, SchemeInfoSel, SchemeInfoNorm }; /* color schemes */
 enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetSystemTray, NetSystemTrayOP, NetSystemTrayOrientation, NetSystemTrayOrientationHorz,
        NetWMFullscreen, NetWMSticky, NetActiveWindow, NetWMWindowType,
@@ -469,107 +469,6 @@ applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact)
 }
 
 void
-bartabdraw(Monitor *m, Client *c, int unused, int x, int w, int groupactive) {
-	if (!c || w <= 0) return;
-	int i, nclienttags = 0, nviewtags = 0;
-
-	drw_setscheme(drw, scheme[
-		m->sel == c ? SchemeSel : (groupactive ? SchemeTabActive : SchemeTabInactive)
-	]);
-	drw_text(drw, x, 0, w, bh, lrpad / 2, c->name, 0);
-
-	// Floating win indicator
-	if (c->isfloating) drw_rect(drw, x + 2, 2, 5, 5, 0, 0);
-
-	// Optional borders between tabs
-	if (BARTAB_BORDERS) {
-		XSetForeground(drw->dpy, drw->gc, drw->scheme[ColBorder].pixel);
-		XFillRectangle(drw->dpy, drw->drawable, drw->gc, x, 0, 1, bh);
-		XFillRectangle(drw->dpy, drw->drawable, drw->gc, x + w, 0, 1, bh);
-	}
-
-	// Optional tags icons
-	for (i = 0; i < LENGTH(tags); i++) {
-		if ((m->tagset[m->seltags] >> i) & 1) { nviewtags++; }
-		if ((c->tags >> i) & 1) { nclienttags++; }
-	}
-
-#if BARTAB_TAGSINDICATOR == 2
-	if (nclienttags > 1 || nviewtags > 1) {
-		for (i = 0; i < LENGTH(tags); i++) {
-			drw_rect(drw,
-				( x + w - 2 - ((LENGTH(tags) / BARTAB_TAGSROWS) * BARTAB_TAGSPX)
-					- (i % (LENGTH(tags)/BARTAB_TAGSROWS)) + ((i % (LENGTH(tags) / BARTAB_TAGSROWS)) * BARTAB_TAGSPX)
-				),
-				( 2 + ((i / (LENGTH(tags)/BARTAB_TAGSROWS)) * BARTAB_TAGSPX)
-					- ((i / (LENGTH(tags)/BARTAB_TAGSROWS)))
-				),
-				BARTAB_TAGSPX, BARTAB_TAGSPX, (c->tags >> i) & 1, 0
-			);
-		}
-	}
-#endif
-}
-
-void
-bartabclick(Monitor *m, Client *c, int passx, int x, int w, int unused) {
-	if (passx >= x && passx <= x + w) {
-		focus(c);
-		restack(selmon);
-	}
-}
-
-void
-bartabcalculate(
-	Monitor *m, int offx, int sw, int passx,
-	void(*tabfn)(Monitor *, Client *, int, int, int, int)
-) {
-	Client *c;
-	int
-		i, clientsnmaster = 0, clientsnstack = 0, clientsnfloating = 0,
-		masteractive = 0, fulllayout = 0, floatlayout = 0,
-		x, w, tgactive;
-
-	for (i = 0, c = m->clients; c; c = c->next) {
-		if (!ISVISIBLE(c)) continue;
-		if (c->isfloating) { clientsnfloating++; continue; }
-		if (m->sel == c) { masteractive = i < m->nmaster; }
-		if (i < m->nmaster) { clientsnmaster++; } else { clientsnstack++; }
-		i++;
-	}
-	for (i = 0; i < LENGTH(bartabfloatfns); i++) if (m ->lt[m->sellt]->arrange == bartabfloatfns[i]) { floatlayout = 1; break; }
-	for (i = 0; i < LENGTH(bartabmonfns); i++) if (m ->lt[m->sellt]->arrange == bartabmonfns[i]) { fulllayout = 1; break; }
-	for (c = m->clients, i = 0; c; c = c->next) {
-		if (!ISVISIBLE(c)) continue;
-		if (clientsnmaster + clientsnstack == 0 || floatlayout) {
-			 x = offx + (((m->mw - offx - sw) / (clientsnmaster + clientsnstack + clientsnfloating)) * i);
-			 w = (m->mw - offx - sw) / (clientsnmaster + clientsnstack + clientsnfloating);
-			 tgactive = 1;
-		} else if (!c->isfloating && (fulllayout || ((clientsnmaster == 0) ^ (clientsnstack == 0)))) {
-			 x = offx + (((m->mw - offx - sw) / (clientsnmaster + clientsnstack)) * i);
-			 w = (m->mw - offx - sw) / (clientsnmaster + clientsnstack);
-			 tgactive = 1;
-		} else if (i < m->nmaster && !c->isfloating) {
-			 x = offx + ((((m->mw * m->mfact) - offx) / clientsnmaster) * i);
-			 w = ((m->mw * m->mfact) - offx) / clientsnmaster;
-
-             // avoid drawing over status bar
-             if (x + w >= m->mw - sw)
-                 w = m->mw - sw - x;
-
-			 tgactive = masteractive;
-		} else if (!c->isfloating) {
-			 w = ((m->mw * (1 - m->mfact)) - sw) / clientsnstack;
-			 x = (m->mw * m->mfact) + (w * (i - m->nmaster));
-			 tgactive = !masteractive;
-		} else continue;
-
-        tabfn(m, c, passx, x, w, tgactive);
-		i++;
-	}
-}
-
-void
 arrange(Monitor *m)
 {
 	if (m)
@@ -726,7 +625,7 @@ buttonpress(XEvent *e)
 			x = selmon->ww - statusw;
 			click = ClkStatusText;
 		} else
-			bartabcalculate(selmon, x, statusw - lrpad + 2, ev->x, bartabclick);
+			click = ClkWinTitle;
 
         } else if (ev->window == selmon->extrabarwin) {
 		if (ev->x < (int)TEXTW(estextl))
@@ -1229,8 +1128,8 @@ void
 drawbar(Monitor *m)
 {
 	int x, w, tw = 0, stw = 0;
-	// int boxs = drw->fonts->h / 9;
-	// int boxw = drw->fonts->h / 6 + 2;
+	int boxs = drw->fonts->h / 9;
+	int boxw = drw->fonts->h / 6 + 2;
 	unsigned int i, occ = 0, urg = 0;
 	Client *c;
 
@@ -1268,17 +1167,18 @@ drawbar(Monitor *m)
 	drw_setscheme(drw, scheme[SchemeTagsNorm]);
 	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
 
-	// Draw bartabgroups
-	// NOTE: updated to include systray width (stw) and extra padding with the status text.
-	drw_rect(drw, x, 0, m->ww - tw - stw - x, bh, 1, 1);
 	if ((w = m->ww - tw - stw - x) > bh) {
-		bartabcalculate(m, x, tw + stw + 2, -1, bartabdraw);
-		if (BARTAB_BOTTOMBORDER) {
-			drw_setscheme(drw, scheme[SchemeTabActive]);
-			drw_rect(drw, 0, bh - 1, m->ww, 1, 1, 0);
+		if (m->sel) {
+			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
+			drw_text(drw, x, 0, w, bh, lrpad / 2, m->sel->name, 0);
+			if (m->sel->isfloating)
+				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
+		} else {
+			drw_setscheme(drw, scheme[SchemeNorm]);
+			drw_rect(drw, x, 0, w, bh, 1, 1);
 		}
 	}
-	drw_map(drw, m->barwin, 0, 0, m->ww - stw, bh);
+	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
 
 	if (m == selmon) { /* extra status is only drawn on selected monitor */
 		drawstatusbar(m, bh, 1, estextl);

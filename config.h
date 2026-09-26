@@ -38,8 +38,6 @@ static const char *colors[][3] = {
     [SchemeTagsNorm]    = { col_fg,    col_blk,   col_blk   }, // Tagbar left unselected
     [SchemeInfoSel]     = { col_fg,    col_blk,   col_blk   }, // infobar middle selected
     [SchemeInfoNorm]    = { col_fg,    col_blk,   col_blk   }, // infobar middle unselected
-    [SchemeTabActive]   = { col_fg,    col_blk,   col_blk   }, // active tab group
-    [SchemeTabInactive] = { col_fg,    col_blk,   col_blk   }  // inactive tab group
 };
 
 /* tagging */
@@ -61,15 +59,6 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 static const int refreshrate = 60;   /* refresh rate (per second) for client move/resize */
 static const int decorhints  = 1;    /* 1 means respect decoration hints */
-
-/* Bartabgroups properties */
-#define BARTAB_BORDERS 0       // 0 = off, 1 = on
-#define BARTAB_BOTTOMBORDER 0  // 0 = off, 1 = on
-#define BARTAB_TAGSINDICATOR 0 // 0 = off, 1 = on if >1 client/view tag, 2 = always on
-#define BARTAB_TAGSPX 0        // # pixels for tag grid boxes
-#define BARTAB_TAGSROWS 0      // # rows in tag grid (9 tags, e.g. 3x3)
-static void (*bartabmonfns[])(Monitor *) = { monocle /* customlayoutfn */ };
-static void (*bartabfloatfns[])(Monitor *) = { NULL /* customlayoutfn */ };
 
 static const Layout layouts[] = {
     /* symbol   arrange function */
