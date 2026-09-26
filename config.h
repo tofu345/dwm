@@ -94,7 +94,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", font, "-nb", col_blk, "-nf", col_fg, "-sb", col_blk, "-sf", col_sel, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
-static const char *browser[]  = { "chromium-bin", NULL };
+static const char *browser[]  = { "chromium-bin", "--class=chromium", NULL };
 static const char *tlp[]      = { "dwm-tlp", NULL };
 static const char *screenshot[] = { "dwm-screenshot", NULL };
 
