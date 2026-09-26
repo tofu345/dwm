@@ -126,7 +126,6 @@ static const Button buttons[] = {
     /* click                event mask      button          function        argument */
     { ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
     { ClkLtSymbol,          0,              Button3,        layoutmenu,     {0} },
-    { ClkWinTitle,          0,              Button2,        zoom,           {0} },
     { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
     { ClkExBarLeftStatus,   0,              Button2,        spawn,          {.v = termcmd } },
     { ClkExBarMiddle,       0,              Button2,        spawn,          {.v = termcmd } },

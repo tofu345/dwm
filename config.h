@@ -170,7 +170,6 @@ static const Button buttons[] = {
     { ClkTagBar,            MODKEY,             Button1,        tag,            {0} },
     { ClkTagBar,            MODKEY,             Button3,        toggletag,      {0} },
     { ClkLtSymbol,          0,                  Button1,        layoutmenu,     {0} },
-    // { ClkWinTitle,          0,                  Button2,        zoom,           {0} },
     { ClkStatusText,        0,                  Button2,        spawn,          {.v = termcmd } },
     // { ClkExBarLeftStatus,   0,                  Button2,        spawn,          {.v = termcmd } },
     // { ClkExBarMiddle,       0,                  Button2,        spawn,          {.v = termcmd } },
