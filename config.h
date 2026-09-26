@@ -51,7 +51,6 @@ static const Rule rules[] = {
      *  WM_NAME(STRING) = title
      */
     /* class            instance    title       tags mask     iscentered    isfloating  monitor */
-    { "Nemo",           NULL,       NULL,       0,            1,            1,          -1 },
     { "Gcr-prompter",   NULL,       NULL,       0,            1,            1,          -1 },
 };
 
@@ -59,7 +58,7 @@ static const Rule rules[] = {
 static const float mfact     = 0.5;  /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
-static const int lockfullscreen = 0; /* 1 will force focus on the fullscreen window */
+static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 static const int refreshrate = 60;   /* refresh rate (per second) for client move/resize */
 static const int decorhints  = 1;    /* 1 means respect decoration hints */
 
@@ -98,7 +97,6 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", font, "-nb
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
 static const char *browser[]  = { "chromium-bin", NULL };
-static const char *files[]    = { "nemo", NULL };
 static const char *tlp[]      = { "dwm-tlp", NULL };
 static const char *screenshot[] = { "dwm-screenshot", NULL };
 
@@ -108,7 +106,6 @@ static const Key keys[] = {
     { MODKEY,               /* r */ 32,             spawn,          {.v = dmenucmd } },
     { MODKEY,               /* d */ 43,             spawn,          {.v = rofi } },
     { MODKEY|ShiftMask,     /* b */ 57,             spawn,          {.v = browser } },
-    { MODKEY,               /* e */ 40,             spawn,          {.v = files } },
     { 0,                /* Print */ 107,            spawn,          {.v = screenshot } },
     { MODKEY|ControlMask,   /* p */ 27,             spawn,          {.v = tlp} },
     { MODKEY|ShiftMask,     /* w */ 59,             spawn,          SHCMD("alacritty -T 'wiremix' -e wiremix") },
@@ -146,7 +143,7 @@ static const Key keys[] = {
     { MODKEY|ControlMask,   /* k */ 55,             movestack,      {.i = -1 } },
 
     { MODKEY|ControlMask|ShiftMask,
-                            /* q */ 53,             exitdwm,       {0} },
+                            /* q */ 53,             exitdwm,        {0} },
 
     { MODKEY,           /* comma */ 25,             focusmon,       {.i = -1 } },
     { MODKEY,          /* period */ 26,             focusmon,       {.i = +1 } },

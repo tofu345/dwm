@@ -30,7 +30,7 @@ void exitdwm ()
     char exit_action[16];
     if (exit_menu == NULL || fscanf(exit_menu, "%15[a-zA-Z -]", exit_action) == EOF)
     {
-        fputs("Error. Failure in exit_dwm.", stderr);
+        fputs("Error: Failure in exitdwm\n", stderr);
         goto close;
     }
 
