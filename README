@@ -49,6 +49,4 @@ patches:
 - transfer
 - unicode_ellipsis-20222909-d3f93c7
 - zoomswap-6.2
-
-alternatives:
-- bartabgroups: underlinetags with taglabels
+- underlinetags with taglabels
