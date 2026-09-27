@@ -1154,21 +1154,21 @@ drawbar(Monitor *m)
 		masterclientontag[i] = NULL;
 
 	resizebarwin(m);
-	for (c = m->clients; c; c = c->next) {
-		if (!c->swallowed) {
-			occ |= c->tags;
-			if (c->isurgent)
-				urg |= c->tags;
-		}
-		for (i = 0; i < LENGTH(tags); i++)
-			if (!masterclientontag[i] && c->tags & (1<<i)) {
-				XClassHint ch = { NULL, NULL };
-				XGetClassHint(dpy, c->win, &ch);
-				masterclientontag[i] = ch.res_class;
-				if (lcaselbl)
-					masterclientontag[i][0] = tolower(masterclientontag[i][0]);
-			}
-	}
+        for (c = m->clients; c; c = c->next) {
+            if (!c->swallowed) {
+                occ |= c->tags;
+                if (c->isurgent)
+                    urg |= c->tags;
+            }
+            for (i = 0; i < LENGTH(tags); i++)
+                if (!masterclientontag[i] && c->tags & (1<<i)) {
+                    XClassHint ch = { NULL, NULL };
+                    XGetClassHint(dpy, c->win, &ch);
+                    masterclientontag[i] = ch.res_class;
+                    if (lcaselbl)
+                        masterclientontag[i][0] = tolower(masterclientontag[i][0]);
+                }
+        }
 	x = 0;
 	for (i = 0; i < LENGTH(tags); i++) {
  		/* Do not draw vacant tags */
