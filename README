@@ -24,7 +24,6 @@ Dependencies:
 patches:
 - Fix transparent borders https://github.com/szatanjl/dwm/commit/1529909466206016f2101457bbf37c67195714c8
 - actualfullscreen
-- attachtop-6.2
 - bartabgroups
 - betterswallow NOTE: requires https://github.com/afishhh/better-swallow it also breaks patch:attachtop
 - center
