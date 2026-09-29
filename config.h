@@ -32,7 +32,7 @@ static const char col_blk[]         = "#000000";  // black
 static const char *colors[][3] = {
     /*                      fg         bg         border (cannot be empty) */
     [SchemeNorm]        = { col_fg,    col_blk,   "#101014" }, // Unselected windows
-    [SchemeSel]         = { col_sel,   col_blk,   "#353743" }, // Selected window
+    [SchemeSel]         = { col_sel,   "#101014", "#353743" }, // Selected window
     [SchemeStatus]      = { col_fg,    col_blk,   col_blk   }, // Statusbar right
     [SchemeTagsSel]     = { col_sel,   col_blk,   col_blk   }, // Tagbar left selected
     [SchemeTagsNorm]    = { col_fg,    col_blk,   col_blk   }, // Tagbar left unselected
@@ -149,7 +149,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,/* period */ 26,             tagmon,         {.i = +1 } },
 
     { MODKEY,               /* 0 */ 19,             view,           {.ui = ~0 } },
-    { MODKEY|ShiftMask,     /* 0 */ 19,             tag,            {.ui = ~0 } },
+    // { MODKEY|ShiftMask,     /* 0 */ 19,             tag,            {.ui = ~0 } },
 
     //       key  code  tag
     TAGKEYS(/* 1 */ 10, 0),

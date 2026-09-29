@@ -1028,7 +1028,7 @@ drawstatusbar(Monitor *m, int bh, int extra, char* stext) {
     switch (extra)
     {
         case 0: // top bar
-            ret = w += 2; /* 1px padding on both sides */
+            ret = w;
             x = m->ww - w - getsystraywidth();
             break;
         case 1: // bottom bar left
