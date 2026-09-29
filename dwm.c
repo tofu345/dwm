@@ -3148,6 +3148,17 @@ zoom(const Arg *arg)
 
 	if (!selmon->lt[selmon->sellt]->arrange || !c || c->isfloating)
 		return;
+
+        // if selected window is master, return to previous zoom behaviour
+        if (selmon->sel == selmon->clients)
+        {
+            if (c == nexttiled(selmon->clients))
+                if (!c || !(c = nexttiled(c->next)))
+                    return;
+            pop(c);
+            return;
+        }
+
 	if (c == nexttiled(selmon->clients)) {
 		at = findbefore(prevzoom);
 		if (at)
