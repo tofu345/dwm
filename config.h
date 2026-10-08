@@ -88,8 +88,8 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", font, "-nb", col_blk, "-nf", col_fg, "-sb", col_blk, "-sf", col_sel, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
-static const char *browser[]  = { "chromium-bin", "--class=chromium", NULL };
-static const char *tlp[]      = { "dwm-tlp", NULL };
+static const char *browser[]  = { "librewolf-bin", NULL };
+static const char *power_mode[] = { "dwm-power-mode", NULL };
 static const char *screenshot[] = { "dwm-screenshot", NULL };
 
 static const Key keys[] = {
@@ -99,7 +99,7 @@ static const Key keys[] = {
     { MODKEY,               /* d */ 43,             spawn,          {.v = rofi } },
     { MODKEY|ShiftMask,     /* b */ 57,             spawn,          {.v = browser } },
     { 0,                /* Print */ 107,            spawn,          {.v = screenshot } },
-    { MODKEY|ControlMask,   /* p */ 27,             spawn,          {.v = tlp} },
+    { MODKEY|ControlMask,   /* p */ 27,             spawn,          {.v = power_mode} },
     { MODKEY|ShiftMask,     /* w */ 59,             spawn,          SHCMD("alacritty -T 'wiremix' -e wiremix") },
     { MODKEY|ShiftMask,     /* v */ 60,             spawn,          SHCMD("xsel -bc") },
     { MODKEY|ShiftMask,     /* l */ 33,             spawn,          SHCMD("slock & sleep .5; xset dpms force off") },
