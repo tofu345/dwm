@@ -85,76 +85,76 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", font, "-nb", col_blk, "-nf", col_fg, "-sb", col_blk, "-sf", col_sel, NULL };
-static const char *termcmd[]  = { "alacritty", NULL };
-static const char *rofi[]     = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
-static const char *browser[]  = { "librewolf-bin", NULL };
+static const char *dmenucmd[]   = { "dmenu_run", "-m", dmenumon, "-fn", font, "-nb", col_blk, "-nf", col_fg, "-sb", col_blk, "-sf", col_sel, NULL };
+static const char *termcmd[]    = { "alacritty", NULL };
+static const char *rofi[]       = { "rofi", "-modi", "drun,run", "-show", "drun", NULL };
+static const char *browser[]    = { "librewolf-bin", NULL };
 static const char *power_mode[] = { "dwm-power-mode", NULL };
 static const char *screenshot[] = { "dwm-screenshot", NULL };
 
 static const Key keys[] = {
-    /* modifier            keycodes (in dvorak :p)  function        argument */
-    { MODKEY,          /* Return */ 36,             spawn,          {.v = termcmd } },
-    { MODKEY,               /* r */ 32,             spawn,          {.v = dmenucmd } },
-    { MODKEY,               /* d */ 43,             spawn,          {.v = rofi } },
-    { MODKEY|ShiftMask,     /* b */ 57,             spawn,          {.v = browser } },
-    { 0,                /* Print */ 107,            spawn,          {.v = screenshot } },
-    { MODKEY|ControlMask,   /* p */ 27,             spawn,          {.v = power_mode} },
-    { MODKEY|ShiftMask,     /* w */ 59,             spawn,          SHCMD("alacritty -T 'wiremix' -e wiremix") },
-    { MODKEY|ShiftMask,     /* v */ 60,             spawn,          SHCMD("xsel -bc") },
-    { MODKEY|ShiftMask,     /* l */ 33,             spawn,          SHCMD("slock & sleep .5; xset dpms force off") },
-    { 0,            /* AudioMute */ 121,            spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && sb-upd vol" ) },
-    { 0,     /* AudioLowerVolume */ 122,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- && sb-upd vol" ) },
-    { 0,     /* AudioRaiseVolume */ 123,            spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+ --limit 1.0 && sb-upd vol") },
-    { 0,      /* MonBrightnessUp */ 233,            spawn,          SHCMD("brightnessctl -q set +2%") },
-    { 0,    /* MonBrightnessDown */ 232,            spawn,          SHCMD("brightnessctl -q --min-value=100 set 2-%") },
+    /* modifier           keycodes  function        argument */
+    { MODKEY,           XK_Return,  spawn,          {.v = termcmd } },
+    { MODKEY,                XK_r,  spawn,          {.v = dmenucmd } },
+    { MODKEY,                XK_d,  spawn,          {.v = rofi } },
+    { MODKEY|ShiftMask,      XK_b,  spawn,          {.v = browser } },
+    { 0,                 XK_Print,  spawn,          {.v = screenshot } },
+    { MODKEY|ControlMask,    XK_p,  spawn,          {.v = power_mode} },
+    { MODKEY|ShiftMask,      XK_w,  spawn,          SHCMD("alacritty -T 'wiremix' -e wiremix") },
+    { MODKEY|ShiftMask,      XK_v,  spawn,          SHCMD("xsel -bc") },
+    { MODKEY|ShiftMask,      XK_l,  spawn,          SHCMD("slock & sleep .5; xset dpms force off") },
+    { 0,         XF86XK_AudioMute,  spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && sb-upd vol" ) },
+    { 0,  XF86XK_AudioLowerVolume,  spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- && sb-upd vol" ) },
+    { 0,  XF86XK_AudioRaiseVolume,  spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+ --limit 1.0 && sb-upd vol") },
+    { 0,   XF86XK_MonBrightnessUp,  spawn,          SHCMD("brightnessctl -q set +2%") },
+    { 0, XF86XK_MonBrightnessDown,  spawn,          SHCMD("brightnessctl -q --min-value=100 set 2-%") },
 
-    { MODKEY,             /* Tab */ 23,             view,           {0} }, // previous tag
-    { MODKEY,               /* z */ 61,             zoom,           {0} },
-    { MODKEY|ShiftMask,     /* q */ 53,             killclient,     {0} },
-    { MODKEY,               /* t */ 45,             setlayout,      {.v = &layouts[0]} }, // tiled
-    { MODKEY,               /* m */ 58,             setlayout,      {.v = &layouts[1]} }, // monocle
-    { MODKEY|ShiftMask,     /* d */ 43,             setlayout,      {.v = &layouts[2]} }, // deck
-    { MODKEY,           /* space */ 65,             setlayout,      {.v = &layouts[3]} }, // floating
-    { MODKEY,               /* f */ 29,             togglefullscr,  {0} },
-    { MODKEY|ShiftMask, /* space */ 65,             togglefloating, {0} },
-    { MODKEY|ShiftMask,     /* s */ 47,             togglesticky,   {0} },
-    { MODKEY,               /* b */ 57,             togglebar,      {0} },
+    { MODKEY,              XK_Tab,  view,           {0} }, // previous tag
+    { MODKEY,                XK_z,  zoom,           {0} },
+    { MODKEY|ShiftMask,      XK_z,  oldzoom,        {0} },
+    { MODKEY|ShiftMask,      XK_q,  killclient,     {0} },
+    { MODKEY,                XK_t,  setlayout,      {.v = &layouts[0]} }, // tiled
+    { MODKEY,                XK_m,  setlayout,      {.v = &layouts[1]} }, // monocle
+    { MODKEY|ShiftMask,      XK_d,  setlayout,      {.v = &layouts[2]} }, // deck
+    { MODKEY,            XK_space,  setlayout,      {.v = &layouts[3]} }, // floating
+    { MODKEY,                XK_f,  togglefullscr,  {0} },
+    { MODKEY|ShiftMask,  XK_space,  togglefloating, {0} },
+    { MODKEY|ShiftMask,      XK_s,  togglesticky,   {0} },
+    { MODKEY,                XK_b,  togglebar,      {0} },
 
-    { MODKEY,               /* j */ 54,             focusstack,     {.i = +1 } },
-    { MODKEY,               /* k */ 55,             focusstack,     {.i = -1 } },
-    { MODKEY,               /* p */ 27,             incnmaster,     {.i = +1 } },
-    { MODKEY|ShiftMask,     /* p */ 27,             incnmaster,     {.i = -1 } },
-    { MODKEY,               /* x */ 56,             transfer,       {0} },
-    { MODKEY,               /* h */ 44,             setmfact,       {.f = -0.05 } },
-    { MODKEY,               /* l */ 33,             setmfact,       {.f = +0.05 } },
-    { MODKEY|ShiftMask,     /* j */ 54,             setcfact,       {.f = -0.25} },
-    { MODKEY|ShiftMask,     /* k */ 55,             setcfact,       {.f = +0.25} },
-    { MODKEY|ShiftMask,     /* o */ 39,             setcfact,       {.f =  0.00} },
-    { MODKEY|ControlMask,   /* j */ 54,             movestack,      {.i = +1 } },
-    { MODKEY|ControlMask,   /* k */ 55,             movestack,      {.i = -1 } },
+    { MODKEY,                XK_j,  focusstack,     {.i = +1 } },
+    { MODKEY,                XK_k,  focusstack,     {.i = -1 } },
+    { MODKEY,                XK_p,  incnmaster,     {.i = +1 } },
+    { MODKEY|ShiftMask,      XK_p,  incnmaster,     {.i = -1 } },
+    { MODKEY,                XK_x,  transfer,       {0} },
+    { MODKEY,                XK_h,  setmfact,       {.f = -0.05 } },
+    { MODKEY,                XK_l,  setmfact,       {.f = +0.05 } },
+    { MODKEY|ShiftMask,      XK_j,  setcfact,       {.f = -0.25} },
+    { MODKEY|ShiftMask,      XK_k,  setcfact,       {.f = +0.25} },
+    { MODKEY|ShiftMask,      XK_o,  setcfact,       {.f =  0.00} },
+    { MODKEY|ControlMask,    XK_j,  movestack,      {.i = +1 } },
+    { MODKEY|ControlMask,    XK_k,  movestack,      {.i = -1 } },
 
     { MODKEY|ControlMask|ShiftMask,
-                            /* q */ 53,             exitdwm,        {0} },
+                             XK_q,  exitdwm,        {0} },
 
-    { MODKEY,           /* comma */ 25,             focusmon,       {.i = -1 } },
-    { MODKEY,          /* period */ 26,             focusmon,       {.i = +1 } },
-    { MODKEY|ShiftMask, /* comma */ 25,             tagmon,         {.i = -1 } },
-    { MODKEY|ShiftMask,/* period */ 26,             tagmon,         {.i = +1 } },
+    { MODKEY,            XK_comma,  focusmon,       {.i = -1 } },
+    { MODKEY,           XK_period,  focusmon,       {.i = +1 } },
+    { MODKEY|ShiftMask,  XK_comma,  tagmon,         {.i = -1 } },
+    { MODKEY|ShiftMask,  XK_period, tagmon,         {.i = +1 } },
 
-    { MODKEY,               /* 0 */ 19,             view,           {.ui = ~0 } },
-    // { MODKEY|ShiftMask,     /* 0 */ 19,             tag,            {.ui = ~0 } },
+    { MODKEY,                XK_0,  view,           {.ui = ~0 } },
+    // { MODKEY|ShiftMask,      XK_0,  tag,            {.ui = ~0 } },
 
-    //       key  code  tag
-    TAGKEYS(/* 1 */ 10, 0),
-    TAGKEYS(/* 2 */ 11, 1),
-    TAGKEYS(/* 3 */ 12, 2),
-    TAGKEYS(/* 4 */ 13, 3),
-    TAGKEYS(/* 5 */ 14, 4),
-    TAGKEYS(/* 6 */ 15, 5),
-    TAGKEYS(/* 7 */ 16, 6),
-    TAGKEYS(/* 8 */ 17, 7),
-    TAGKEYS(/* 9 */ 18, 8),
+    TAGKEYS(XK_1, 0),
+    TAGKEYS(XK_2, 1),
+    TAGKEYS(XK_3, 2),
+    TAGKEYS(XK_4, 3),
+    TAGKEYS(XK_5, 4),
+    TAGKEYS(XK_6, 5),
+    TAGKEYS(XK_7, 6),
+    TAGKEYS(XK_8, 7),
+    TAGKEYS(XK_9, 8),
 };
 
 /* button definitions */
