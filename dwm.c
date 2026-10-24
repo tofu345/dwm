@@ -300,6 +300,7 @@ static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
+static void oldzoom(const Arg *arg);
 
 /* variables */
 static Client *prevzoom = NULL;
@@ -3120,16 +3121,6 @@ zoom(const Arg *arg)
 	if (!selmon->lt[selmon->sellt]->arrange || !c || c->isfloating)
 		return;
 
-        // if selected window is master, return to previous zoom behaviour
-        if (selmon->sel == selmon->clients)
-        {
-            if (c == nexttiled(selmon->clients))
-                if (!c || !(c = nexttiled(c->next)))
-                    return;
-            pop(c);
-            return;
-        }
-
 	if (c == nexttiled(selmon->clients)) {
 		at = findbefore(prevzoom);
 		if (at)
@@ -3157,6 +3148,19 @@ zoom(const Arg *arg)
 	}
 	focus(c);
 	arrange(c->mon);
+}
+
+void
+oldzoom(const Arg *arg)
+{
+    Client *c = selmon->sel;
+
+    if (!selmon->lt[selmon->sellt]->arrange || !c || c->isfloating)
+        return;
+
+    if (c == nexttiled(selmon->clients) && !(c = nexttiled(c->next)))
+        return;
+    pop(c);
 }
 
 int
