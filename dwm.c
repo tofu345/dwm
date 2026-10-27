@@ -248,6 +248,7 @@ static void resizemouse(const Arg *arg);
 static void resizerequest(XEvent *e);
 static void restack(Monitor *m);
 static void run(void);
+static void runAutostart(void);
 static void scan(void);
 static int sendevent(Window w, Atom proto, int m, long d0, long d1, long d2, long d3, long d4);
 static void sendmon(Client *c, Monitor *m);
@@ -1952,6 +1953,15 @@ run(void)
 }
 
 void
+runAutostart(void) {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-result"
+	system("cd ~/.dwm; ./autostart_blocking.sh");
+	system("cd ~/.dwm; ./autostart.sh &");
+#pragma GCC diagnostic pop
+}
+
+void
 scan(void)
 {
 	unsigned int i, num;
@@ -3166,8 +3176,12 @@ oldzoom(const Arg *arg)
 int
 main(int argc, char *argv[])
 {
-	if (argc == 2 && !strcmp("-v", argv[1]))
+        int autostart = 1;
+	if (argc == 2)
+            if (!strcmp("-v", argv[1]))
 		die("dwm-"VERSION);
+            else
+                autostart = strcmp("--no-autostart", argv[1]) != 0;
 	else if (argc != 1)
 		die("usage: dwm [-v]");
 	if (!setlocale(LC_CTYPE, "") || !XSupportsLocale())
@@ -3181,8 +3195,11 @@ main(int argc, char *argv[])
 		die("pledge");
 #endif /* __OpenBSD__ */
 	scan();
+        if (autostart)
+            runAutostart();
 	run();
-	if(restart) execvp(argv[0], argv);
+	if (restart)
+            execvp(argv[0], (char * const[]){ argv[0], "--no-autostart", NULL });
 	cleanup();
 	XCloseDisplay(dpy);
 	return EXIT_SUCCESS;
