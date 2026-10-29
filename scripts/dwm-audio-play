@@ -4,6 +4,9 @@ exec >&/dev/null
 # emulate pause butten presses on earphones
 # 1 = pause, 2 = next, 3 = previous
 
+# timeout at start and after each button press
+timeout=0.5
+
 # send USR1 to an older process if any
 pid=$(pgrep -ox dwm-audio-play)
 if [[ -n "$pid" && "$pid" != $$ ]]; then
@@ -17,7 +20,9 @@ presses=0
 handler() {
     trap handler USR1
     presses=$((presses + 1))
-    wait # wait for timout sleep to finish
+
+    sleep $timeout &
+    wait # wait for timouts
 
     case $presses in
         1) playerctl play-pause;;
@@ -28,7 +33,4 @@ handler() {
 }
 
 # run in sub process
-(
-    sleep 1 &
-    handler
-) &
+handler &
