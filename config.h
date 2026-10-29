@@ -91,6 +91,7 @@ static const char *rofi[]       = { "rofi", "-modi", "drun,run", "-show", "drun"
 static const char *browser[]    = { "librewolf-bin", NULL };
 static const char *power_mode[] = { "dwm-power-mode", NULL };
 static const char *screenshot[] = { "dwm-screenshot", NULL };
+static const char *audio_play[] = { "dwm-audio-play", NULL };
 
 static const Key keys[] = {
     /* modifier           keycodes  function        argument */
@@ -103,6 +104,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,      XK_w,  spawn,          SHCMD("alacritty -T 'wiremix' -e wiremix") },
     { MODKEY|ShiftMask,      XK_v,  spawn,          SHCMD("xsel -bc") },
     { MODKEY|ShiftMask,      XK_l,  spawn,          SHCMD("slock & sleep .5; xset dpms force off") },
+    { 0,         XF86XK_AudioPlay,  spawn,          {.v = audio_play } },
     { 0,         XF86XK_AudioMute,  spawn,          SHCMD("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && sb-upd vol" ) },
     { 0,  XF86XK_AudioLowerVolume,  spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%- && sb-upd vol" ) },
     { 0,  XF86XK_AudioRaiseVolume,  spawn,          SHCMD("wpctl set-volume @DEFAULT_AUDIO_SINK@ 3%+ --limit 1.0 && sb-upd vol") },
