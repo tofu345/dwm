@@ -16,20 +16,24 @@ fi
 
 presses=0
 
-# increase "presses" on SIGUSR1
-handler() {
-    trap handler USR1
-    presses=$((presses + 1))
-
-    sleep $timeout &
-    wait # wait for timouts
-
+run() {
     case $presses in
         1) playerctl play-pause;;
         2) playerctl next;;
         *) playerctl previous;;
     esac
     exit
+}
+
+# increase "presses" on SIGUSR1
+handler() {
+    trap handler USR1
+    presses=$((presses + 1))
+    [[ $presses == 3 ]] && run
+
+    sleep $timeout &
+    wait # wait for timouts
+    run
 }
 
 # run in sub process
