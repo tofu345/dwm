@@ -20,7 +20,7 @@ run() {
     case $presses in
         1) playerctl play-pause;;
         2) playerctl next;;
-        *) playerctl previous;;
+        3) playerctl previous;;
     esac
     exit
 }
