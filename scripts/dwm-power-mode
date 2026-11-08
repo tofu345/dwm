@@ -1,17 +1,16 @@
 #!/bin/sh
 
-# NOTE: doas must not require a password for `tlp` and `tlp-stat`
+# NOTE: doas must not require a password for `tlp`
 
-current=$(doas tlp-stat -m)
-selected=$(echo "Performance |Balanced |Power Saver" \
-        | rofi -dmenu -sep '|' -i -select "Balanced" -p "Current: $current")
+opts="Performance
+Balanced
+Power Saver"
+current=$(tlp-stat -m)
+selected=$(echo "$opts" | rofi -dmenu -i -select "$(echo $current | sed 's/[\/-].*//')" -p "$current")
 
 exec >&/dev/null
 case $selected in
-    "Performance ")
-        doas tlp performance;;
-    "Balanced ")
-        doas tlp balanced;;
-    "Power Saver")
-        doas tlp power-saver;;
+    Performance)    doas tlp performance;;
+    Balanced)       doas tlp balanced;;
+    "Power Saver")  doas tlp power-saver;;
 esac
