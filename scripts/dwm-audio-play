@@ -5,7 +5,7 @@ exec >&/dev/null
 # 1 = pause, 2 = next, 3 = previous
 
 # timeout at start and after each button press
-timeout=0.5
+timeout=0.75
 
 # send USR1 to an older process if any
 pid=$(pgrep -ox dwm-audio-play)

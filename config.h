@@ -23,7 +23,7 @@ static const char *fonts[]          = { font };
 
 /* https://github.com/tonybanters/dwm/blob/master/config.h */
 static const char col_bg[]          = "#101010";  // background
-static const char col_fg[]          = "#a9b1d6";  // foreground
+static const char col_fg[]          = "#99a0c2";  // foreground
 static const char col_sel[]         = "#c9d3ff";  // foreground selected
 static const char col_blk[]         = "#000000";  // black
 
@@ -39,7 +39,7 @@ static const char *colors[][3] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "", "", "3", "4", "5", "6", "7", "8", "9" };
 
 static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
 static const unsigned int ulinestroke	= 1;	/* thickness / height of the underline */
